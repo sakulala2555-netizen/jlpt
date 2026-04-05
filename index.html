@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#378ADD">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="日検練習">
+<title>日検練習 - JLPT N3</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{
+  --blue:#378ADD;--blue-dark:#185FA5;--blue-bg:#E6F1FB;--blue-text:#0C447C;
+  --green-bg:#EAF3DE;--green-border:#639922;--green-text:#27500A;
+  --red-bg:#FCEBEB;--red-border:#E24B4A;--red-text:#791F1F;
+  --text:#1a1a1a;--text2:#666;--text3:#999;
+  --bg:#fff;--bg2:#f5f5f5;--bg3:#fafafa;
+  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.2);
+  --radius:8px;--radius-lg:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --text:#f0f0f0;--text2:#aaa;--text3:#666;
+    --bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;
+    --border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.22);
+    --blue-bg:#0c2d4a;--blue-text:#7bb8f0;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.app{max-width:430px;margin:0 auto;padding:0 16px 48px;}
+.screen{display:none;}.screen.active{display:block;}
+/* topbar */
+.topbar{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:0.5px solid var(--border);margin-bottom:20px;}
+.back-btn{background:none;border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 13px;font-size:13px;cursor:pointer;color:var(--text2);flex-shrink:0;}
+.back-btn:active{background:var(--bg2);}
+.topbar-title{font-size:15px;font-weight:600;color:var(--text);}
+/* home */
+.logo{font-size:26px;font-weight:700;color:var(--text);padding-top:16px;letter-spacing:-0.5px;}
+.logo-sub{font-size:12px;color:var(--text3);margin:3px 0 24px;}
+.sec-label{font-size:11px;color:var(--text3);letter-spacing:.07em;margin-bottom:9px;text-transform:uppercase;}
+.level-row{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:24px;}
+.pill{border:0.5px solid var(--border2);border-radius:var(--radius);padding:11px 4px;text-align:center;cursor:pointer;background:var(--bg);font-size:14px;font-weight:600;color:var(--text2);}
+.pill:active{background:var(--bg2);}
+.pill.sel{background:var(--blue-bg);border-color:var(--blue);color:var(--blue-text);}
+.cat-list{display:flex;flex-direction:column;gap:8px;margin-bottom:22px;}
+.cat-card{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 15px;cursor:pointer;background:var(--bg);display:flex;justify-content:space-between;align-items:center;}
+.cat-card:active{background:var(--bg2);}
+.cat-jp{font-size:11px;color:var(--text3);margin-bottom:2px;}
+.cat-zh{font-size:15px;font-weight:600;color:var(--text);}
+.cat-count{font-size:11px;color:var(--text3);margin-top:2px;}
+.cat-arr{font-size:20px;color:var(--text3);}
+.util-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.util-btn{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 6px;text-align:center;cursor:pointer;background:var(--bg);}
+.util-btn:active{background:var(--bg2);}
+.util-icon{font-size:20px;margin-bottom:5px;}
+.util-jp{font-size:10px;color:var(--text3);}
+.util-zh{font-size:12px;font-weight:600;color:var(--text2);}
+/* setup */
+.src-tabs{display:flex;gap:8px;margin-bottom:20px;}
+.src-tab{flex:1;border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;text-align:center;cursor:pointer;background:var(--bg);}
+.src-tab:active{background:var(--bg2);}
+.src-tab .sj{font-size:10px;color:var(--text3);}
+.src-tab .sz{font-size:14px;font-weight:600;color:var(--text2);margin-top:2px;}
+.src-tab.sel{background:var(--blue-bg);border-color:var(--blue);}
+.src-tab.sel .sj{color:var(--blue-dark);}
+.src-tab.sel .sz{color:var(--blue-text);}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+.mode-card{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px 12px;cursor:pointer;background:var(--bg);}
+.mode-card:active{background:var(--bg2);}
+.mode-card.sel{background:var(--blue-bg);border-color:var(--blue);}
+.mode-icon{font-size:20px;margin-bottom:6px;}
+.mode-jp{font-size:10px;color:var(--text3);}
+.mode-zh{font-size:13px;font-weight:600;color:var(--text);margin:2px 0 4px;}
+.mode-card.sel .mode-jp{color:var(--blue-dark);}
+.mode-card.sel .mode-zh{color:var(--blue-text);}
+.mode-desc{font-size:11px;color:var(--text2);line-height:1.5;}
+.count-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.count-card{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:13px 16px;cursor:pointer;background:var(--bg);}
+.count-card:active{background:var(--bg2);}
+.count-card.sel{background:var(--blue-bg);border-color:var(--blue);}
+.count-card .cj{font-size:11px;color:var(--text3);}
+.count-card .cz{font-size:14px;font-weight:600;color:var(--text);}
+.count-card.sel .cj{color:var(--blue-dark);}
+.count-card.sel .cz{color:var(--blue-text);}
+.start-btn{width:100%;border:none;border-radius:var(--radius-lg);padding:15px;font-size:16px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;letter-spacing:.3px;}
+.start-btn:active{background:var(--blue-dark);}
+/* quiz */
+.prog-bar{background:var(--bg2);border-radius:4px;height:4px;margin-bottom:18px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .35s;}
+.q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.q-num{font-size:13px;color:var(--text2);font-weight:500;}
+.q-badge{font-size:11px;padding:4px 11px;border-radius:20px;background:var(--blue-bg);color:var(--blue);font-weight:600;}
+.passage{background:var(--bg2);border-radius:var(--radius-lg);padding:14px 15px;margin-bottom:16px;font-size:13px;color:var(--text);line-height:1.9;white-space:pre-wrap;}
+.passage-label{font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.q-text{font-size:16px;color:var(--text);line-height:1.8;white-space:pre-wrap;}
+.q-hl{background:#FEF3C7;border-radius:4px;padding:1px 4px;font-weight:700;color:#92400E;}
+@media(prefers-color-scheme:dark){.q-hl{background:#44330a;color:#fcd34d;}}
+.q-hint{font-size:13px;color:var(--text2);margin-top:8px;}
+.options{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+.opt{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:13px 15px;cursor:pointer;font-size:15px;color:var(--text);background:var(--bg);display:flex;align-items:flex-start;gap:12px;line-height:1.5;transition:background .1s;}
+.opt:active:not(.disabled){background:var(--bg2);}
+.opt.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green-text);}
+.opt.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red-text);}
+.opt.marked{background:var(--blue-bg);border-color:var(--blue);color:var(--blue-text);}
+.opt.disabled{cursor:default;}
+.opt-n{font-size:12px;color:var(--text3);min-width:16px;margin-top:2px;flex-shrink:0;font-weight:600;}
+.opt.correct .opt-n{color:var(--green-text);}
+.opt.wrong .opt-n{color:var(--red-text);}
+.opt.marked .opt-n{color:var(--blue);}
+.act-btn{width:100%;margin-top:18px;border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);}
+.act-btn:active{background:var(--bg2);}
+.act-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;}
+.act-btn.primary:active{background:var(--blue-dark);}
+.act-btn.hidden{display:none;}
+/* review */
+.rev-item{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:13px 15px;margin-bottom:10px;}
+.rev-item.ok{border-left:3px solid var(--green-border);}
+.rev-item.ng{border-left:3px solid var(--red-border);}
+.rev-q{font-size:13px;color:var(--text2);margin-bottom:7px;line-height:1.6;}
+.rev-ok{font-size:14px;color:var(--green-text);font-weight:500;}
+.rev-ng{font-size:14px;color:var(--red-text);}
+/* result */
+.result-top{text-align:center;padding:24px 0 16px;}
+.res-emoji{font-size:40px;margin-bottom:8px;}
+.res-pct{font-size:52px;font-weight:700;color:var(--text);letter-spacing:-2px;}
+.res-msg{font-size:14px;color:var(--text2);margin-top:6px;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0;}
+.stat-c{background:var(--bg2);border-radius:var(--radius);padding:14px 6px;text-align:center;}
+.stat-v{font-size:26px;font-weight:700;}
+.stat-j{font-size:10px;color:var(--text3);}
+.stat-z{font-size:11px;color:var(--text2);margin-top:1px;}
+.divider{height:0.5px;background:var(--border);margin:18px 0;}
+.btn-col{display:flex;flex-direction:column;gap:9px;}
+.sec-btn{width:100%;border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);}
+.sec-btn:active{background:var(--bg2);}
+.pri-btn{width:100%;border:none;border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;}
+.pri-btn:active{background:var(--blue-dark);}
+/* stats */
+.stats-sec{margin-bottom:24px;}
+.stats-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:14px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.bar-label{font-size:13px;color:var(--text2);width:44px;flex-shrink:0;}
+.bar-track{flex:1;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .6s;}
+.bar-pct{font-size:13px;font-weight:600;color:var(--text2);width:38px;text-align:right;flex-shrink:0;}
+.bar-sub{font-size:11px;color:var(--text3);margin:0 0 14px 54px;}
+.hist-item{border:0.5px solid var(--border);border-radius:var(--radius);padding:11px 14px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;}
+.hist-l .hj{font-size:11px;color:var(--text3);}
+.hist-l .hz{font-size:14px;color:var(--text);margin-top:2px;}
+.hist-pct{font-size:18px;font-weight:700;}
+/* wrong */
+.wrong-topbar{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:0.5px solid var(--border);margin-bottom:20px;}
+.wrong-item{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 15px;margin-bottom:10px;border-left:3px solid var(--red-border);}
+.wrong-meta{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.wrong-q{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:9px;white-space:pre-wrap;}
+.wrong-ok{font-size:13px;color:var(--green-text);font-weight:500;}
+.wrong-ng{font-size:13px;color:var(--red-text);margin-top:3px;}
+.empty{text-align:center;padding:50px 20px;color:var(--text2);font-size:15px;line-height:2;}
+/* import */
+.import-fmt{background:var(--bg2);border-radius:var(--radius);padding:13px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.9;font-family:monospace;}
+.import-ta{width:100%;height:120px;border:0.5px solid var(--border2);border-radius:var(--radius);padding:11px 13px;font-size:13px;color:var(--text);background:var(--bg);resize:none;outline:none;font-family:monospace;margin-bottom:13px;}
+.import-ta:focus{border-color:var(--blue);}
+.import-msg{font-size:13px;text-align:center;margin-top:10px;min-height:20px;font-weight:500;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="logo">日検練習</div>
+  <div class="logo-sub">JLPT 模擬練習 / 日本語能力試験対策</div>
+  <div class="sec-label">レベル / 等級</div>
+  <div class="level-row">
+    <div class="pill" onclick="selLv(this,'N1')">N1</div>
+    <div class="pill" onclick="selLv(this,'N2')">N2</div>
+    <div class="pill sel" onclick="selLv(this,'N3')">N3</div>
+    <div class="pill" onclick="selLv(this,'N4')">N4</div>
+    <div class="pill" onclick="selLv(this,'N5')">N5</div>
+  </div>
+  <div class="sec-label">問題タイプ / 題型</div>
+  <div class="cat-list">
+    <div class="cat-card" onclick="goCat('vocab')">
+      <div><div class="cat-jp">文字・語彙</div><div class="cat-zh">單字・語彙</div><div class="cat-count">30 題真題 ＋ 5 題 AI</div></div><span class="cat-arr">›</span>
+    </div>
+    <div class="cat-card" onclick="goCat('grammar')">
+      <div><div class="cat-jp">文法</div><div class="cat-zh">文法・句型</div><div class="cat-count">13 題真題 ＋ 5 題 AI</div></div><span class="cat-arr">›</span>
+    </div>
+    <div class="cat-card" onclick="goCat('reorder')">
+      <div><div class="cat-jp">文の組み立て</div><div class="cat-zh">重組句子</div><div class="cat-count">5 題真題</div></div><span class="cat-arr">›</span>
+    </div>
+    <div class="cat-card" onclick="goCat('reading')">
+      <div><div class="cat-jp">読解</div><div class="cat-zh">閱讀理解</div><div class="cat-count">短文3＋中文1＋長文1</div></div><span class="cat-arr">›</span>
+    </div>
+  </div>
+  <div class="util-row">
+    <div class="util-btn" onclick="openStats()"><div class="util-icon">📊</div><div class="util-jp">成績統計</div><div class="util-zh">進度統計</div></div>
+    <div class="util-btn" onclick="openWrong()"><div class="util-icon">📝</div><div class="util-jp">間違いノート</div><div class="util-zh">錯題本</div></div>
+    <div class="util-btn" onclick="goScreen('import')"><div class="util-icon">＋</div><div class="util-jp">問題追加</div><div class="util-zh">匯入題目</div></div>
+  </div>
+</div>
+
+<!-- SETUP VGR -->
+<div id="setup-vgr" class="screen">
+  <div class="topbar">
+    <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
+    <span class="topbar-title" id="setup-title"></span>
+  </div>
+  <div id="src-wrap">
+    <div class="sec-label">ソース / 題目來源</div>
+    <div class="src-tabs">
+      <div class="src-tab sel" onclick="selSrc(this,'real')"><div class="sj">本試験問題</div><div class="sz">真題</div></div>
+      <div class="src-tab" onclick="selSrc(this,'ai')"><div class="sj">AI生成問題</div><div class="sz">AI 模擬題</div></div>
+    </div>
+  </div>
+  <div class="sec-label">モード / 練習模式</div>
+  <div class="mode-grid">
+    <div class="mode-card sel" onclick="selMode(this,'instant')"><div class="mode-icon">⚡</div><div class="mode-jp">即時フィードバック</div><div class="mode-zh">即時反饋</div><div class="mode-desc">選完馬上顯示對錯</div></div>
+    <div class="mode-card" onclick="selMode(this,'review')"><div class="mode-icon">📋</div><div class="mode-jp">まとめて確認</div><div class="mode-zh">全部做完</div><div class="mode-desc">全部答完再查看</div></div>
+  </div>
+  <div class="sec-label">問題数 / 題目數量</div>
+  <div class="count-list">
+    <div class="count-card sel" onclick="selCount(this,10)"><div class="cj">10問</div><div class="cz">10 題</div></div>
+    <div class="count-card" onclick="selCount(this,20)"><div class="cj">20問</div><div class="cz">20 題</div></div>
+    <div class="count-card" onclick="selCount(this,0)"><div class="cj">全問</div><div class="cz">全部題目</div></div>
+  </div>
+  <button class="start-btn" onclick="startQuiz()">練習開始 / 開始練習</button>
+</div>
+
+<!-- SETUP READING -->
+<div id="setup-reading" class="screen">
+  <div class="topbar">
+    <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
+    <span class="topbar-title">読解 / 閱讀理解</span>
+  </div>
+  <div class="sec-label">モード / 練習模式</div>
+  <div class="mode-grid">
+    <div class="mode-card sel" onclick="selMode(this,'instant')"><div class="mode-icon">⚡</div><div class="mode-jp">即時フィードバック</div><div class="mode-zh">即時反饋</div><div class="mode-desc">選完馬上顯示對錯</div></div>
+    <div class="mode-card" onclick="selMode(this,'review')"><div class="mode-icon">📋</div><div class="mode-jp">まとめて確認</div><div class="mode-zh">全部做完</div><div class="mode-desc">全部答完再查看</div></div>
+  </div>
+  <div class="sec-label">セット / 題組選擇</div>
+  <div class="count-list">
+    <div class="count-card sel" onclick="selReadSet(this,'A')"><div class="cj">短文×1 ＋ 中文×1（計4問）</div><div class="cz">一篇短文 ＋ 一篇中文（共4題）</div></div>
+    <div class="count-card" onclick="selReadSet(this,'B')"><div class="cj">短文×2 ＋ 長文×1（計6問）</div><div class="cz">兩篇短文 ＋ 一篇長文（共6題）</div></div>
+    <div class="count-card" onclick="selReadSet(this,'C')"><div class="cj">短文×3 ＋ 中文×1 ＋ 長文×1</div><div class="cz">三篇短文 ＋ 一篇中文 ＋ 一篇長文</div></div>
+  </div>
+  <button class="start-btn" onclick="startReading()">練習開始 / 開始練習</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
+  <div class="q-meta"><span class="q-num" id="q-num">1/5</span><span class="q-badge" id="q-badge">語彙</span></div>
+  <div id="passage-wrap" style="display:none;"><div class="passage-label" id="passage-label"></div><div class="passage" id="passage-text"></div></div>
+  <div class="q-text" id="q-text"></div>
+  <div id="q-hint-el" class="q-hint" style="display:none;"></div>
+  <div class="options" id="options"></div>
+  <button class="act-btn hidden" id="act-btn"></button>
+</div>
+
+<!-- REVIEW -->
+<div id="review" class="screen">
+  <div class="topbar"><span class="topbar-title">答案確認 / 答題回顧</span></div>
+  <div id="rev-list"></div>
+  <button class="pri-btn" onclick="showResult()">結果を見る / 查看結果</button>
+</div>
+
+<!-- RESULT -->
+<div id="result" class="screen">
+  <div class="result-top">
+    <div class="res-emoji" id="res-emoji"></div>
+    <div class="res-pct" id="res-pct"></div>
+    <div class="res-msg" id="res-msg"></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-c"><div class="stat-v" id="sv-ok" style="color:#3B6D11;"></div><div class="stat-j">正解</div><div class="stat-z">答對</div></div>
+    <div class="stat-c"><div class="stat-v" id="sv-ng" style="color:#A32D2D;"></div><div class="stat-j">不正解</div><div class="stat-z">答錯</div></div>
+    <div class="stat-c"><div class="stat-v" id="sv-tot"></div><div class="stat-j">合計</div><div class="stat-z">總題數</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="btn-col">
+    <button class="sec-btn" onclick="startQuiz()">もう一度 / 再練習</button>
+    <button class="pri-btn" onclick="goScreen('home')">ホーム / 首頁</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div id="stats" class="screen">
+  <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title">成績統計 / 進度統計</span></div>
+  <div class="stats-sec">
+    <div class="stats-title">題型別正確率 / 各題型平均正確率</div>
+    <div id="cat-bars"></div>
+  </div>
+  <div class="stats-sec">
+    <div class="stats-title">練習履歴 / 練習記錄</div>
+    <div id="hist-list"></div>
+  </div>
+</div>
+
+<!-- WRONG -->
+<div id="wrong" class="screen">
+  <div class="wrong-topbar">
+    <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
+    <span class="topbar-title">間違いノート / 錯題本</span>
+    <button class="back-btn" style="margin-left:auto;color:#378ADD;border-color:#378ADD;font-weight:600;" onclick="practiceWrong()">練習する ›</button>
+  </div>
+  <div id="wrong-list"></div>
+</div>
+
+<!-- IMPORT -->
+<div id="import" class="screen">
+  <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title">問題追加 / 匯入題目</span></div>
+  <div class="sec-label">フォーマット / 格式說明</div>
+  <div class="import-fmt">題型: vocab / grammar / reorder
+問題: 題目文字
+hl: 被考的字（可空）
+hint: 提示文字（可空）
+選択肢: 選A|選B|選C|選D
+正解: 0（從0起算）
+---（每題之間用此分隔）</div>
+  <div class="sec-label">データ貼り付け / 貼上資料</div>
+  <textarea class="import-ta" id="import-ta" placeholder="在此貼上題目資料..."></textarea>
+  <button class="start-btn" onclick="doImport()">匯入 / インポート</button>
+  <div class="import-msg" id="import-msg"></div>
+</div>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const VOCAB_REAL=[
+  {q:'苦しいときは、この歌を聞きます。',hl:'苦しい',hint:'＿＿＿の読み方は？',opts:['かなしい','くやしい','くるしい','さびしい'],ans:2},
+  {q:'来月、日本に出張する予定です。',hl:'出張',hint:'＿＿＿の読み方は？',opts:['しゅちゅう','しゅちょう','しゅっちゅう','しゅっちょう'],ans:3},
+  {q:'一つだけ席があいていました。',hl:'席',hint:'＿＿＿の読み方は？',opts:['せき','かぎ','あな','ふた'],ans:0},
+  {q:'その木の根は薬にもなるそうです。',hl:'根',hint:'＿＿＿の読み方は？',opts:['ね','は','かわ','め'],ans:0},
+  {q:'すみませんが、事情があって、今日は行けません。',hl:'事情',hint:'＿＿＿の読み方は？',opts:['じこ','じじょう','じこう','じじょ'],ans:1},
+  {q:'面接の結果は、1週間以内に通知します。',hl:'通知',hint:'＿＿＿の読み方は？',opts:['つうち','とおち','つうし','とおし'],ans:0},
+  {q:'あの人はプロのサッカー選手です。',hl:'選手',hint:'＿＿＿の読み方は？',opts:['ぜんしゅ','せんしゅう','せんしゅ','ぜんしゅう'],ans:2},
+  {q:'試合に出られなかったのは、実力が足りなかったからだ。',hl:'実力',hint:'＿＿＿の読み方は？',opts:['しつりょく','じつりょく','どりょく','とりょく'],ans:1},
+  {q:'工事のせいで道が（　）していて、車が全然前に進まない。',hl:'',hint:'（　）に入る言葉は？',opts:['運休','故障','渋滞','集中'],ans:2},
+  {q:'車のエンジンの音が（　）ので、修理をお願いした。',hl:'',hint:'（　）に入る言葉は？',opts:['まずしい','おかしい','きびしい','しつこい'],ans:1},
+  {q:'時計が止まってしまったので、新しい電池に（　）した。',hl:'',hint:'（　）に入る言葉は？',opts:['移動','変化','交換','入力'],ans:2},
+  {q:'缶やペットボトルも捨てないで（　）すれば、ごみは少なくなる。',hl:'',hint:'（　）に入る言葉は？',opts:['リサイクル','キャンセル','カット','チェンジ'],ans:0},
+  {q:'林さんが結婚するという（　）を聞いたが、本当かどうかはわからない。',hl:'',hint:'（　）に入る言葉は？',opts:['文句','宣伝','うそ','うわさ'],ans:3},
+  {q:'この講演会の参加者は（　）学生だったが、ほかに主婦や会社員も少しいた。',hl:'',hint:'（　）に入る言葉は？',opts:['かならず','すべて','じゅうぶん','おもに'],ans:3},
+  {q:'こんな重要な仕事がわたしにできるかどうか、初めは（　）だった。',hl:'',hint:'（　）に入る言葉は？',opts:['不安','無理','退屈','苦手'],ans:0},
+  {q:'都合が悪くなったときは、（　）早く連絡してください。',hl:'',hint:'（　）に入る言葉は？',opts:['ずいぶん','なるべく','きっと','さっそく'],ans:1},
+  {q:'会議の間、山田さんは目を（　）いたので、寝ているのかと思った。',hl:'',hint:'（　）に入る言葉は？',opts:['とめて','やめて','さげて','とじて'],ans:3},
+  {q:'セーターをきちんと（　）、たんすの引き出しにしまった。',hl:'',hint:'（　）に入る言葉は？',opts:['締めて','曲げて','たたんで','むすんで'],ans:2},
+  {q:'のどが（　）、何か飲みたい。',hl:'',hint:'（　）に入る言葉は？',opts:['ふらふらなので','ぺこぺこなので','すいたので','かわいたので'],ans:3},
+  {q:'これと同じサイズの皿はありますか。',hl:'サイズ',hint:'＿＿＿に意味が最も近いものは？',opts:['大きさ','値段','色','形'],ans:0},
+  {q:'サラダはもう注文しましたか。',hl:'注文',hint:'＿＿＿に意味が最も近いものは？',opts:['作りましたか','たのみましたか','食べましたか','はこびましたか'],ans:1},
+  {q:'すみませんが、もう一回たしかめてくれませんか。',hl:'たしかめて',hint:'＿＿＿に意味が最も近いものは？',opts:['コピーして','メモして','メールして','チェックして'],ans:3},
+  {q:'山田さんはこのごろ忙しそうですね。',hl:'このごろ',hint:'＿＿＿に意味が最も近いものは？',opts:['ずっと','いつも','まだ','さいきん'],ans:3},
+  {q:'さっきからあの子ばかりしゃべっている。',hl:'しゃべって',hint:'＿＿＿に意味が最も近いものは？',opts:['騒いで','話して','答えて','遊んで'],ans:1},
+  {q:'わたしは、彼女ならできるとしんじています。',hl:'しんじて',hint:'＿＿＿を漢字で書くと？',opts:['真じて','信じて','心じて','親じて'],ans:1},
+  {q:'この店は夜おそくまで開いているので、とても便利だ。',hl:'おそく',hint:'＿＿＿を漢字で書くと？',opts:['遣く','後く','遅く','徨く'],ans:2},
+  {q:'この工場ではプラスチックのようきを生産しています。',hl:'ようき',hint:'＿＿＿を漢字で書くと？',opts:['溶器','容器','容機','溶機'],ans:1},
+  {q:'今日は一日中歩いていたので、足がつかれました。',hl:'つかれ',hint:'＿＿＿を漢字で書くと？',opts:['疲れ','痛れ','病れ','症れ'],ans:0},
+  {q:'お皿はかさねてその棚にしまってください。',hl:'かさねて',hint:'＿＿＿を漢字で書くと？',opts:['整ねて','列ねて','階ねて','重ねて'],ans:3},
+  {q:'今週はざんぎょうが多かった。',hl:'ざんぎょう',hint:'＿＿＿を漢字で書くと？',opts:['増勤','増業','残勤','残業'],ans:3},
+];
+const VOCAB_AI=[
+  {q:'彼女は毎朝、丁寧に化粧をします。',hl:'丁寧',hint:'＿＿＿の読み方は？',opts:['ていねい','ちょうねい','ていれい','ちょうれい'],ans:0},
+  {q:'電車が遅延して、授業に遅刻しました。',hl:'遅延',hint:'＿＿＿の読み方は？',opts:['ちえん','そうえん','ちこく','ちえい'],ans:0},
+  {q:'社長は部下に仕事を任せました。',hl:'任せ',hint:'＿＿＿の読み方は？',opts:['ゆだね','まかせ','たすけ','わたし'],ans:1},
+  {q:'この薬は副作用がほとんどありません。',hl:'副作用',hint:'＿＿＿の読み方は？',opts:['ふくさよう','ふくさくよう','ふうさよう','ふっさよう'],ans:0},
+  {q:'彼は常に冷静な判断ができる人だ。',hl:'冷静',hint:'＿＿＿の読み方は？',opts:['れいせい','れいしず','りょうせい','りょうしず'],ans:0},
+];
+const GRAMMAR_REAL=[
+  {q:'兄と私は、意志が強い（　）点でよく似ている。',hl:'（　）',opts:['の','のことの','という','をいう'],ans:2},
+  {q:'ガイドブックに金閣寺（　）行き方が書いてある。',hl:'（　）',opts:['に','で','への','とは'],ans:2},
+  {q:'隣の町（　）、私の住んでいる町は水道代が高い。',hl:'（　）',opts:['として','と比べて','にまで','において'],ans:1},
+  {q:'昨日、駅前の本屋に（　）、偶然、学生時代の友人に会った。',hl:'（　）',opts:['行けば','行くなら','行こうと','行ったら'],ans:3},
+  {q:'せっかく海外に（　）、いろいろな所を見たい。',hl:'（　）',opts:['来たのだから','来たために','来たおかげで','来たかったから'],ans:0},
+  {q:'山下「田中さん、（　）楽しみにしていたのに、残念だね。」',hl:'（　）',opts:['あんなに','やっと','どんな','つい'],ans:0},
+  {q:'妹は最初「水泳教室に行きたくない」と（　）が、今では楽しそうに通っている。',hl:'（　）',opts:['嫌そうだ','嫌がっていた','嫌なのだ','嫌がったままだ'],ans:1},
+  {q:'B「サッカークラブに入りたいのですが、一度練習を（　）」\nA「ええ、いいですよ。」',hl:'（　）',opts:['見学してはいけませんよ','見学しましょうよ','見学させていただけませんか','見学ではどうですか'],ans:2},
+  {q:'（デパートで）店員「はい。あちらの（　）ございます。」',hl:'（　）',opts:['階段の近く','階段の近くに','階段に近くて','階段は近くて'],ans:1},
+  {q:'習慣にしていた朝のジョギングを（　）、1年がたつ。',hl:'（　）',opts:['しないときに','しないあいだは','しなくなってから','しなくなったあとで'],ans:2},
+  {q:'会議で使う資料に間違いがあったが、今から（　）時間が足りない。',hl:'（　）',opts:['作り直すには','作ったままでは','作り始めなくて','作っていなくて'],ans:0},
+  {q:'山下かずおは、いつ首相（　）実力を持っている。',hl:'（　）',opts:['をしてよかった','になってもしかたなかった','をしたくなった','になってもおかしくない'],ans:3},
+  {q:'A「このテレビ、ずいぶん古いね。」B「15年前に買った。」\nA「そろそろ（　）？」B「まだ見られるから、必要ないよ。」',hl:'（　）',opts:['買い替えないかもしれない','買い替えてみたかもしれない','買い替えにくかったんじゃない','買い替えてもいいんじゃない'],ans:3},
+];
+const REORDER_REAL=[
+  {q:'（病院で）受付「はい、村山さんですね。では、そちらの ＿ ＿ ★ ＿ ください。」\n★に入るものは？',hl:'★',opts:['お待ち','おかけ','いすに','になって'],ans:1},
+  {q:'料理をする ＿ ＿ ★ ＿ おいしく作れる。\n★に入るものは？',hl:'★',opts:['私でも','ハンバーグだけは','それほど得意ではない','のが'],ans:0},
+  {q:'山村「はい。思いついた ＿ ＿ ★ ＿ しているんです。」\n★に入るものは？',hl:'★',opts:['忘れて','まわないように','ことを','必ず持ち歩くように'],ans:2},
+  {q:'昨日の夜、誰も ＿ ＿ ★ ＿ 気がした。\n★に入るものは？',hl:'★',opts:['いない','聞こえた','何か音が','部屋から'],ans:2},
+  {q:'現在、市民運動公園の中に、大小 ＿ ＿ ★ ＿ 検討されている。\n★に入るものは？',hl:'★',opts:['体育館を','建設する','二つの','という案が'],ans:2},
+];
+const GRAMMAR_AI=[
+  {q:'彼は仕事（　）、毎日残業しています。',hl:'（　）',opts:['のために','によって','においても','にかけて'],ans:0},
+  {q:'この映画は見る（　）の価値があります。',hl:'（　）',opts:['ほど','だけ','まで','ぐらい'],ans:0},
+  {q:'彼女は日本語だけ（　）、英語も話せます。',hl:'（　）',opts:['でなく','じゃなく','ではなく','のでなく'],ans:2},
+  {q:'時間があれ（　）、もっと勉強できるのに。',hl:'（　）',opts:['ば','たら','なら','と'],ans:0},
+  {q:'この問題は難し（　）、誰でも解けるはずだ。',hl:'（　）',opts:['そうだが','ようだが','くなくて','くても'],ans:3},
+];
+const READING_SHORT=[
+  {passage:'営業部の皆様\n　皆さんもご存じのように、中村さんが来月でお辞めになります。そこで、中村さんに花束と記念品を差し上げたいと思いますが、いかがでしょうか。\n　中村さんのお好きな物など、ご存じの方がいらっしゃいましたら、アドバイスをいただければうれしいです。\n　この案に賛成の方は、今週中にご返信ください。\n\n石田',
+   qs:[{q:'「この案」とあるが、何か。',opts:['中村さんのためにお別れ会をすること','中村さんにみんなでプレゼントをあげること','中村さんの好きな物をそれぞれが買って贈ること','どんなプレゼントをもらいたいか聞くこと'],ans:1}],type:'short',label:'短文'},
+  {passage:'私の家の近くを大きな川が流れている。川沿いの歩道をジョギングするのが、私の趣味だ。だが、残念なことが一つある。歩道の色が場所によってバラバラなのだ。この川は一つの市と二つの町を通っており、市や町によって道の色が変わっているのである。一本の自然な川はずっと同じように続いているのだから、周りも変えないで一つの景色を作ることはできなかったのかと思う。',
+   qs:[{q:'この文章を書いた人が言いたいことは何か。',opts:['歩道の色が変わる中を走るのは楽しい','歩道の色が市や町によって違うのは残念だ','川の景色を見ながら走るのは気持ちがいい','人工的な川の流れを見るのは悲しい'],ans:1}],type:'short',label:'短文'},
+  {passage:'ある雑誌に、おいしそうなケーキやクッキーの写真が載っているページがあった。よく見たら、塩の味がするお菓子を宣伝している広告だった。塩辛いお菓子なのかと思ったら、そうではなくて、甘さの中に、塩味も感じられるお菓子なのだそうだ。塩の味がする甘い和菓子は食べたことがあるが、洋菓子にも同じようなものがあったのだ。一度買ってみようと思う。',
+   qs:[{q:'この文章を書いた人は何を買ってみようと思っているか。',opts:['塩辛くて甘くない和菓子','塩辛くて甘くない洋菓子','少し塩の味がする甘い和菓子','少し塩の味がする甘い洋菓子'],ans:3}],type:'short',label:'短文'},
+];
+const READING_MID=[
+  {passage:'以下の文章は、イタリアから来た留学生のビアンカさんが書いた作文である。\n\n　私が好きな日本の料理は「納豆スパゲティ」です。私は２年前に初めて納豆を見ました。イタリアの大学で日本語を勉強していたとき、先生がパーティーに納豆を持ってきてくださったのです。けれど、そのときはにおいが強くて食べられませんでした。\n\n　ところが、日本に来て友達とレストランに行ったとき、友達の納豆スパゲティを少し食べさせてもらって驚きました。ほとんどにおいがなく、とてもおいしかったからです。\n\n　それから、週に３、４回そのレストランに行って、納豆スパゲティを頼むようになりました。最近は納豆を買ってきて、自分でも作って食べています。帰国したら、友達や家族に納豆スパゲティを作ってあげたいです。',
+   qs:[
+    {q:'先生がパーティーに納豆を（　）のです。\n（　）に入るものは？',opts:['持ってきてくださった','持ってきてくださったそう','持っていかれたと思い','持っていかれたはず'],ans:0},
+    {q:'（　）、日本に来て友達とレストランに行ったとき…\n（　）に入る接続詞は？',opts:['そのうえ','たとえば','ところが','ちなみに'],ans:2},
+    {q:'帰国したら、友達や家族に（　）。\n（　）に入るものは？',opts:['作ってもらえました','作らせてやりました','作ってくれます','作ってあげたいです'],ans:3},
+   ],type:'mid',label:'中文'},
+];
+const READING_LONG=[
+  {passage:'　結婚して妻と一緒に住み始めたころ、こんなことがあった。閉めたと思ったトイレや部屋のドアが、しばらくして見ると、開いているのだ。おかしいなあと思いながら、もう一度閉めておいても、少したつと、また開いている。妻にドアのことを尋ねてみると、「もちろん、そこを使っていない時は、開けておくわよ。」と言うので、びっくり。犯人は妻だったのだ。\n\n　父親の仕事の都合で外国生活が長かった妻は、ドアはいつも開けておくようにと言われて育ったそうだ。私はずっと「ドアは必ず閉めなさい。」と注意されてきたので、その違いに驚いてしまった。しかし、言われてみれば確かに、外国の映画やテレビドラマでは、トイレや部屋のドアが開けたままになっていることが多かった。\n\n　結婚は、育ち方も習慣も違う二人が一緒に生活を始めるのだから、最初は違いに驚くことが多いだろう。しかし、それも長く一緒に生活していると、ほとんど気にならなくなってくる。\n\n　あれから20年。今では、私の家のドアは、すべて開けたままになっている。',
+   qs:[
+    {q:'「おかしいなあと思いながら」とあるが、どうしてそう思ったのか。',opts:['閉めようとしたら、ドアが自然に開いたから','ドアを閉めても、少したつと、開いていたから','どんなに強い力で閉めても閉まらないから','開けておいても、しばらくすると閉まっていたから'],ans:1},
+    {q:'「びっくり」とあるが、それはどうしてか。',opts:['ドアを開けていたのが、妻だとわかったから','妻も、ドアが開いているのが変だと感じていたから','自分は犯人ではないと、妻が言い出したから','妻は、「私」が犯人だと思っていたから'],ans:0},
+    {q:'この文章を書いた人が言っていることはどれか。',opts:['結婚は習慣が違う二人なので、何でもよく話し合ったほうがいい','結婚では違いがあっても、そのたびに驚かないほうがいい','結婚直後は習慣の違いに驚くが、次第に気にならなくなっていく','結婚生活が長くなると、初めは新鮮なことも嫌になることが多い'],ans:2},
+    {q:'20年後、筆者の家のドアはどうなっているか。',opts:['いつも閉まっている','いつも開いている','妻が管理している','場合によって違う'],ans:1},
+   ],type:'long',label:'長文'},
+];
+
+// ── STATE ──────────────────────────────────────────────────────
+const S={cat:'vocab',src:'real',mode:'instant',count:10,level:'N3',readSet:'A'};
+let QS=[],qi=0,correct=0,userAnswers=[];
+let wrongBank=JSON.parse(localStorage.getItem('jlpt_wrong')||'[]');
+let histBank=JSON.parse(localStorage.getItem('jlpt_hist')||'[]');
+
+function save(){
+  try{localStorage.setItem('jlpt_wrong',JSON.stringify(wrongBank));localStorage.setItem('jlpt_hist',JSON.stringify(histBank));}catch(e){}
+}
+
+// ── SELECTORS ──────────────────────────────────────────────────
+function selLv(el,v){document.querySelectorAll('.level-row .pill').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');S.level=v;}
+function selSrc(el,v){document.querySelectorAll('.src-tab').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');S.src=v;}
+function selMode(el,v){el.closest('.mode-grid').querySelectorAll('.mode-card').forEach(m=>m.classList.remove('sel'));el.classList.add('sel');S.mode=v;}
+function selCount(el,v){document.querySelectorAll('#setup-vgr .count-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');S.count=v;}
+function selReadSet(el,v){document.querySelectorAll('#setup-reading .count-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');S.readSet=v;}
+
+// ── NAVIGATION ─────────────────────────────────────────────────
+function goScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function openStats(){renderStats();goScreen('stats');}
+function openWrong(){renderWrong();goScreen('wrong');}
+function goCat(c){
+  S.cat=c;
+  if(c==='reading'){goScreen('setup-reading');return;}
+  const names={vocab:'文字・語彙 / 單字',grammar:'文法 / 句型',reorder:'文の組み立て / 重組'};
+  document.getElementById('setup-title').textContent=names[c];
+  document.getElementById('src-wrap').style.display=(c==='vocab'||c==='grammar')?'block':'none';
+  goScreen('setup-vgr');
+}
+
+// ── QUIZ ───────────────────────────────────────────────────────
+function getPool(){
+  if(S.cat==='vocab') return S.src==='ai'?[...VOCAB_AI]:[...VOCAB_REAL];
+  if(S.cat==='grammar') return S.src==='ai'?[...GRAMMAR_AI]:[...GRAMMAR_REAL];
+  if(S.cat==='reorder') return [...REORDER_REAL];
+  return [];
+}
+function startQuiz(){
+  let pool=getPool();
+  const n=S.count===0?pool.length:Math.min(S.count,pool.length);
+  QS=shuffle(pool).slice(0,n).map(q=>({...q,catKey:S.cat}));
+  qi=0;correct=0;userAnswers=[];
+  goScreen('quiz');renderQ();
+}
+function startReading(){
+  const sets={
+    A:[...shuffle([...READING_SHORT]).slice(0,1),...shuffle([...READING_MID]).slice(0,1)],
+    B:[...shuffle([...READING_SHORT]).slice(0,2),...shuffle([...READING_LONG]).slice(0,1)],
+    C:[...shuffle([...READING_SHORT]).slice(0,3),...shuffle([...READING_MID]).slice(0,1),...shuffle([...READING_LONG]).slice(0,1)],
+  };
+  QS=[];
+  sets[S.readSet].forEach(p=>p.qs.forEach(q=>QS.push({passage:p.passage,passageLabel:p.label,...q,catKey:'reading'})));
+  qi=0;correct=0;userAnswers=[];
+  goScreen('quiz');renderQ();
+}
+function practiceWrong(){
+  if(!wrongBank.length){alert('錯題本是空的！ / 間違いノートは空です');return;}
+  QS=shuffle([...wrongBank]).map(w=>({...w.q,catKey:w.cat}));
+  S.mode='instant';
+  qi=0;correct=0;userAnswers=[];
+  goScreen('quiz');renderQ();
+}
+function renderQ(){
+  const q=QS[qi],total=QS.length;
+  document.getElementById('prog').style.width=((qi/total)*100)+'%';
+  document.getElementById('q-num').textContent=(qi+1)+' / '+total;
+  const bl={vocab:'語彙',grammar:'文法',reorder:'組立',reading:'読解'};
+  document.getElementById('q-badge').textContent=bl[q.catKey]||'読解';
+  // passage
+  const pw=document.getElementById('passage-wrap');
+  if(q.passage){
+    pw.style.display='block';
+    document.getElementById('passage-label').textContent=(q.passageLabel||'')+'  文章を読んでください';
+    document.getElementById('passage-text').textContent=q.passage;
+  } else pw.style.display='none';
+  // question
+  const qt=document.getElementById('q-text');
+  qt.innerHTML='';
+  if(q.hl&&q.hl.length>0&&q.hl!=='（　）'&&q.hl!=='★'){
+    const re=new RegExp(q.hl.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g');
+    qt.innerHTML=q.q.replace(re,'<span class="q-hl">'+q.hl+'</span>');
+  } else qt.textContent=q.q;
+  // hint
+  const he=document.getElementById('q-hint-el');
+  if(q.hint){he.style.display='block';he.textContent=q.hint;}
+  else he.style.display='none';
+  // options
+  const od=document.getElementById('options');od.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const d=document.createElement('div');d.className='opt';
+    d.innerHTML=`<span class="opt-n">${i+1}</span><span>${o}</span>`;
+    if(S.mode==='instant') d.onclick=()=>answerInstant(i);
+    else d.onclick=()=>markOpt(d,i);
+    od.appendChild(d);
+  });
+  // btn
+  const ab=document.getElementById('act-btn');
+  ab.className='act-btn hidden';
+  if(S.mode==='review'){
+    ab.className='act-btn';
+    ab.textContent=(qi+1<QS.length)?'次の問題 / 下一題 →':'完了 / 完成';
+    ab.onclick=handleReviewNext;
+  }
+}
+function answerInstant(i){
+  const q=QS[qi];
+  if(document.querySelector('.opt.disabled')) return;
+  document.querySelectorAll('.opt').forEach((o,idx)=>{
+    o.classList.add('disabled');
+    if(idx===q.ans) o.classList.add('correct');
+    else if(idx===i) o.classList.add('wrong');
+  });
+  userAnswers.push(i);
+  if(i===q.ans) correct++;
+  else addWrong(q,i,q.catKey);
+  const ab=document.getElementById('act-btn');
+  ab.className='act-btn';
+  if(qi+1<QS.length){ab.textContent='次の問題 / 下一題 →';ab.onclick=()=>{qi++;renderQ();};}
+  else{ab.textContent='結果を見る / 查看結果';ab.className='act-btn primary';ab.onclick=showResult;}
+}
+function markOpt(el,i){
+  document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('marked');delete o._c;});
+  el.classList.add('marked');el._c=i;
+}
+function handleReviewNext(){
+  let chosen=-1;
+  document.querySelectorAll('.opt').forEach(o=>{if(o.classList.contains('marked')&&o._c!==undefined) chosen=o._c;});
+  userAnswers.push(chosen);
+  const q=QS[qi];
+  if(chosen===q.ans) correct++;
+  else addWrong(q,chosen,q.catKey);
+  qi++;
+  if(qi<QS.length) renderQ(); else buildReview();
+}
+function addWrong(q,chosen,cat){
+  const key=q.q+'|'+q.ans;
+  const idx=wrongBank.findIndex(w=>w.key===key);
+  const entry={key,q:{...q},chosen,cat,time:Date.now()};
+  if(idx>=0) wrongBank[idx]=entry; else wrongBank.push(entry);
+  save();
+}
+function buildReview(){
+  const list=document.getElementById('rev-list');list.innerHTML='';
+  QS.forEach((q,i)=>{
+    const ua=userAnswers[i],ok=(ua===q.ans);
+    const d=document.createElement('div');d.className='rev-item '+(ok?'ok':'ng');
+    const qShort=q.q.length>55?q.q.slice(0,55)+'…':q.q;
+    d.innerHTML=`<div class="rev-q">${qShort}</div>`
+      +(ok?`<div class="rev-ok">✓ 正解：${q.opts[q.ans]}</div>`
+          :`<div class="rev-ng">✗ あなた：${ua>=0?q.opts[ua]:'未回答'}</div><div class="rev-ok" style="margin-top:4px;">正解：${q.opts[q.ans]}</div>`);
+    list.appendChild(d);
+  });
+  goScreen('review');
+}
+function showResult(){
+  const total=QS.length,pct=Math.round((correct/total)*100);
+  document.getElementById('res-emoji').textContent=pct>=80?'🎉':pct>=60?'📚':'💪';
+  document.getElementById('res-pct').textContent=pct+'%';
+  document.getElementById('res-msg').textContent=pct>=80?'すばらしい！素晴らしい成績！':pct>=60?'よくできました！もう少し！':'頑張れ！練習を続けよう！';
+  document.getElementById('sv-ok').textContent=correct;
+  document.getElementById('sv-ng').textContent=total-correct;
+  document.getElementById('sv-tot').textContent=total;
+  histBank.push({cat:S.cat,correct,total,pct,time:Date.now()});
+  save();
+  goScreen('result');
+}
+function renderStats(){
+  const catKeys=['vocab','grammar','reorder','reading'];
+  const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};
+  const bars=document.getElementById('cat-bars');bars.innerHTML='';
+  let hasData=false;
+  catKeys.forEach(k=>{
+    const h=histBank.filter(x=>x.cat===k);
+    if(!h.length) return;
+    hasData=true;
+    const avg=Math.round(h.reduce((s,x)=>s+x.pct,0)/h.length);
+    const cnt=h.reduce((s,x)=>s+x.total,0);
+    bars.innerHTML+=`<div class="bar-row"><span class="bar-label">${catZh[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${avg}%"></div></div><span class="bar-pct">${avg}%</span></div><div class="bar-sub">累計 ${cnt} 題 · ${h.length} 回練習</div>`;
+  });
+  if(!hasData) bars.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">まだデータがありません<br>尚無資料，先去練習看看！</div>';
+  const hist=document.getElementById('hist-list');hist.innerHTML='';
+  const catJp={vocab:'語彙',grammar:'文法',reorder:'組立',reading:'読解'};
+  if(!histBank.length){hist.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">まだ履歴がありません / 尚無記錄</div>';return;}
+  [...histBank].reverse().slice(0,20).forEach(h=>{
+    const d=new Date(h.time);
+    const ds=`${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+    hist.innerHTML+=`<div class="hist-item"><div class="hist-l"><div class="hj">${catJp[h.cat]||h.cat} · ${ds}</div><div class="hz">${h.correct}／${h.total} 正解</div></div><div class="hist-pct" style="color:${h.pct>=70?'#3B6D11':'#A32D2D'}">${h.pct}%</div></div>`;
+  });
+}
+function renderWrong(){
+  const list=document.getElementById('wrong-list');list.innerHTML='';
+  if(!wrongBank.length){list.innerHTML='<div class="empty">間違いはありません！<br>錯題本是空的 🎉<br><br>繼續練習，錯題會自動加入這裡。</div>';return;}
+  const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};
+  [...wrongBank].reverse().forEach(w=>{
+    const d=document.createElement('div');d.className='wrong-item';
+    const qShort=w.q.q.length>80?w.q.q.slice(0,80)+'…':w.q.q;
+    d.innerHTML=`<div class="wrong-meta">${catZh[w.cat]||w.cat}</div><div class="wrong-q">${qShort}</div><div class="wrong-ok">正解：${w.q.opts[w.q.ans]}</div>${w.chosen>=0?`<div class="wrong-ng">あなたの答え：${w.q.opts[w.chosen]}</div>`:''}`;
+    list.appendChild(d);
+  });
+}
+function doImport(){
+  const raw=document.getElementById('import-ta').value.trim();
+  const msg=document.getElementById('import-msg');
+  if(!raw){msg.style.color='#A32D2D';msg.textContent='資料為空 / データが空です';return;}
+  try{
+    const blocks=raw.split('---').map(b=>b.trim()).filter(Boolean);
+    let added=0;
+    blocks.forEach(b=>{
+      const lines=b.split('\n');
+      const get=k=>{const l=lines.find(x=>x.startsWith(k+':'));return l?l.slice(k.length+1).trim():'';};
+      const catRaw=get('題型')||get('type')||'vocab';
+      const qText=get('問題');
+      const optsRaw=get('選択肢')||get('opts');
+      const ans=parseInt(get('正解')||get('ans'))||0;
+      if(!qText||!optsRaw) return;
+      const entry={q:qText,hl:get('hl')||'',hint:get('hint')||'',opts:optsRaw.split('|'),ans};
+      const pool=catRaw==='grammar'?GRAMMAR_REAL:catRaw==='reorder'?REORDER_REAL:VOCAB_REAL;
+      if(!pool.find(x=>x.q===qText)){pool.push(entry);added++;}
+    });
+    msg.style.color='#3B6D11';
+    msg.textContent=`成功匯入 ${added} 題！ / ${added}問追加しました！`;
+    document.getElementById('import-ta').value='';
+  }catch(e){msg.style.color='#A32D2D';msg.textContent='格式錯誤 / フォーマットエラー';}
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+</script>
+
+<script>
+// Service Worker 註冊
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
