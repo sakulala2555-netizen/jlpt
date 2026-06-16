@@ -7,43 +7,27 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="日検練習">
-<title>日検練習 - JLPT N3</title>
+<title>日検練習 - JLPT</title>
 <link rel="manifest" href="manifest.json">
 <style>
-:root{
-  --blue:#378ADD;--blue-dark:#185FA5;--blue-bg:#E6F1FB;--blue-text:#0C447C;
-  --green-bg:#EAF3DE;--green-border:#639922;--green-text:#27500A;
-  --red-bg:#FCEBEB;--red-border:#E24B4A;--red-text:#791F1F;
-  --text:#1a1a1a;--text2:#666;--text3:#999;
-  --bg:#fff;--bg2:#f5f5f5;--bg3:#fafafa;
-  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.2);
-  --radius:8px;--radius-lg:12px;
-}
-@media(prefers-color-scheme:dark){
-  :root{
-    --text:#f0f0f0;--text2:#aaa;--text3:#666;
-    --bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;
-    --border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.22);
-    --blue-bg:#0c2d4a;--blue-text:#7bb8f0;
-  }
-}
+:root{--blue:#378ADD;--blue-dark:#185FA5;--blue-bg:#E6F1FB;--blue-text:#0C447C;--green-bg:#EAF3DE;--green-border:#639922;--green-text:#27500A;--red-bg:#FCEBEB;--red-border:#E24B4A;--red-text:#791F1F;--text:#1a1a1a;--text2:#666;--text3:#999;--bg:#fff;--bg2:#f5f5f5;--border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);--radius:8px;--radius-lg:12px;}
+@media(prefers-color-scheme:dark){:root{--text:#f0f0f0;--text2:#aaa;--text3:#666;--bg:#1c1c1e;--bg2:#2c2c2e;--border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.22);--blue-bg:#0c2d4a;--blue-text:#7bb8f0;}}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 .app{max-width:430px;margin:0 auto;padding:0 16px 48px;}
 .screen{display:none;}.screen.active{display:block;}
-/* topbar */
 .topbar{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:0.5px solid var(--border);margin-bottom:20px;}
 .back-btn{background:none;border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 13px;font-size:13px;cursor:pointer;color:var(--text2);flex-shrink:0;}
 .back-btn:active{background:var(--bg2);}
 .topbar-title{font-size:15px;font-weight:600;color:var(--text);}
-/* home */
-.logo{font-size:26px;font-weight:700;color:var(--text);padding-top:16px;letter-spacing:-0.5px;}
+.logo{font-size:26px;font-weight:700;color:var(--text);padding-top:16px;letter-spacing:-.5px;}
 .logo-sub{font-size:12px;color:var(--text3);margin:3px 0 24px;}
 .sec-label{font-size:11px;color:var(--text3);letter-spacing:.07em;margin-bottom:9px;text-transform:uppercase;}
 .level-row{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:24px;}
 .pill{border:0.5px solid var(--border2);border-radius:var(--radius);padding:11px 4px;text-align:center;cursor:pointer;background:var(--bg);font-size:14px;font-weight:600;color:var(--text2);}
 .pill:active{background:var(--bg2);}
 .pill.sel{background:var(--blue-bg);border-color:var(--blue);color:var(--blue-text);}
+.pill.disabled{opacity:.35;cursor:default;pointer-events:none;}
 .cat-list{display:flex;flex-direction:column;gap:8px;margin-bottom:22px;}
 .cat-card{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 15px;cursor:pointer;background:var(--bg);display:flex;justify-content:space-between;align-items:center;}
 .cat-card:active{background:var(--bg2);}
@@ -51,16 +35,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .cat-zh{font-size:15px;font-weight:600;color:var(--text);}
 .cat-count{font-size:11px;color:var(--text3);margin-top:2px;}
 .cat-arr{font-size:20px;color:var(--text3);}
-.util-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.util-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .util-btn{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 6px;text-align:center;cursor:pointer;background:var(--bg);}
 .util-btn:active{background:var(--bg2);}
 .util-icon{font-size:20px;margin-bottom:5px;}
 .util-jp{font-size:10px;color:var(--text3);}
 .util-zh{font-size:12px;font-weight:600;color:var(--text2);}
-/* setup */
 .src-tabs{display:flex;gap:8px;margin-bottom:20px;}
 .src-tab{flex:1;border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;text-align:center;cursor:pointer;background:var(--bg);}
-.src-tab:active{background:var(--bg2);}
 .src-tab .sj{font-size:10px;color:var(--text3);}
 .src-tab .sz{font-size:14px;font-weight:600;color:var(--text2);margin-top:2px;}
 .src-tab.sel{background:var(--blue-bg);border-color:var(--blue);}
@@ -68,7 +50,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .src-tab.sel .sz{color:var(--blue-text);}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
 .mode-card{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px 12px;cursor:pointer;background:var(--bg);}
-.mode-card:active{background:var(--bg2);}
 .mode-card.sel{background:var(--blue-bg);border-color:var(--blue);}
 .mode-icon{font-size:20px;margin-bottom:6px;}
 .mode-jp{font-size:10px;color:var(--text3);}
@@ -78,15 +59,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .mode-desc{font-size:11px;color:var(--text2);line-height:1.5;}
 .count-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
 .count-card{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:13px 16px;cursor:pointer;background:var(--bg);}
-.count-card:active{background:var(--bg2);}
 .count-card.sel{background:var(--blue-bg);border-color:var(--blue);}
 .count-card .cj{font-size:11px;color:var(--text3);}
 .count-card .cz{font-size:14px;font-weight:600;color:var(--text);}
 .count-card.sel .cj{color:var(--blue-dark);}
 .count-card.sel .cz{color:var(--blue-text);}
-.start-btn{width:100%;border:none;border-radius:var(--radius-lg);padding:15px;font-size:16px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;letter-spacing:.3px;}
+.start-btn{width:100%;border:none;border-radius:var(--radius-lg);padding:15px;font-size:16px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;}
 .start-btn:active{background:var(--blue-dark);}
-/* quiz */
 .prog-bar{background:var(--bg2);border-radius:4px;height:4px;margin-bottom:18px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .35s;}
 .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
@@ -99,7 +78,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 @media(prefers-color-scheme:dark){.q-hl{background:#44330a;color:#fcd34d;}}
 .q-hint{font-size:13px;color:var(--text2);margin-top:8px;}
 .options{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
-.opt{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:13px 15px;cursor:pointer;font-size:15px;color:var(--text);background:var(--bg);display:flex;align-items:flex-start;gap:12px;line-height:1.5;transition:background .1s;}
+.opt{border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:13px 15px;cursor:pointer;font-size:15px;color:var(--text);background:var(--bg);display:flex;align-items:flex-start;gap:12px;line-height:1.5;}
 .opt:active:not(.disabled){background:var(--bg2);}
 .opt.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green-text);}
 .opt.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red-text);}
@@ -110,18 +89,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .opt.wrong .opt-n{color:var(--red-text);}
 .opt.marked .opt-n{color:var(--blue);}
 .act-btn{width:100%;margin-top:18px;border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);}
-.act-btn:active{background:var(--bg2);}
 .act-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;}
-.act-btn.primary:active{background:var(--blue-dark);}
 .act-btn.hidden{display:none;}
-/* review */
 .rev-item{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:13px 15px;margin-bottom:10px;}
 .rev-item.ok{border-left:3px solid var(--green-border);}
 .rev-item.ng{border-left:3px solid var(--red-border);}
 .rev-q{font-size:13px;color:var(--text2);margin-bottom:7px;line-height:1.6;}
 .rev-ok{font-size:14px;color:var(--green-text);font-weight:500;}
 .rev-ng{font-size:14px;color:var(--red-text);}
-/* result */
 .result-top{text-align:center;padding:24px 0 16px;}
 .res-emoji{font-size:40px;margin-bottom:8px;}
 .res-pct{font-size:52px;font-weight:700;color:var(--text);letter-spacing:-2px;}
@@ -134,41 +109,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .divider{height:0.5px;background:var(--border);margin:18px 0;}
 .btn-col{display:flex;flex-direction:column;gap:9px;}
 .sec-btn{width:100%;border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);}
-.sec-btn:active{background:var(--bg2);}
 .pri-btn{width:100%;border:none;border-radius:var(--radius-lg);padding:14px;font-size:15px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;}
-.pri-btn:active{background:var(--blue-dark);}
-/* stats */
 .stats-sec{margin-bottom:24px;}
 .stats-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:14px;}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
 .bar-label{font-size:13px;color:var(--text2);width:44px;flex-shrink:0;}
 .bar-track{flex:1;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;}
-.bar-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .6s;}
+.bar-fill{height:100%;background:var(--blue);border-radius:4px;}
 .bar-pct{font-size:13px;font-weight:600;color:var(--text2);width:38px;text-align:right;flex-shrink:0;}
 .bar-sub{font-size:11px;color:var(--text3);margin:0 0 14px 54px;}
 .hist-item{border:0.5px solid var(--border);border-radius:var(--radius);padding:11px 14px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;}
 .hist-l .hj{font-size:11px;color:var(--text3);}
 .hist-l .hz{font-size:14px;color:var(--text);margin-top:2px;}
 .hist-pct{font-size:18px;font-weight:700;}
-/* wrong */
-.wrong-topbar{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:0.5px solid var(--border);margin-bottom:20px;}
 .wrong-item{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 15px;margin-bottom:10px;border-left:3px solid var(--red-border);}
 .wrong-meta{font-size:11px;color:var(--text3);margin-bottom:5px;}
 .wrong-q{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:9px;white-space:pre-wrap;}
 .wrong-ok{font-size:13px;color:var(--green-text);font-weight:500;}
 .wrong-ng{font-size:13px;color:var(--red-text);margin-top:3px;}
 .empty{text-align:center;padding:50px 20px;color:var(--text2);font-size:15px;line-height:2;}
-/* import */
-.import-fmt{background:var(--bg2);border-radius:var(--radius);padding:13px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.9;font-family:monospace;}
-.import-ta{width:100%;height:120px;border:0.5px solid var(--border2);border-radius:var(--radius);padding:11px 13px;font-size:13px;color:var(--text);background:var(--bg);resize:none;outline:none;font-family:monospace;margin-bottom:13px;}
-.import-ta:focus{border-color:var(--blue);}
-.import-msg{font-size:13px;text-align:center;margin-top:10px;min-height:20px;font-weight:500;}
+.lv-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--blue-bg);color:var(--blue);margin-right:5px;vertical-align:middle;}
 </style>
 </head>
 <body>
 <div class="app">
-
-<!-- HOME -->
 <div id="home" class="screen active">
   <div class="logo">日検練習</div>
   <div class="logo-sub">JLPT 模擬練習 / 日本語能力試験対策</div>
@@ -181,39 +145,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
     <div class="pill" onclick="selLv(this,'N5')">N5</div>
   </div>
   <div class="sec-label">問題タイプ / 題型</div>
-  <div class="cat-list">
-    <div class="cat-card" onclick="goCat('vocab')">
-      <div><div class="cat-jp">文字・語彙</div><div class="cat-zh">單字・語彙</div><div class="cat-count">30 題真題 ＋ 5 題 AI</div></div><span class="cat-arr">›</span>
-    </div>
-    <div class="cat-card" onclick="goCat('grammar')">
-      <div><div class="cat-jp">文法</div><div class="cat-zh">文法・句型</div><div class="cat-count">13 題真題 ＋ 5 題 AI</div></div><span class="cat-arr">›</span>
-    </div>
-    <div class="cat-card" onclick="goCat('reorder')">
-      <div><div class="cat-jp">文の組み立て</div><div class="cat-zh">重組句子</div><div class="cat-count">5 題真題</div></div><span class="cat-arr">›</span>
-    </div>
-    <div class="cat-card" onclick="goCat('reading')">
-      <div><div class="cat-jp">読解</div><div class="cat-zh">閱讀理解</div><div class="cat-count">短文3＋中文1＋長文1</div></div><span class="cat-arr">›</span>
-    </div>
-  </div>
+  <div class="cat-list" id="cat-list"></div>
   <div class="util-row">
     <div class="util-btn" onclick="openStats()"><div class="util-icon">📊</div><div class="util-jp">成績統計</div><div class="util-zh">進度統計</div></div>
     <div class="util-btn" onclick="openWrong()"><div class="util-icon">📝</div><div class="util-jp">間違いノート</div><div class="util-zh">錯題本</div></div>
-    <div class="util-btn" onclick="goScreen('import')"><div class="util-icon">＋</div><div class="util-jp">問題追加</div><div class="util-zh">匯入題目</div></div>
   </div>
 </div>
-
-  
-<!-- SETUP VGR -->
 <div id="setup-vgr" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
-    <span class="topbar-title" id="setup-title"></span>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title" id="setup-title"></span></div>
   <div id="src-wrap">
     <div class="sec-label">ソース / 題目來源</div>
     <div class="src-tabs">
       <div class="src-tab sel" onclick="selSrc(this,'real')"><div class="sj">本試験問題</div><div class="sz">真題</div></div>
-      <div class="src-tab" onclick="selSrc(this,'ai')"><div class="sj">AI生成問題</div><div class="sz">AI 模擬題</div></div>
+      <div class="src-tab" onclick="selSrc(this,'ai')" id="ai-tab"><div class="sj">AI生成問題</div><div class="sz">AI 模擬題</div></div>
     </div>
   </div>
   <div class="sec-label">モード / 練習模式</div>
@@ -229,13 +173,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
   </div>
   <button class="start-btn" onclick="startQuiz()">練習開始 / 開始練習</button>
 </div>
-
-<!-- SETUP READING -->
 <div id="setup-reading" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
-    <span class="topbar-title">読解 / 閱讀理解</span>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title">読解 / 閱讀理解</span></div>
   <div class="sec-label">モード / 練習模式</div>
   <div class="mode-grid">
     <div class="mode-card sel" onclick="selMode(this,'instant')"><div class="mode-icon">⚡</div><div class="mode-jp">即時フィードバック</div><div class="mode-zh">即時反饋</div><div class="mode-desc">選完馬上顯示對錯</div></div>
@@ -243,14 +182,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
   </div>
   <div class="sec-label">セット / 題組選擇</div>
   <div class="count-list">
-    <div class="count-card sel" onclick="selReadSet(this,'A')"><div class="cj">短文×1 ＋ 中文×1（計4問）</div><div class="cz">一篇短文 ＋ 一篇中文（共4題）</div></div>
-    <div class="count-card" onclick="selReadSet(this,'B')"><div class="cj">短文×2 ＋ 長文×1（計6問）</div><div class="cz">兩篇短文 ＋ 一篇長文（共6題）</div></div>
+    <div class="count-card sel" onclick="selReadSet(this,'A')"><div class="cj">短文×1 ＋ 中文×1</div><div class="cz">一篇短文 ＋ 一篇中文</div></div>
+    <div class="count-card" onclick="selReadSet(this,'B')"><div class="cj">短文×2 ＋ 長文×1</div><div class="cz">兩篇短文 ＋ 一篇長文</div></div>
     <div class="count-card" onclick="selReadSet(this,'C')"><div class="cj">短文×3 ＋ 中文×1 ＋ 長文×1</div><div class="cz">三篇短文 ＋ 一篇中文 ＋ 一篇長文</div></div>
   </div>
   <button class="start-btn" onclick="startReading()">練習開始 / 開始練習</button>
 </div>
-
-<!-- QUIZ -->
 <div id="quiz" class="screen">
   <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
   <div class="q-meta"><span class="q-num" id="q-num">1/5</span><span class="q-badge" id="q-badge">語彙</span></div>
@@ -260,78 +197,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
   <div class="options" id="options"></div>
   <button class="act-btn hidden" id="act-btn"></button>
 </div>
-
-<!-- REVIEW -->
 <div id="review" class="screen">
   <div class="topbar"><span class="topbar-title">答案確認 / 答題回顧</span></div>
   <div id="rev-list"></div>
   <button class="pri-btn" onclick="showResult()">結果を見る / 查看結果</button>
 </div>
-
-<!-- RESULT -->
 <div id="result" class="screen">
-  <div class="result-top">
-    <div class="res-emoji" id="res-emoji"></div>
-    <div class="res-pct" id="res-pct"></div>
-    <div class="res-msg" id="res-msg"></div>
-  </div>
+  <div class="result-top"><div class="res-emoji" id="res-emoji"></div><div class="res-pct" id="res-pct"></div><div class="res-msg" id="res-msg"></div></div>
   <div class="stat-row">
     <div class="stat-c"><div class="stat-v" id="sv-ok" style="color:#3B6D11;"></div><div class="stat-j">正解</div><div class="stat-z">答對</div></div>
     <div class="stat-c"><div class="stat-v" id="sv-ng" style="color:#A32D2D;"></div><div class="stat-j">不正解</div><div class="stat-z">答錯</div></div>
     <div class="stat-c"><div class="stat-v" id="sv-tot"></div><div class="stat-j">合計</div><div class="stat-z">總題數</div></div>
   </div>
   <div class="divider"></div>
-  <div class="btn-col">
-    <button class="sec-btn" onclick="startQuiz()">もう一度 / 再練習</button>
-    <button class="pri-btn" onclick="goScreen('home')">ホーム / 首頁</button>
-  </div>
+  <div class="btn-col"><button class="sec-btn" onclick="startQuiz()">もう一度 / 再練習</button><button class="pri-btn" onclick="goScreen('home')">ホーム / 首頁</button></div>
 </div>
-
-<!-- STATS -->
 <div id="stats" class="screen">
   <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title">成績統計 / 進度統計</span></div>
-  <div class="stats-sec">
-    <div class="stats-title">題型別正確率 / 各題型平均正確率</div>
-    <div id="cat-bars"></div>
-  </div>
-  <div class="stats-sec">
-    <div class="stats-title">練習履歴 / 練習記錄</div>
-    <div id="hist-list"></div>
-  </div>
+  <div class="stats-sec"><div class="stats-title">題型別正確率 / 各題型平均正確率</div><div id="cat-bars"></div></div>
+  <div class="stats-sec"><div class="stats-title">練習履歴 / 練習記錄</div><div id="hist-list"></div></div>
 </div>
-
-<!-- WRONG -->
 <div id="wrong" class="screen">
-  <div class="wrong-topbar">
+  <div class="topbar">
     <button class="back-btn" onclick="goScreen('home')">← 戻る</button>
     <span class="topbar-title">間違いノート / 錯題本</span>
     <button class="back-btn" style="margin-left:auto;color:#378ADD;border-color:#378ADD;font-weight:600;" onclick="practiceWrong()">練習する ›</button>
   </div>
   <div id="wrong-list"></div>
 </div>
-
-<!-- IMPORT -->
-<div id="import" class="screen">
-  <div class="topbar"><button class="back-btn" onclick="goScreen('home')">← 戻る</button><span class="topbar-title">問題追加 / 匯入題目</span></div>
-  <div class="sec-label">フォーマット / 格式說明</div>
-  <div class="import-fmt">題型: vocab / grammar / reorder
-問題: 題目文字
-hl: 被考的字（可空）
-hint: 提示文字（可空）
-選択肢: 選A|選B|選C|選D
-正解: 0（從0起算）
----（每題之間用此分隔）</div>
-  <div class="sec-label">データ貼り付け / 貼上資料</div>
-  <textarea class="import-ta" id="import-ta" placeholder="在此貼上題目資料..."></textarea>
-  <button class="start-btn" onclick="doImport()">匯入 / インポート</button>
-  <div class="import-msg" id="import-msg"></div>
 </div>
-
-</div>
-
 <script>
-// ── DATA ──────────────────────────────────────────────────────
-const VOCAB_REAL=[
+
+const N3_VOCAB_REAL=[
   {q:'苦しいときは、この歌を聞きます。',hl:'苦しい',hint:'＿＿＿の読み方は？',opts:['かなしい','くやしい','くるしい','さびしい'],ans:2},
   {q:'来月、日本に出張する予定です。',hl:'出張',hint:'＿＿＿の読み方は？',opts:['しゅちゅう','しゅちょう','しゅっちゅう','しゅっちょう'],ans:3},
   {q:'一つだけ席があいていました。',hl:'席',hint:'＿＿＿の読み方は？',opts:['せき','かぎ','あな','ふた'],ans:0},
@@ -362,15 +259,83 @@ const VOCAB_REAL=[
   {q:'今日は一日中歩いていたので、足がつかれました。',hl:'つかれ',hint:'＿＿＿を漢字で書くと？',opts:['疲れ','痛れ','病れ','症れ'],ans:0},
   {q:'お皿はかさねてその棚にしまってください。',hl:'かさねて',hint:'＿＿＿を漢字で書くと？',opts:['整ねて','列ねて','階ねて','重ねて'],ans:3},
   {q:'今週はざんぎょうが多かった。',hl:'ざんぎょう',hint:'＿＿＿を漢字で書くと？',opts:['増勤','増業','残勤','残業'],ans:3},
+  {q:'日本の首都はどこですか。',hl:'首都',hint:'＿＿＿の読み方は？',opts:['しゅとう','しゅうと','しゅと','しゅうとう'],ans:2},
+  {q:'地球は太陽のまわりを回っている。',hl:'地球',hint:'＿＿＿の読み方は？',opts:['じきゅう','ちきゅう','じきゅ','ちきゅ'],ans:1},
+  {q:'あの時計は遅れている。',hl:'遅れて',hint:'＿＿＿の読み方は？',opts:['こわれて','おくれて','たおれて','よごれて'],ans:1},
+  {q:'二人で協力すれば、仕事も早く終わるだろう。',hl:'協力',hint:'＿＿＿の読み方は？',opts:['きょりょく','どりょく','きょうりょく','どうりょく'],ans:2},
+  {q:'大学の奨学金に応募した。',hl:'応募',hint:'＿＿＿の読み方は？',opts:['おうぼ','おうも','おうほう','おうもう'],ans:0},
+  {q:'子どもの疑問に答えた。',hl:'疑問',hint:'＿＿＿の読み方は？',opts:['ぐもん','ぎもん','ぐうもん','ぎいもん'],ans:1},
+  {q:'試験の成績が発表された。',hl:'発表',hint:'＿＿＿の読み方は？',opts:['はっぴょう','はつびょう','はっぴゅう','はつぴゅう'],ans:0},
+  {q:'単語のリストはどなりのページにあります。',hl:'単語',hint:'＿＿＿の読み方は？',opts:['げいご','けいご','たんご','だんご'],ans:2},
+  {q:'みんなで話し合って、問題をかいけつした。',hl:'かいけつ',hint:'＿＿＿を漢字で書くと？',opts:['改決','改結','解決','解結'],ans:2},
+  {q:'山口さんに東京をあんないしてもらった。',hl:'あんない',hint:'＿＿＿を漢字で書くと？',opts:['安内','案内','室内','客内'],ans:1},
+  {q:'わたしはけんこうのために毎日走っています。',hl:'けんこう',hint:'＿＿＿を漢字で書くと？',opts:['健康','建康','健庫','建庫'],ans:0},
+  {q:'今年の夏はきおんが高かった。',hl:'きおん',hint:'＿＿＿を漢字で書くと？',opts:['気温','気湯','気混','気晴'],ans:0},
+  {q:'頭がいたいので、薬を飲んだ。',hl:'いたい',hint:'＿＿＿を漢字で書くと？',opts:['病い','痛い','疼い','症い'],ans:1},
+  {q:'このシャツは工場でたいりょうに作られている。',hl:'たいりょう',hint:'＿＿＿を漢字で書くと？',opts:['多量','多料','大量','大料'],ans:2},
+  {q:'この携帯電話はボタンが押しにくいという（　）を持つ利用者もいる。',hl:'',hint:'（　）に入る言葉は？',opts:['関心','不満','目標','我慢'],ans:1},
+  {q:'街を（　）していたら、山本さんに会った。',hl:'',hint:'（　）に入る言葉は？',opts:['ぐらぐら','がらがら','ばらばら','ぶらぶら'],ans:3},
+  {q:'ゼミナーに参加したい人は、（　）に住所、氏名、希望日を書いてください。',hl:'',hint:'（　）に入る言葉は？',opts:['証明書','領収書','申込書','参考書'],ans:2},
+  {q:'この計算は（　）なので、コンピューターを使っても時間がかかる。',hl:'',hint:'（　）に入る言葉は？',opts:['意外','重大','複雑','正常'],ans:2},
+  {q:'この町には大きな川が（　）います。',hl:'',hint:'（　）に入る言葉は？',opts:['流れて','しずんで','浮いて','こぼれて'],ans:0},
+  {q:'このオレンジはアメリカ（　）です。',hl:'',hint:'（　）に入る言葉は？',opts:['産','製','作','品'],ans:0},
+  {q:'優勝した選手に（　）をして記事を書いた。',hl:'',hint:'（　）に入る言葉は？',opts:['スピーチ','インタビュー','メッセージ','コミュニケーション'],ans:1},
+  {q:'全員が自分の意見を（　）したので、会議がなかなか終わらなかった。',hl:'',hint:'（　）に入る言葉は？',opts:['命令','返信','主張','注文'],ans:2},
+  {q:'書類や本がきちんと（　）されていて、きれいな部屋ですね。',hl:'',hint:'（　）に入る言葉は？',opts:['準備','世話','選択','整理'],ans:3},
+  {q:'朝から何も飲んでいないので、のどが（　）です。',hl:'',hint:'（　）に入る言葉は？',opts:['ぺらぺら','からから','ぶらぶら','べこべこ'],ans:1},
+  {q:'将来のために、お金を（　）います。',hl:'',hint:'（　）に入る言葉は？',opts:['ためて','のせて','かさねて','くわえて'],ans:0},
+  {q:'指示',hl:'指示',hint:'「指示」の使い方として正しいものは？',opts:['「この書類、30部コピーしておいて」と秘書に指示した。','「この作文を見ていただけませんか」と先生に指示した。','「あした映画を見に行こうよ」と友達に指示した。','「お元気ですか」と相手に指示した。'],ans:0},
+  {q:'見送る',hl:'見送る',hint:'「見送る」の使い方として正しいものは？',opts:['毎日かならずメールを見送るようにしている。','何ページか見送ってみたが、むずかしくてわからなかった。','駅まで友達を見送りに行った。','電車の窓から景色を見送るのが好きだ。'],ans:2},
+  {q:'転ぶ',hl:'転ぶ',hint:'「転ぶ」の使い方として正しいものは？',opts:['ベッドの上で転んで寝てしまった。','計画が転んでうまくいかなかった。','台風で庭の木が転んだ。','階段で転んでけがをした。'],ans:3},
 ];
-const VOCAB_AI=[
+const N3_VOCAB_AI=[
   {q:'彼女は毎朝、丁寧に化粧をします。',hl:'丁寧',hint:'＿＿＿の読み方は？',opts:['ていねい','ちょうねい','ていれい','ちょうれい'],ans:0},
   {q:'電車が遅延して、授業に遅刻しました。',hl:'遅延',hint:'＿＿＿の読み方は？',opts:['ちえん','そうえん','ちこく','ちえい'],ans:0},
   {q:'社長は部下に仕事を任せました。',hl:'任せ',hint:'＿＿＿の読み方は？',opts:['ゆだね','まかせ','たすけ','わたし'],ans:1},
   {q:'この薬は副作用がほとんどありません。',hl:'副作用',hint:'＿＿＿の読み方は？',opts:['ふくさよう','ふくさくよう','ふうさよう','ふっさよう'],ans:0},
   {q:'彼は常に冷静な判断ができる人だ。',hl:'冷静',hint:'＿＿＿の読み方は？',opts:['れいせい','れいしず','りょうせい','りょうしず'],ans:0},
+  {q:'毎朝、新聞を読みます。',hl:'新聞',hint:'＿＿＿の読み方は？',opts:['しんぶん','しんもん','じんぶん','じんもん'],ans:0},
+  {q:'この本は図書館で借りました。',hl:'図書館',hint:'＿＿＿の読み方は？',opts:['としょかん','どしょかん','とそかん','どそかん'],ans:0},
+  {q:'昨日、映画を見ました。',hl:'映画',hint:'＿＿＿の読み方は？',opts:['えいが','えいか','えが','えか'],ans:0},
+  {q:'病院で薬をもらいました。',hl:'病院',hint:'＿＿＿の読み方は？',opts:['びょういん','ひょういん','びよういん','ひよういん'],ans:0},
+  {q:'彼は優秀な学生です。',hl:'優秀',hint:'＿＿＿の読み方は？',opts:['ゆうしゅう','ようしゅう','ゆうしょう','ようしょう'],ans:0},
+  {q:'試験に合格しました。',hl:'合格',hint:'＿＿＿の読み方は？',opts:['ごうかく','ごうがく','こうかく','こうがく'],ans:0},
+  {q:'目的地に到着した。',hl:'到着',hint:'＿＿＿の読み方は？',opts:['とうちゃく','どうちゃく','とうじゃく','どうじゃく'],ans:0},
+  {q:'会議の準備をする。',hl:'準備',hint:'＿＿＿の読み方は？',opts:['じゅんび','しゅんび','じゅんひ','しゅんひ'],ans:0},
+  {q:'交通事故が発生した。',hl:'交通',hint:'＿＿＿の読み方は？',opts:['こうつう','きょうつう','こうづう','きょうづう'],ans:0},
+  {q:'今日は記念日です。',hl:'記念日',hint:'＿＿＿の読み方は？',opts:['きねんび','ぎねんび','きねんひ','ぎねんひ'],ans:0},
+  {q:'コンビニで弁当をかいました。',hl:'かい',hint:'＿＿＿を漢字で書くと？',opts:['買い','売い','貝い','貸い'],ans:0},
+  {q:'駅まであるいて行きます。',hl:'あるい',hint:'＿＿＿を漢字で書くと？',opts:['歩い','足い','走い','行い'],ans:0},
+  {q:'にもつが重いです。',hl:'にもつ',hint:'＿＿＿を漢字で書くと？',opts:['荷物','荷品','重物','重品'],ans:0},
+  {q:'すいえいが得意です。',hl:'すいえい',hint:'＿＿＿を漢字で書くと？',opts:['水泳','水永','水営','水栄'],ans:0},
+  {q:'けっこんしきに招待された。',hl:'けっこん',hint:'＿＿＿を漢字で書くと？',opts:['結婚','結昏','結魂','結困'],ans:0},
+  {q:'りょこうの計画を立てる。',hl:'りょこう',hint:'＿＿＿を漢字で書くと？',opts:['旅行','旅高','留行','留高'],ans:0},
+  {q:'やくそくの時間に遅れた。',hl:'やくそく',hint:'＿＿＿を漢字で書くと？',opts:['約束','役束','薬束','約速'],ans:0},
+  {q:'しゅみは読書です。',hl:'しゅみ',hint:'＿＿＿を漢字で書くと？',opts:['趣味','取味','種味','酒味'],ans:0},
+  {q:'けいけんが大切です。',hl:'けいけん',hint:'＿＿＿を漢字で書くと？',opts:['経験','経検','径験','径検'],ans:0},
+  {q:'ぐたいてきな説明をお願いします。',hl:'ぐたいてき',hint:'＿＿＿を漢字で書くと？',opts:['具体的','具態的','倶体的','倶態的'],ans:0},
+  {q:'明日は試験だから、（　）勉強しよう。',hl:'',hint:'（　）に入る言葉は？',opts:['ちゃんと','どんどん','たくさん','たまに'],ans:0},
+  {q:'雨が（　）降ってきた。',hl:'',hint:'（　）に入る言葉は？',opts:['急に','ゆっくり','ずっと','たまに'],ans:0},
+  {q:'部屋を（　）にしてください。',hl:'',hint:'（　）に入る言葉は？',opts:['きれい','うるさい','つまらない','むずかしい'],ans:0},
+  {q:'宿題が（　）終わりません。',hl:'',hint:'（　）に入る言葉は？',opts:['なかなか','すぐに','すっかり','どんどん'],ans:0},
+  {q:'お風呂は（　）入りますか。',hl:'',hint:'（　）に入る言葉は？',opts:['いつ','どこ','だれ','なに'],ans:0},
+  {q:'時間がないので、（　）食べました。',hl:'',hint:'（　）に入る言葉は？',opts:['急いで','ゆっくり','楽しく','静かに'],ans:0},
+  {q:'駅から会社まで（　）10分です。',hl:'',hint:'（　）に入る言葉は？',opts:['歩いて','走って','飛んで','泳いで'],ans:0},
+  {q:'コーヒーに砂糖を（　）入れますか。',hl:'',hint:'（　）に入る言葉は？',opts:['いくつ','いくら','どのくらい','どれくらい'],ans:2},
+  {q:'寒いから窓を（　）ください。',hl:'',hint:'（　）に入る言葉は？',opts:['しめて','あけて','つけて','けして'],ans:0},
+  {q:'まだ宿題が（　）残っています。',hl:'',hint:'（　）に入る言葉は？',opts:['たくさん','少し','ちょっと','ぜんぜん'],ans:0},
+  {q:'運転免許を（　）。',hl:'',hint:'（　）に入る言葉は？',opts:['取った','作った','買った','売った'],ans:0},
+  {q:'プレゼントを（　）。',hl:'',hint:'（　）に入る言葉は？',opts:['もらった','あげた','くれた','受けた'],ans:0},
+  {q:'子供たちが公園で（　）遊んでいる。',hl:'',hint:'（　）に入る言葉は？',opts:['元気に','静かに','すぐに','急に'],ans:0},
+  {q:'この問題は（　）難しい。',hl:'',hint:'（　）に入る言葉は？',opts:['とても','たくさん','よく','ずっと'],ans:0},
+  {q:'熱があるので、（　）休んでください。',hl:'',hint:'（　）に入る言葉は？',opts:['ゆっくり','急いで','早く','すぐに'],ans:0},
+  {q:'宿題はもう全部おわりました。',hl:'おわりました',hint:'＿＿＿に意味が最も近いものは？',opts:['すみました','はじまりました','つかれました','こまりました'],ans:0},
+  {q:'たまに家族と外食します。',hl:'たまに',hint:'＿＿＿に意味が最も近いものは？',opts:['ときどき','いつも','まったく','よく'],ans:0},
+  {q:'部屋がちらかっている。',hl:'ちらかって',hint:'＿＿＿に意味が最も近いものは？',opts:['きたなくなって','きれいになって','せまくなって','ひろくなって'],ans:0},
+  {q:'彼の説明はわかりやすかった。',hl:'わかりやすかった',hint:'＿＿＿に意味が最も近いものは？',opts:['理解しやすかった','むずかしかった','つまらなかった','長かった'],ans:0},
+  {q:'母にあやまりました。',hl:'あやまり',hint:'＿＿＿に意味が最も近いものは？',opts:['ごめんなさいと言いました','ありがとうと言いました','こんにちはと言いました','さようならと言いました'],ans:0},
 ];
-const GRAMMAR_REAL=[
+const N3_GRAMMAR_REAL=[
   {q:'兄と私は、意志が強い（　）点でよく似ている。',hl:'（　）',opts:['の','のことの','という','をいう'],ans:2},
   {q:'ガイドブックに金閣寺（　）行き方が書いてある。',hl:'（　）',opts:['に','で','への','とは'],ans:2},
   {q:'隣の町（　）、私の住んでいる町は水道代が高い。',hl:'（　）',opts:['として','と比べて','にまで','において'],ans:1},
@@ -378,71 +343,695 @@ const GRAMMAR_REAL=[
   {q:'せっかく海外に（　）、いろいろな所を見たい。',hl:'（　）',opts:['来たのだから','来たために','来たおかげで','来たかったから'],ans:0},
   {q:'山下「田中さん、（　）楽しみにしていたのに、残念だね。」',hl:'（　）',opts:['あんなに','やっと','どんな','つい'],ans:0},
   {q:'妹は最初「水泳教室に行きたくない」と（　）が、今では楽しそうに通っている。',hl:'（　）',opts:['嫌そうだ','嫌がっていた','嫌なのだ','嫌がったままだ'],ans:1},
-  {q:'B「サッカークラブに入りたいのですが、一度練習を（　）」\nA「ええ、いいですよ。」',hl:'（　）',opts:['見学してはいけませんよ','見学しましょうよ','見学させていただけませんか','見学ではどうですか'],ans:2},
+  {q:'B「サッカークラブに入りたいのですが、一度練習を（　）」A「ええ、いいですよ。」',hl:'（　）',opts:['見学してはいけませんよ','見学しましょうよ','見学させていただけませんか','見学ではどうですか'],ans:2},
   {q:'（デパートで）店員「はい。あちらの（　）ございます。」',hl:'（　）',opts:['階段の近く','階段の近くに','階段に近くて','階段は近くて'],ans:1},
   {q:'習慣にしていた朝のジョギングを（　）、1年がたつ。',hl:'（　）',opts:['しないときに','しないあいだは','しなくなってから','しなくなったあとで'],ans:2},
   {q:'会議で使う資料に間違いがあったが、今から（　）時間が足りない。',hl:'（　）',opts:['作り直すには','作ったままでは','作り始めなくて','作っていなくて'],ans:0},
   {q:'山下かずおは、いつ首相（　）実力を持っている。',hl:'（　）',opts:['をしてよかった','になってもしかたなかった','をしたくなった','になってもおかしくない'],ans:3},
   {q:'A「このテレビ、ずいぶん古いね。」B「15年前に買った。」\nA「そろそろ（　）？」B「まだ見られるから、必要ないよ。」',hl:'（　）',opts:['買い替えないかもしれない','買い替えてみたかもしれない','買い替えにくかったんじゃない','買い替えてもいいんじゃない'],ans:3},
+  {q:'A「沖縄旅行はどうだった?」B「海がきれいで、料理もおいしくて、最高だったよ。」A「いいなあ。わたしも（　）一度行ってみたいなあ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['いつのまにか','いつ','いつでも','いつか'],ans:3},
+  {q:'（デパートでシャツを選びながら）山田「明るい色のシャツが欲しいんだけど…」田中「だったら、これ（　）どう?山田さんにすごく似合うと思うよ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['なんか','ばかり','だけ','まで'],ans:0},
+  {q:'A「あれっ、田中さんって、どんな人?」B「すごく親切な人だよ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['って','とは','という','では'],ans:0},
+  {q:'あの美術館は曜日（　）窓口で確認したほうがいいよ。',hl:'（　）',hint:'（　）に入るものは？',opts:['閉まる時間','違うから','によって','が'],ans:1},
+  {q:'A「今度のさよならパーティーで、みんなで歌う歌は、これでいいですか。」B「すみません。この歌は好きなんですが、少しむずかしいです。（　）してほしいです。」',hl:'（　）',hint:'（　）に入るものは？',opts:['のほか','のほかに','がほかに','をほかに'],ans:0},
+  {q:'うちの子は、ジュースを飲ませないで水を飲ませている。すると（　）、よく水を飲むようになった。',hl:'（　）',hint:'（　）に入るものは？',opts:['ことに','ことか','ものを','ものか'],ans:0},
+  {q:'昨日、買い物に行こうとしたら、（　）家を出るところに友達が来た。',hl:'（　）',hint:'（　）に入るものは？',opts:['ちょうど','まったく','ぜんぜん','まさに'],ans:0},
+  {q:'こちらの仕事は、（　）終わりそうもありません。',hl:'（　）',hint:'（　）に入るものは？',opts:['まだ','もう','すでに','とっくに'],ans:0},
+  {q:'たくさん運動した ＿ ＿ ★ ＿ なった。',hl:'★',hint:'★に入るものは？',opts:['ので','大変','疲れて','とても'],ans:1},
+  {q:'明日のテストは ＿ ＿ ★ ＿ つもりだ。',hl:'★',hint:'★に入るものは？',opts:['難しい','けれども','頑張る','とても'],ans:1},
+  {q:'昨日 ＿ ＿ ★ ＿ 行きました。',hl:'★',hint:'★に入るものは？',opts:['友達と','映画を','見に','一緒に'],ans:2},
+  {q:'この本は ＿ ＿ ★ ＿ 思います。',hl:'★',hint:'★に入るものは？',opts:['とても','読む価値が','ある','と'],ans:1},
+  {q:'寒いから ＿ ＿ ★ ＿ ください。',hl:'★',hint:'★に入るものは？',opts:['暖かい','服を','着て','出かけて'],ans:2},
 ];
-const REORDER_REAL=[
-  {q:'（病院で）受付「はい、村山さんですね。では、そちらの ＿ ＿ ★ ＿ ください。」\n★に入るものは？',hl:'★',opts:['お待ち','おかけ','いすに','になって'],ans:1},
+const N3_REORDER_REAL=[
+  {q:'（病院で）受付「はい、村山さんですね。では、そちらの ＿ ＿ ★ ＿ ください。」\n★に入るものは？',hl:'★',opts:['お待ち','おかけ','いすに','になって'],ans:3},
   {q:'料理をする ＿ ＿ ★ ＿ おいしく作れる。\n★に入るものは？',hl:'★',opts:['私でも','ハンバーグだけは','それほど得意ではない','のが'],ans:0},
-  {q:'山村「はい。思いついた ＿ ＿ ★ ＿ しているんです。」\n★に入るものは？',hl:'★',opts:['忘れて','まわないように','ことを','必ず持ち歩くように'],ans:2},
+  {q:'山村「はい。思いついた ＿ ＿ ★ ＿ しているんです。」\n★に入るものは？',hl:'★',opts:['忘れて','まわないように','ことを','必ず持ち歩くように'],ans:1},
   {q:'昨日の夜、誰も ＿ ＿ ★ ＿ 気がした。\n★に入るものは？',hl:'★',opts:['いない','聞こえた','何か音が','部屋から'],ans:2},
-  {q:'現在、市民運動公園の中に、大小 ＿ ＿ ★ ＿ 検討されている。\n★に入るものは？',hl:'★',opts:['体育館を','建設する','二つの','という案が'],ans:2},
+  {q:'現在、市民運動公園の中に、大小 ＿ ＿ ★ ＿ 検討されている。\n★に入るものは？',hl:'★',opts:['体育館を','建設する','二つの','という案が'],ans:1},
 ];
-const GRAMMAR_AI=[
+const N3_GRAMMAR_AI=[
   {q:'彼は仕事（　）、毎日残業しています。',hl:'（　）',opts:['のために','によって','においても','にかけて'],ans:0},
   {q:'この映画は見る（　）の価値があります。',hl:'（　）',opts:['ほど','だけ','まで','ぐらい'],ans:0},
   {q:'彼女は日本語だけ（　）、英語も話せます。',hl:'（　）',opts:['でなく','じゃなく','ではなく','のでなく'],ans:2},
   {q:'時間があれ（　）、もっと勉強できるのに。',hl:'（　）',opts:['ば','たら','なら','と'],ans:0},
   {q:'この問題は難し（　）、誰でも解けるはずだ。',hl:'（　）',opts:['そうだが','ようだが','くなくて','くても'],ans:3},
+  {q:'雨が降りそう（　）ので、傘を持っていこう。',hl:'（　）',hint:'（　）に入るものは？',opts:['な','の','で','に'],ans:0},
+  {q:'彼は来る（　）どうか分からない。',hl:'（　）',hint:'（　）に入るものは？',opts:['か','が','の','を'],ans:0},
+  {q:'時間がない（　）、急ぎましょう。',hl:'（　）',hint:'（　）に入るものは？',opts:['ので','のに','けど','でも'],ans:0},
+  {q:'勉強した（　）、いい点が取れなかった。',hl:'（　）',hint:'（　）に入るものは？',opts:['のに','ので','から','ため'],ans:0},
+  {q:'宿題を（　）から、遊びます。',hl:'（　）',hint:'（　）に入るものは？',opts:['してから','している','する','した'],ans:0},
+  {q:'彼は来年日本へ来る（　）です。',hl:'（　）',hint:'（　）に入るものは？',opts:['予定','約束','計画','希望'],ans:0},
+  {q:'雨が降ったら、行かない（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['ことにする','ことにできる','ものにする','ものにできる'],ans:0},
+  {q:'もっと（　）勉強したほうがいい。',hl:'（　）',hint:'（　）に入るものは？',opts:['一生懸命','一生懸命に','一生懸命な','一生懸命だ'],ans:0},
+  {q:'病気だから、薬を飲ま（　）なりません。',hl:'（　）',hint:'（　）に入るものは？',opts:['なければ','ないと','なくては','なきゃ'],ans:0},
+  {q:'毎日運動する（　）にしている。',hl:'（　）',hint:'（　）に入るものは？',opts:['よう','こと','の','もの'],ans:0},
+  {q:'子供（　）電車で行きます。',hl:'（　）',hint:'（　）に入るものは？',opts:['と','が','に','で'],ans:0},
+  {q:'これは何（　）作りますか。',hl:'（　）',hint:'（　）に入るものは？',opts:['で','と','が','に'],ans:0},
+  {q:'駅まで歩いて10分（　）かかります。',hl:'（　）',hint:'（　）に入るものは？',opts:['ぐらい','など','ほど','とか'],ans:0},
+  {q:'宿題は明日まで（　）出してください。',hl:'（　）',hint:'（　）に入るものは？',opts:['に','で','の','を'],ans:0},
+  {q:'彼が来る前（　）、準備しておきましょう。',hl:'（　）',hint:'（　）に入るものは？',opts:['に','で','が','と'],ans:0},
+  {q:'映画を見ている間（　）、電話が鳴った。',hl:'（　）',hint:'（　）に入るものは？',opts:['に','で','が','と'],ans:0},
+  {q:'お金が（　）、買えませんでした。',hl:'（　）',hint:'（　）に入るものは？',opts:['たりなくて','たらなくて','ありなくて','すくなくて'],ans:0},
+  {q:'子供のころ、よく公園で遊んだ（　）です。',hl:'（　）',hint:'（　）に入るものは？',opts:['もの','こと','の','とき'],ans:0},
+  {q:'急いで来た（　）、まだ間に合うかもしれない。',hl:'（　）',hint:'（　）に入るものは？',opts:['ら','ば','と','の'],ans:0},
+  {q:'雪が降って、寒く（　）きました。',hl:'（　）',hint:'（　）に入るものは？',opts:['なって','なる','なった','なります'],ans:0},
+  {q:'母に手紙を書い（　）あげた。',hl:'（　）',hint:'（　）に入るものは？',opts:['て','が','を','の'],ans:0},
+  {q:'宿題が（　）ので、遊べません。',hl:'（　）',hint:'（　）に入るものは？',opts:['多い','多く','多くて','多かった'],ans:0},
+  {q:'山田さんは料理が（　）そうです。',hl:'（　）',hint:'（　）に入るものは？',opts:['上手','上手だ','上手な','上手に'],ans:0},
+  {q:'子供（　）親に頼ってばかりではいけない。',hl:'（　）',hint:'（　）に入るものは？',opts:['でも','まで','だけ','しか'],ans:0},
+  {q:'明日早く起きる（　）、今日は早く寝よう。',hl:'（　）',hint:'（　）に入るものは？',opts:['ために','ように','ことに','ものに'],ans:0},
+  {q:'走っていた（　）、転んでしまった。',hl:'（　）',hint:'（　）に入るものは？',opts:['ら','と','ば','の'],ans:0},
+  {q:'お母さんがケーキを作って（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['くれた','あげた','もらった','いた'],ans:0},
+  {q:'彼は元気（　）見えます。',hl:'（　）',hint:'（　）に入るものは？',opts:['そうに','そうで','そうな','そうの'],ans:0},
+  {q:'もう少し（　）、休みましょう。',hl:'（　）',hint:'（　）に入るものは？',opts:['したら','すれば','すると','して'],ans:0},
+  {q:'雨が（　）、出かけました。',hl:'（　）',hint:'（　）に入るものは？',opts:['止んで','止めて','止んだ','止め'],ans:0},
 ];
-const READING_SHORT=[
-  {passage:'営業部の皆様\n　皆さんもご存じのように、中村さんが来月でお辞めになります。そこで、中村さんに花束と記念品を差し上げたいと思いますが、いかがでしょうか。\n　中村さんのお好きな物など、ご存じの方がいらっしゃいましたら、アドバイスをいただければうれしいです。\n　この案に賛成の方は、今週中にご返信ください。\n\n石田',
-   qs:[{q:'「この案」とあるが、何か。',opts:['中村さんのためにお別れ会をすること','中村さんにみんなでプレゼントをあげること','中村さんの好きな物をそれぞれが買って贈ること','どんなプレゼントをもらいたいか聞くこと'],ans:1}],type:'short',label:'短文'},
-  {passage:'私の家の近くを大きな川が流れている。川沿いの歩道をジョギングするのが、私の趣味だ。だが、残念なことが一つある。歩道の色が場所によってバラバラなのだ。この川は一つの市と二つの町を通っており、市や町によって道の色が変わっているのである。一本の自然な川はずっと同じように続いているのだから、周りも変えないで一つの景色を作ることはできなかったのかと思う。',
-   qs:[{q:'この文章を書いた人が言いたいことは何か。',opts:['歩道の色が変わる中を走るのは楽しい','歩道の色が市や町によって違うのは残念だ','川の景色を見ながら走るのは気持ちがいい','人工的な川の流れを見るのは悲しい'],ans:1}],type:'short',label:'短文'},
-  {passage:'ある雑誌に、おいしそうなケーキやクッキーの写真が載っているページがあった。よく見たら、塩の味がするお菓子を宣伝している広告だった。塩辛いお菓子なのかと思ったら、そうではなくて、甘さの中に、塩味も感じられるお菓子なのだそうだ。塩の味がする甘い和菓子は食べたことがあるが、洋菓子にも同じようなものがあったのだ。一度買ってみようと思う。',
-   qs:[{q:'この文章を書いた人は何を買ってみようと思っているか。',opts:['塩辛くて甘くない和菓子','塩辛くて甘くない洋菓子','少し塩の味がする甘い和菓子','少し塩の味がする甘い洋菓子'],ans:3}],type:'short',label:'短文'},
+const N3_READING_SHORT=[
+  {passage:'営業部の皆様\n　皆さんもご存じのように、中村さんが来月でお辞めになります。そこで、中村さんに花束と記念品を差し上げたいと思いますが、いかがでしょうか。\n　この案に賛成の方は、今週中にご返信ください。\n\n石田',qs:[{q:'「この案」とあるが、何か。',opts:['中村さんのためにお別れ会をすること','中村さんにみんなでプレゼントをあげること','中村さんの好きな物をそれぞれが買って贈ること','どんなプレゼントをもらいたいか聞くこと'],ans:1}],type:'short',label:'短文'},
+  {passage:'私の家の近くを大きな川が流れている。川沿いの歩道をジョギングするのが、私の趣味だ。だが、残念なことが一つある。歩道の色が場所によってバラバラなのだ。この川は一つの市と二つの町を通っており、市や町によって道の色が変わっているのである。',qs:[{q:'この文章を書いた人が言いたいことは何か。',opts:['歩道の色が変わる中を走るのは楽しい','歩道の色が市や町によって違うのは残念だ','川の景色を見ながら走るのは気持ちがいい','人工的な川の流れを見るのは悲しい'],ans:1}],type:'short',label:'短文'},
+  {passage:'ある雑誌に、おいしそうなケーキやクッキーの写真が載っているページがあった。よく見たら、塩の味がするお菓子を宣伝している広告だった。甘さの中に、塩味も感じられるお菓子なのだそうだ。一度買ってみようと思う。',qs:[{q:'この文章を書いた人は何を買ってみようと思っているか。',opts:['塩辛くて甘くない和菓子','塩辛くて甘くない洋菓子','少し塩の味がする甘い和菓子','少し塩の味がする甘い洋菓子'],ans:3}],type:'short',label:'短文'},
+  {passage:'昨日プリンターが故障したので、川名電気に修理を頼みました。修理の人は、10時に来てくれるそうです。わたしは授業があるので、修理の人が来たら、プリンターの場所に案内をお願いします。\n\n故障の内容ですが、印刷する時に紙にインクの汚れがついてしまいます。実際に印刷した紙がプリンターのところに置いてありますから、それを修理の人に見せて説明してください。\n\n修理が済んだら、午後のゼミの資料を人数分用意しておいてください。\n下田',qs:[{q:'修理の人が来たとき、中村さんがしなければならないことは何か。',opts:['教室へ下田先生を呼びに行く','印刷した紙をプリンターのところに置く','修理の人に故障の状態を説明する','修理の人にゼミの資料を印刷してもらう'],ans:2}],type:'short',label:'短文'},
+  {passage:'難しい問題が発生し、広島に出張することになった。三日目にやっと解決でき、ほっとしてホテルに戻った。荷物を整理したとき、間違えて重要な書類を捨ててしまった。しかし、気がつかずにその日夜遅く東京に帰ってきた。翌日気がついて、あわててホテルに電話をしたら、すぐに書類を見つけてくれた。そのホテルでは、客がチェックアウトしたあとも部屋のゴミはもう一泊させるのだそうだ。客のことをよく考えたサービスだと感心し、本当にうれしかった。',qs:[{q:'うれしいこととあるが、どのようなことか。',opts:['会社の難しい問題がやっと解決できたこと','ホテルの人が書類の整理をしてくれていたこと','ホテルが書類を捨てずに残しておいてくれたこと','同じ部屋にもう一晩泊まることができたこと'],ans:2}],type:'short',label:'短文'},
 ];
-const READING_MID=[
-  {passage:'以下の文章は、イタリアから来た留学生のビアンカさんが書いた作文である。\n\n　私が好きな日本の料理は「納豆スパゲティ」です。私は２年前に初めて納豆を見ました。イタリアの大学で日本語を勉強していたとき、先生がパーティーに納豆を持ってきてくださったのです。けれど、そのときはにおいが強くて食べられませんでした。\n\n　ところが、日本に来て友達とレストランに行ったとき、友達の納豆スパゲティを少し食べさせてもらって驚きました。ほとんどにおいがなく、とてもおいしかったからです。\n\n　それから、週に３、４回そのレストランに行って、納豆スパゲティを頼むようになりました。最近は納豆を買ってきて、自分でも作って食べています。帰国したら、友達や家族に納豆スパゲティを作ってあげたいです。',
-   qs:[
-    {q:'先生がパーティーに納豆を（　）のです。\n（　）に入るものは？',opts:['持ってきてくださった','持ってきてくださったそう','持っていかれたと思い','持っていかれたはず'],ans:0},
-    {q:'（　）、日本に来て友達とレストランに行ったとき…\n（　）に入る接続詞は？',opts:['そのうえ','たとえば','ところが','ちなみに'],ans:2},
-    {q:'帰国したら、友達や家族に（　）。\n（　）に入るものは？',opts:['作ってもらえました','作らせてやりました','作ってくれます','作ってあげたいです'],ans:3},
-   ],type:'mid',label:'中文'},
+const N3_READING_MID=[
+  {passage:'以下の文章は、イタリアから来た留学生のビアンカさんが書いた作文である。\n\n　私が好きな日本の料理は「納豆スパゲティ」です。私は２年前に初めて納豆を見ました。イタリアの大学で日本語を勉強していたとき、先生がパーティーに納豆を持ってきてくださったのです。けれど、そのときはにおいが強くて食べられませんでした。\n\n　ところが、日本に来て友達とレストランに行ったとき、友達の納豆スパゲティを少し食べさせてもらって驚きました。ほとんどにおいがなく、とてもおいしかったからです。\n\n　最近は納豆を買ってきて、自分でも作って食べています。帰国したら、友達や家族に納豆スパゲティを作ってあげたいです。',qs:[
+    {q:'先生がパーティーに納豆を（　）のです。（　）に入るものは？',opts:['持ってきてくださった','持ってきてくださったそう','持っていかれたと思い','持っていかれたはず'],ans:0},
+    {q:'（　）、日本に来て友達とレストランに…（　）に入る接続詞は？',opts:['そのうえ','たとえば','ところが','ちなみに'],ans:2},
+    {q:'帰国したら、友達や家族に（　）。（　）に入るものは？',opts:['作ってもらえました','作らせてやりました','作ってくれます','作ってあげたいです'],ans:3},
+  ],type:'mid',label:'中文'},
+  {passage:'わたしは、家の近くを毎日散歩していますが、今日はいつもと違う道を歩いてみました。ぶらぶら歩いていると、どこからか花のいいにおいがしてきました。知っている香りなのに、それがどんな花なのか思い出せませんでした。でも、そのとき自然に、昔住んでいた家のことを思い出しました。\n\nそれは、田舎の、広い庭がある家でした。祖父と祖母も一緒に住んでいて、にぎやかな毎日でした。隣の家の明子ちゃんという女の子と、家の裏にある山に行ったり、近くの川に行ったりして、よく一緒に遊びました。なつかしい思い出です。\n\nどうしてあの時、昔住んでいた家のことを思い出したのか、わたしは不思議でした。家に帰ってから、昔の写真や祖父、祖母の写真を見ながら、しばらく考えました。そして、昔住んでいた家の庭には、春になると、白くて小さな、かわいい花がたくさん咲いていたことを思い出しました。その花は、今日道を歩いていたときの、あの花と同じ香りだったのです。',qs:[
+    {q:'それとあるが、何のことか。',opts:['散歩の途中で見た、花が咲いている家','昔住んでいた家によく似ている家','子どものころ、自分が住んでいた家','昔一緒によく遊んだ明子ちゃんの家'],ans:2},
+    {q:'なつかしい思い出とあるが、例えばどんな思い出だと言っているか。',opts:['隣の家の広い庭によく行った','祖父と祖母がよく遊びに来た','庭で明子ちゃんと花を見た','友達と一緒に山や川で遊んだ'],ans:3},
+    {q:'この文章を書いた人は、散歩のときに昔住んでいた家のことを思い出したのはなぜだと考えているか。',opts:['昔住んでいた家の庭に咲いていたのと同じ花の香りがしたから','昔住んでいた家の庭に咲いていたのと同じ白い花を見たから','昔住んでいた家の近くの道に咲いていたのと同じ花の香りがしたから','昔住んでいた家の近くの道に咲いていたのと同じ白い花を見たから'],ans:0}
+  ],type:'mid',label:'中文'}
 ];
-const READING_LONG=[
-  {passage:'　結婚して妻と一緒に住み始めたころ、こんなことがあった。閉めたと思ったトイレや部屋のドアが、しばらくして見ると、開いているのだ。おかしいなあと思いながら、もう一度閉めておいても、少したつと、また開いている。妻にドアのことを尋ねてみると、「もちろん、そこを使っていない時は、開けておくわよ。」と言うので、びっくり。犯人は妻だったのだ。\n\n　父親の仕事の都合で外国生活が長かった妻は、ドアはいつも開けておくようにと言われて育ったそうだ。私はずっと「ドアは必ず閉めなさい。」と注意されてきたので、その違いに驚いてしまった。しかし、言われてみれば確かに、外国の映画やテレビドラマでは、トイレや部屋のドアが開けたままになっていることが多かった。\n\n　結婚は、育ち方も習慣も違う二人が一緒に生活を始めるのだから、最初は違いに驚くことが多いだろう。しかし、それも長く一緒に生活していると、ほとんど気にならなくなってくる。\n\n　あれから20年。今では、私の家のドアは、すべて開けたままになっている。',
-   qs:[
+const N3_READING_LONG=[
+  {passage:'　結婚して妻と一緒に住み始めたころ、こんなことがあった。閉めたと思ったトイレや部屋のドアが、しばらくして見ると、開いているのだ。おかしいなあと思いながら、もう一度閉めておいても、少したつと、また開いている。妻にドアのことを尋ねてみると、「もちろん、そこを使っていない時は、開けておくわよ。」と言うので、びっくり。犯人は妻だったのだ。\n\n　父親の仕事の都合で外国生活が長かった妻は、ドアはいつも開けておくようにと言われて育ったそうだ。\n\n　結婚は、育ち方も習慣も違う二人が一緒に生活を始めるのだから、最初は違いに驚くことが多いだろう。しかし、それも長く一緒に生活していると、ほとんど気にならなくなってくる。\n\n　あれから20年。今では、私の家のドアは、すべて開けたままになっている。',qs:[
     {q:'「おかしいなあと思いながら」とあるが、どうしてそう思ったのか。',opts:['閉めようとしたら、ドアが自然に開いたから','ドアを閉めても、少したつと、開いていたから','どんなに強い力で閉めても閉まらないから','開けておいても、しばらくすると閉まっていたから'],ans:1},
     {q:'「びっくり」とあるが、それはどうしてか。',opts:['ドアを開けていたのが、妻だとわかったから','妻も、ドアが開いているのが変だと感じていたから','自分は犯人ではないと、妻が言い出したから','妻は、「私」が犯人だと思っていたから'],ans:0},
     {q:'この文章を書いた人が言っていることはどれか。',opts:['結婚は習慣が違う二人なので、何でもよく話し合ったほうがいい','結婚では違いがあっても、そのたびに驚かないほうがいい','結婚直後は習慣の違いに驚くが、次第に気にならなくなっていく','結婚生活が長くなると、初めは新鮮なことも嫌になることが多い'],ans:2},
     {q:'20年後、筆者の家のドアはどうなっているか。',opts:['いつも閉まっている','いつも開いている','妻が管理している','場合によって違う'],ans:1},
-   ],type:'long',label:'長文'},
+  ],type:'long',label:'長文'},
+  {passage:'現在、日本で農業をしている人は、約200万人。40年前に比べると、その数は3分の1以下に減っている。そして、農業をしている人の60%以上は65歳以上のお年寄りだ。この状態を変えようと、最近いろいろな農業のやり方が考えられているそうだ。\n\nその一つは、これまでのように家族で農業をするのではなく、多くの人が働く「会社」の形で農業をするというものだ。このような会社の一つに「あおぞら」がある。「あおぞら」では今までにないいくつかの工夫によって、若者も働きやすい環境を作っている。\n\n第一の工夫は「決まった給料を払うこと」。農業は自然が相手なので、どうしても収入が多い時と少ない時が出てしまう。しかし、一年中いろいろな種類の野菜を作ることで、一つがだめでも他の野菜でカバーできるようにし、毎月同じ給料が払えるようにする。\n\n第二の工夫は「休めるようにすること」。社員はみんな違う日に休みを取る。社員が大勢いるので、それぞれが順番に休みを取るようにすれば、それほど多くはないが、休日も作れる。',qs:[
+    {q:'この状態とは、どのような状態か。',opts:['農業をする若者が増えている状態','40年前に比べて農業をする人が減っている状態','農業の会社が増えている状態','農業の収入が安定している状態'],ans:1},
+    {q:'いくつかの工夫の中で挙げられているのはどれか。',opts:['若者の好きな野菜を作ること','給料を毎月安定して払うこと','テクノロジーを活用すること','家族で農業を続けること'],ans:1},
+    {q:'なぜ「あおぞら」では毎月同じ給料が払えるのか。',opts:['野菜を一年中いろんな種類作るから','給料が高く設定されているから','社員数が少ないから','政府からの補助があるから'],ans:0}
+  ],type:'long',label:'長文'}
+];
+const N4_VOCAB_REAL=[
+  {q:'ちょっと味がへんですよ。',hl:'味',hint:'＿＿＿の読み方は？',opts:['こえ','あじ','おと','におい'],ans:1},
+  {q:'このビルは世界でいちばん高いです。',hl:'世界',hint:'＿＿＿の読み方は？',opts:['せいがい','せいかい','せがい','せかい'],ans:3},
+  {q:'それはたなかさんが考えてくれました。',hl:'考えて',hint:'＿＿＿の読み方は？',opts:['かぞえて','こたえて','かんがえて','つたえて'],ans:2},
+  {q:'じしょが買いたかったのに、お金が足りませんでした。',hl:'足りません',hint:'＿＿＿の読み方は？',opts:['たりません','あしりません','たしりません','ありません'],ans:0},
+  {q:'わたしのかぞくはみんな体がじょうぶです。',hl:'体',hint:'＿＿＿の読み方は？',opts:['かたら','からた','かだら','からだ'],ans:3},
+  {q:'今度の日よう日にきこくします。',hl:'今度',hint:'＿＿＿の読み方は？',opts:['こんどう','こんど','こんと','こんとう'],ans:1},
+  {q:'あしたの営業はあさ9時からです。',hl:'営業',hint:'＿＿＿の読み方は？',opts:['じゅぎょう','えいきょう','えいぎょう','じゅきょう'],ans:2},
+  {q:'ずっとまどから雲を見ていました。',hl:'雲',hint:'＿＿＿の読み方は？',opts:['くも','ほし','つき','そら'],ans:0},
+  {q:'まいあさ近所のこうえんでジョギングをしています。',hl:'近所',hint:'＿＿＿の読み方は？',opts:['きんじょ','ちかじょ','きんじょう','ちかじょう'],ans:0},
+  {q:'このくすりはいくらですか。',hl:'くすり',hint:'＿＿＿を漢字で書くと？',opts:['果','楽','菓','薬'],ans:3},
+  {q:'きのうは9時におきました。',hl:'おき',hint:'＿＿＿を漢字で書くと？',opts:['赴きました','題きました','起きました','匙きました'],ans:2},
+  {q:'だんせいのおてあらいはあちらです。',hl:'だんせい',hint:'＿＿＿を漢字で書くと？',opts:['男姓','女性','男性','女姓'],ans:2},
+  {q:'このスイッチをおせば、電気がつきます。',hl:'おせ',hint:'＿＿＿を漢字で書くと？',opts:['伸せば','挿せば','押せば','坤せば'],ans:2},
+  {q:'国のりょうしんにもつをおくりました。',hl:'おくり',hint:'＿＿＿を漢字で書くと？',opts:['込りました','返りました','速りました','送りました'],ans:3},
+  {q:'あには車のうんてんができます。',hl:'うんてん',hint:'＿＿＿を漢字で書くと？',opts:['運転','運軽','運伝','運軒'],ans:0},
+  {q:'とても行きたかったのに、りょこうがちゅうしになって、（　）です。',hl:'',hint:'（　）に入る言葉は？',opts:['ざんねん','ふべん','だめ','しんぱい'],ans:0},
+  {q:'なくしたかぎを（　）けど、どこにもないんです。',hl:'',hint:'（　）に入る言葉は？',opts:['しらべた','さがした','みつけた','あつめた'],ans:1},
+  {q:'スポーツのあとでシャワーをあびるのは（　）がいいです。',hl:'',hint:'（　）に入る言葉は？',opts:['ぐあい','こころ','きもち','げんき'],ans:2},
+  {q:'日本へりょこうに行ったとき、いろいろな（　）をしました。',hl:'',hint:'（　）に入る言葉は？',opts:['けいけん','おもいで','おみやげ','きょうみ'],ans:0},
+  {q:'雨がふっているので、さんぽに行くのは（　）。',hl:'',hint:'（　）に入る言葉は？',opts:['とじました','すてました','しめました','やめました'],ans:3},
+  {q:'にもつが多いので、やまださんがひっこしを（　）くれました。',hl:'',hint:'（　）に入る言葉は？',opts:['はこんで','てつだって','かたづけて','つつんで'],ans:1},
+  {q:'もりさんに、先週学校に来なかった（　）を聞きました。',hl:'',hint:'（　）に入る言葉は？',opts:['れんらく','りゆう','いけん','そうだん'],ans:1},
+  {q:'どうぞ（　）しないで、たくさん食べてください。',hl:'',hint:'（　）に入る言葉は？',opts:['しつれい','えんりょ','ちゅうい','はんたい'],ans:1},
+  {q:'えさをやったり、さんぽにつれていったり、毎日犬の（　）をしています。',hl:'',hint:'（　）に入る言葉は？',opts:['せわ','うんどう','ようい','しゅうかん'],ans:0},
+  {q:'ねつがあるので、びょういんに（　）から会社に行きます。',hl:'',hint:'（　）に入る言葉は？',opts:['もどって','よって','まがって','かよって'],ans:1},
+  {q:'おとうとはあそこでアルバイトをしています。',hl:'アルバイト',hint:'下線部に意味が最も近いものは？',opts:['おとうとはあそこでまっています。','おとうとはあそこでやすんでいます。','おどうとはあそこであそんでいます。','おとうとはあそこではたらいています。'],ans:3},
+  {q:'あの人はほんとうにうつくしいですね。',hl:'うつくしい',hint:'下線部に意味が最も近いものは？',opts:['あの人はほんとうにきれいですね。','あの人はほんとうにおもしろいですね。','あの人はほんとうにわかいですね。','あの人はほんとうにかわいいですね。'],ans:0},
+  {q:'あの店はすいています。',hl:'すいて',hint:'下線部に意味が最も近いものは？',opts:['あの店はしなものが少ないです。','あの店はおきゃくさんが多いです。','あの店はおきゃくさんが少ないです。','あの店はしなものが多いです。'],ans:2},
+  {q:'このシャワーはぬるいです。',hl:'ぬるい',hint:'下線部に意味が最も近いものは？',opts:['このシャワーはあつくないです。','このシャワーはあついです。','このシャワーはつよいです。','このシャワーはつよくないです。'],ans:0},
+  {q:'友だちに日本のりょうりをおそわりました。',hl:'おそわり',hint:'下線部に意味が最も近いものは？',opts:['友だちに日本のりょうりをもらいました。','友だちに日本のりょうりをおしえました。','友だちに日本のりょうりをあげました。','友だちに日本のりょうりをならいました。'],ans:3},
+  {q:'けしき',hl:'けしき',hint:'「けしき」の正しい使い方は？',opts:['先週えきまえにできた店は、中のけしきがとてもあかるいです。','わたしはかぞくのたのしそうなけしきをいつもビデオでとっています。','このまちは山も川もあって、けしきがとてもいいです。','子どものけしきがへんだったので、びょういんにつれていきました。'],ans:2},
+  {q:'おどろく',hl:'おどろく',hint:'「おどろく」の正しい使い方は？',opts:['みんなの前で話すとき、いつもおどろいてじょうずに話せません。','やまださんのおにいさんがゆうめいなかしゅだと聞いて、おどろきました。','ねる前にコーヒーを飲むと、おどろいてねむれません。','あしたははじめてのデートなので、いまからおどろいています。'],ans:1},
+  {q:'ひろう',hl:'ひろう',hint:'「ひろう」の正しい使い方は？',opts:['みちがわからなくなったので、かばんからちずをひろいました。','すみません、たなの上のはこをひろってくれませんか。','木からりんごをひろって、ふくろに入れました。','小学生がごみをひろって、こうえんをそうじしています。'],ans:3},
+  {q:'しょうたい',hl:'しょうたい',hint:'「しょうたい」の正しい使い方は？',opts:['119ばんに電話して、きゅうきゅうしゃをいえにしょうたいしてください。','ぶちょうにしょうたいされて、休みの日に会社に行きました。','大学のこうはいをけっこんしきにしょうたいするつもりです。','いしゃにしょうたいされて、あしたからにゅういんすることになりました。'],ans:2},
+  {q:'わたす',hl:'わたす',hint:'「わたす」の正しい使い方は？',opts:['毎日にわの花に水をわたしています。','このきっぷは、かいさつぐちを出るとき、えきいんにわたしてください。','このてがみをポストにわたしてきてください。','わたしはいつもこうちゃにさとうとぎゅうにゅうをわたします。'],ans:1},
+];
+const N4_GRAMMAR_REAL=[
+  {q:'母が育てたトマト（　）ジュースを作りました。',hl:'（　）',opts:['で','に','へ','や'],ans:0},
+  {q:'このかばんは軽いから、旅行（　）便利です。',hl:'（　）',opts:['と','を','に','の'],ans:2},
+  {q:'（教室で）先生「じゃあ、一人（　）じこしょうかいをしてください。」',hl:'（　）',opts:['など','ずつ','しか','も'],ans:1},
+  {q:'（料理教室で）先生「今日はだれ（　）かんたんに作れるケーキの作り方を教えます。」',hl:'（　）',opts:['で','は','でも','なら'],ans:2},
+  {q:'いっしょうけんめい勉強して、（　）外国の大学に行きたいです。',hl:'（　）',opts:['すっかり','たぶん','やっと','いつか'],ans:3},
+  {q:'今朝、ねぼうしてしまったので、学校まで走っていったが、（　）ちこくした。',hl:'（　）',opts:['かならず','ときどき','そろそろ','やはり'],ans:3},
+  {q:'（電話で）A「もしもし、これから（　）に行くよ。」\nB「じゃあ、駅に着いたら、電話をください。」',hl:'（　）',opts:['こっち','そっち','あっち','どっち'],ans:1},
+  {q:'あしたは朝、会議があるから、（　）家を出ます。',hl:'（　）',opts:['早くて','早く','早い','早いと'],ans:1},
+  {q:'田中さんは体が大きくてこわそう（　）、本当はこわくありません。',hl:'（　）',opts:['し','だし','だけれど','けれど'],ans:2},
+  {q:'インターネットラジオを（　）ために、パソコンを買いました。',hl:'（　）',opts:['聞きます','聞こう','聞く','聞ける'],ans:2},
+  {q:'もらったりんごをジャムに（　）食べました。',hl:'（　）',opts:['して','されて','なって','なれて'],ans:0},
+  {q:'最近、私は仕事がいそがしくて、なかなかともだちと（　）。',hl:'（　）',opts:['会える','会えない','会う','会った'],ans:1},
+  {q:'山本「田中さん、元気がありませんね。どう（　）か。」\n田中「ええ、かぜをひきました。」',hl:'（　）',opts:['でしょう','なります','します','したんです'],ans:3},
+  {q:'こども「ご飯まだ？」\n母「うん。今から（　）だよ。」',hl:'（　）',opts:['作るところ','作っているところ','作るとき','作っているとき'],ans:0},
+  {q:'田中「木村さん、荷物が重そうだね。（　）。」\n木村「ありがとうございます。」',hl:'（　）',opts:['てつだいたいんですか','てつだってくださいよ','てつだったよ','てつだおうか'],ans:3},
+  {q:'れいぞうこに ＿ ＿ ★ ＿ ので、食べました。\n★に入るものは？',hl:'★',opts:['ケーキが','父が','買ってきた','残っていた'],ans:0},
+  {q:'大事な ＿ ＿ ★ ＿ がかかってきた。\n★に入るものは？',hl:'★',opts:['電話','とちゅう','話の','で'],ans:3},
+  {q:'（学校で）先生「ろうかがぬれています。歩く ＿ ＿ ★ ＿ してください。」\n★に入るものは？',hl:'★',opts:['ように','注意','ときは','すべらない'],ans:0},
+  {q:'来週、会社の ＿ ＿ ★ ＿ しました。\n★に入るものは？',hl:'★',opts:['近くに','する','ことに','ひっこしを'],ans:1},
+  {q:'北町に ＿ ＿ ★ ＿ そうです。\n★に入るものは？',hl:'★',opts:['和食のお店は','「さくら」という','有名だ','ある'],ans:0},
+];
+const N4_READING_SHORT=[
+  {passage:'私はきれいな切手をたくさん集めています。手紙を出すときは、書いたことに関係がある切手を選んで、封筒にはります。例えば、海で泳いだことを書いたときは、魚の切手をはります。手紙を読む人に、切手も楽しんでもらいたいからです。',qs:[{q:'魚の切手をはるのは、どうしてですか。',opts:['手紙に、海に関係があることを書いたから','魚の切手を集めることが趣味だから','手紙を読む人が、海が好きだから','魚の切手はとてもきれいだから'],ans:0}],type:'short',label:'短文'},
+  {passage:'真一へ\nお帰りなさい。\n今日は、おじいちゃんの家に寄ってから、家に帰ります。8時ごろには家に着くと思います。晩ご飯はピザです。7時ごろ、ピザ屋さんがピザを持ってくるので、封筒の中のお金を渡してください。\nピザを食べて、待っていてください。\n母',qs:[{q:'このメモを読んで。真一さんがしなければならないことは何ですか。',opts:['お母さんが帰る前に、ピザ屋でピザを食べます。','ピザ屋に行って、8時ごろまでに家に帰ります。','ピザ屋が来たら、封筒の中にあるお金を払います。','お母さんが帰るまで、ピザを食べないで待ちます。'],ans:2}],type:'short',label:'短文'},
+  {passage:'夏川大学で、日本で働きたいという留学生85人になぜ日本で働きたいか聞きました。\n一番多かった理由は「日本語を使う仕事がしたい」で、次は「働きながら、日本の技術を勉強したい」でした。三番目は「日本にずっと住みたい」で、「お金がたくさんもらえる」は一番少なくて、5人でした。',qs:[{q:'日本で働きたい理由について、どんなことがわかりますか。',opts:['日本語が上手になりたいから、という人が一番多い。','日本の技術を勉強したいから、という人が二番目に多い。','日本にずっと住みたいから、という人は5人だった。','お金をたくさんもらえるから、という人は三番目に多い。'],ans:1}],type:'short',label:'短文'},
+];
+const N4_READING_MID=[
+  {passage:'下の文章は韓国で日本語を勉強しているイムさんの作文です。\n\n夏休みの予定\n\nイム ユリ\n\nもうすぐ大学生活で初めての夏休みです。大学の夏休みは長いので、いろいろなことをしようと思います。\n\nまず、本を読みます。いつも学校の勉強がたいへんで、好きな本を読む時間がありません。夏休みには好きな本をたくさん読むつもりです。\n\nそれから、初めてアルバイトをします。兄が働いている花屋です。兄にしょうかいしてもらいました。初めてなので少し心配ですが、がんばります。\n\nそして、日本に旅行に行きます。旅行中、たくさん日本語を使うつもりです。\n\n大学1年生の夏休みは1回だけです。いろいろな経験をして、初めての夏休みを楽しみたいです。',qs:[
+    {q:'もうすぐ大学生活で初めての夏休みです。…いろいろなことを（21）。の（21）に入るものは？',opts:['していたのです','するようになりました','しようと思います','する予定だからです'],ans:2},
+    {q:'夏休み（22）好きな本をたくさん読むつもりです。の（22）に入るものは？',opts:['には','にも','からも','までは'],ans:0},
+    {q:'（23）、初めてアルバイトをします。の（23）に入るものは？',opts:['では','それから','たとえば','ですから'],ans:1},
+    {q:'兄にしょうかいして（24）ました。の（24）に入るものは？',opts:['くれ','あげ','もらい','やり'],ans:2},
+    {q:'初めての夏休みを（25）。の（25）に入るものは？',opts:['楽しそうです','楽しんでいます','楽しようです','楽しみたいです'],ans:3},
+  ],type:'mid',label:'中文'},
+];
+const N4_READING_LONG=[
+  {passage:'　わたしが、初めて自分が少し大人になったと思ったのは、10歳のときでした。とてもうれしかったことを今でもよく覚えています。\n\n　10歳になるまで、わたしは毎年、姉と一緒に両親の誕生日プレゼントを選んでいました。しかし10歳になって、母の誕生日プレゼントについて姉と話しているとき、姉が「今年は一人で選んでみる？」と言いました。わたしはびっくりしましたが、少し考えてから「うん。」と答えました。そして、プレゼントを選びに、一人で本屋に行ったり、花屋に行ったりしました。\n\n　母の誕生日の前の日曜日に、わたしはスーパーに行って、ハンカチを一枚買いました。母の好きな花の絵がかいてあるハンカチでした。母が喜んでくれるかどうか心配でしたが、母はハンカチを見て「とてもきれいね。ありがとう。」と言いました。わたしはとても安心しました。姉もにこにこしながら、「よかったね。」と言ってくれました。\n\n　もう子どもじゃないと思ったときの思い出です。',qs:[
+    {q:'「わたし」は10歳のとき、母の誕生日プレゼントをどうやって選びましたか。',opts:['自分一人で選びました。','姉と一緒に選びました。','姉に何がいいか聞いて選びました。','母に何がいいか聞いて選びました。'],ans:0},
+    {q:'「わたし」は母に何をプレゼントしましたか。',opts:['本','花','花の絵','ハンカチ'],ans:3},
+    {q:'安心しましたとありますが。どうしてですか。',opts:['スーパーでハンカチが見つけられたから','姉がプレゼントをきれいだとほめてくれたから','母がプレゼントを喜んでくれたから','姉が「よかったね。」と言ってくれたから'],ans:2},
+    {q:'この文章で、「わたし」が一番言いたかったことは何ですか。',opts:['初めて一人で買い物ができて、とても楽しかったこと','プレゼントがなかなか選べなくて、困ったこと','自分が少し大人になったと思えて、うれしかったこと','母がプレゼントを喜んでくれるかどうか、心配だったこと'],ans:2},
+  ],type:'long',label:'長文'},
+];
+const N4_VOCAB_AI=[
+  {q:'駅の前に新しい図書館ができました。',hl:'図書館',hint:'＿＿＿の読み方は？',opts:['としょかん','としょかえ','どしょかん','どしょかえ'],ans:0},
+  {q:'この問題はとても難しいです。',hl:'難しい',hint:'＿＿＿の読み方は？',opts:['やさしい','むずかしい','いそがしい','たのしい'],ans:1},
+  {q:'試験の結果を先生に報告しました。',hl:'報告',hint:'＿＿＿の読み方は？',opts:['ほうこう','ほうごく','ほうこく','ほうごう'],ans:2},
+  {q:'母は毎朝、台所で料理をします。',hl:'台所',hint:'＿＿＿の読み方は？',opts:['だいどころ','たいしょ','だいしょ','たいどころ'],ans:0},
+  {q:'道が工事中で、車が通れませんでした。',hl:'工事',hint:'＿＿＿の読み方は？',opts:['こうし','こうじ','くうし','くうじ'],ans:1},
+  {q:'このへやはとても広いです。',hl:'へや',hint:'＿＿＿を漢字で書くと？',opts:['部家','部屋','副屋','副家'],ans:1},
+  {q:'バスていで友だちを待ちました。',hl:'バスてい',hint:'＿＿＿を漢字で書くと？',opts:['バス定','バス亭','バス停','バス程'],ans:2},
+  {q:'銀行でおかねをおろしました。',hl:'おかね',hint:'＿＿＿を漢字で書くと？',opts:['小金','御金','お鏡','お金'],ans:3},
+  {q:'荷物が重くて一人では（　）ので、友だちに手伝ってもらいました。',hl:'',hint:'（　）に入る言葉は？',opts:['むりでした','へんでした','だめでした','ざんねんでした'],ans:0},
+  {q:'転んでひざを（　）しまいました。病院に行きましょう。',hl:'',hint:'（　）に入る言葉は？',opts:['こわして','きって','けがして','やぶって'],ans:2},
+  {q:'この電車は途中で（　）しないで、終点まで直接行きます。',hl:'',hint:'（　）に入る言葉は？',opts:['もどり','とまり','むかえ','むすび'],ans:1},
+  {q:'会議は（　）に終わりましたので、早く帰れました。',hl:'',hint:'（　）に入る言葉は？',opts:['よていどおり','まにあうように','たいへんに','いっしょうけんめい'],ans:0},
+  {q:'このバスはあちらに止まります。',hl:'あちら',hint:'下線部に意味が最も近いものは？',opts:['ここ','そこ','あそこ','どこか'],ans:2},
+  {q:'父はとても元気です。',hl:'元気',hint:'下線部に意味が最も近いものは？',opts:['かなしそうです','たのしそうです','けんこうです','わかいです'],ans:2},
+  {q:'きびしい',hl:'きびしい',hint:'「きびしい」の正しい使い方は？',opts:['このケーキはとてもきびしい味です。','先生はルールについてとてもきびしいです。','今日はきびしい天気で、散歩しました。','友だちのきびしい話を聞いて、笑いました。'],ans:1},
+  {q:'おくる',hl:'おくる',hint:'「おくる」の正しい使い方は？',opts:['電車に乗って友だちをおくりました。','国の家族に荷物をおくりました。','公園に行くとき、花をおくりました。','毎日学校でノートをおくっています。'],ans:1},
+];
+const N4_GRAMMAR_AI=[
+  {q:'兄は先月、会社（　）やめました。',hl:'（　）',opts:['が','を','に','で'],ans:1},
+  {q:'子どもたちは公園（　）楽しそうに遊んでいます。',hl:'（　）',opts:['を','に','で','が'],ans:2},
+  {q:'もっと早く起きれば、電車（　）間に合いましたのに。',hl:'（　）',opts:['が','に','で','を'],ans:1},
+  {q:'彼女は歌が上手（　）、ダンスも得意です。',hl:'（　）',opts:['なのに','だし','のに','けれど'],ans:1},
+  {q:'熱があるから、今日は学校を休む（　）いいと思います。',hl:'（　）',opts:['ことが','ほうが','わけが','ためが'],ans:1},
+  {q:'雨が降り（　）、試合を続けました。',hl:'（　）',opts:['ながらも','てから','たあとで','ているのに'],ans:0},
+  {q:'A「ちょっとお待ちください。田中（　）おつなぎします。」',hl:'（　）',opts:['さんに','くんを','様が','さんへ'],ans:0},
+  {q:'来週までに報告書を（　）なければなりません。',hl:'（　）',opts:['だし','だして','出す','出した'],ans:1},
+  {q:'この本は読め（　）、買うつもりはありません。',hl:'（　）',opts:['ても','なくても','るのに','ないのに'],ans:1},
+  {q:'すみません、このビル（　）郵便局はどこですか。',hl:'（　）',opts:['から','まで','の中に','のそばに'],ans:3},
+];
+const N1_VOCAB_REAL=[
+  {q:'珍しいイベントがあると聞いて、広場に群衆が押し寄せた。',hl:'群衆',hint:'＿＿＿の読み方は？',opts:['かんしゅ','かんしゅう','ぐんしゅ','ぐんしゅう'],ans:3},
+  {q:'これまでの学説を覆すような新事実が発見された。',hl:'覆す',hint:'＿＿＿の読み方は？',opts:['ひるがえす','くつがえす','まどわす','ゆるがす'],ans:1},
+  {q:'この文書には、当時の生活の様子が克明に記録されている。',hl:'克明',hint:'＿＿＿の読み方は？',opts:['きょくめい','きょうめい','こくめい','こうめい'],ans:2},
+  {q:'窓を開けると、心地よい風が入ってきた。',hl:'心地よい',hint:'＿＿＿の読み方は？',opts:['こころちよい','こころじよい','ここちよい','こころよい'],ans:2},
+  {q:'新社長は、これまでの経営方針を踏襲すると述べた。',hl:'踏襲',hint:'＿＿＿の読み方は？',opts:['とうしょう','とうしゅう','としょう','としゅう'],ans:1},
+  {q:'新しい政権には、医療制度の改革が期待されている。',hl:'改革',hint:'＿＿＿の読み方は？',opts:['かいかく','かいこく','かいがく','かいごく'],ans:0},
+  {q:'この本は内容が難しすぎて、初心者には（　）が高いと思う。',hl:'',hint:'（　）に入る言葉は？',opts:['リミット','ブロック','ノルマ','ハードル'],ans:3},
+  {q:'プランの（　）はすでに固まっています。',hl:'',hint:'（　）に入る言葉は？',opts:['大筋','大幅','大口','大方'],ans:0},
+  {q:'本書の改訂（　）は、9月上旬に発売の予定です。',hl:'',hint:'（　）に入る言葉は？',opts:['刷','刀','誌','版'],ans:3},
+  {q:'システムトラブルの原因を徹底的に（　）し、再発防止に取り組みたい。',hl:'',hint:'（　）に入る言葉は？',opts:['究明','釈明','察知','探知'],ans:0},
+  {q:'カタカナの「ソ」と「リ」は（　）ので、名前を書くときは気をつけてください。',hl:'',hint:'（　）に入る言葉は？',opts:['悩ましい','疑わしい','まぎらわしい','わずらわしい'],ans:2},
+  {q:'この業者は魚を缶詰に（　）し、それを海外に輸出している。',hl:'',hint:'（　）に入る言葉は？',opts:['変造','転造','細工','加工'],ans:3},
+  {q:'市役所のロビーで、アマチュア写真家による写真展が（　）います。',hl:'',hint:'（　）に入る言葉は？',opts:['施されて','催されて','設けられて','挙げられて'],ans:1},
+  {q:'山田先生に触発されて、画家の道を志しました。',hl:'触発されて',hint:'＿＿＿の意味に最も近いものは？',opts:['指導を受けて','刺激を受けて','援助を受けて','評価を受けて'],ans:1},
+  {q:'試合後のインタビューで、選手たちはすがすがしい表情で質問に答えていた。',hl:'すがすがしい',hint:'＿＿＿の意味に最も近いものは？',opts:['ほっとした','興奮した','さわやかな','真剣な'],ans:2},
+  {q:'その部屋にある家具は、どれも簡素なデザインのものだった。',hl:'簡素',hint:'＿＿＿の意味に最も近いものは？',opts:['クールな','モダンな','ユニークな','シンプルな'],ans:3},
+  {q:'彼の誕生日パーティーの準備を、友人数人とひそかに進めている。',hl:'ひそかに',hint:'＿＿＿の意味に最も近いものは？',opts:['こっそり','張り切って','のんびり','急いで'],ans:0},
+  {q:'高橋選手は今年の大会への参加を断念したらしい。',hl:'断念',hint:'＿＿＿の意味に最も近いものは？',opts:['きめた','あきらめた','ことわった','のぞんだ'],ans:1},
+  {q:'努力をすればおのずと結果に表れてくる。',hl:'おのずと',hint:'＿＿＿の意味に最も近いものは？',opts:['だんだん','はっきり','自然に','絶対に'],ans:2},
+  {q:'免除',hl:'免除',hint:'「免除」の使い方として正しいものは？',opts:['会費を2年間滞納すると、自動的に会から免除されます。','3年後にもう一度試験を受けないと、この資格は免除されます。','入学試験の成績優秀者は、入学金が免除になります。','うがいをすれば、風邪の免除になります。'],ans:2},
+  {q:'ブランク',hl:'ブランク',hint:'「ブランク」の使い方として正しいものは？',opts:['2年のブランクがあり心配だったが、先月から職場に復帰した。','15分ほどブランクにしませんか。みんな疲れたようだし。','プレゼンの最中は緊張しちゃって、頭がブランクだったよ。','大事なデータをブランクしてしまった。'],ans:0},
+  {q:'怠る',hl:'怠る',hint:'「怠る」の使い方として正しいものは？',opts:['昨日、会社を怠って映画を見に行ってしまった。','忙しいときは料理を怠って、買ってきた弁当で済ますこともある。','彼はどんな苦労も怠らずに、いつも積極的に仕事に取り組んでいる。','成功を勝ち取るためには、日々の努力を怠ってはいけない。'],ans:3},
+  {q:'見込み',hl:'見込み',hint:'「見込み」の使い方として正しいものは？',opts:['今日はこれから取引先に打ち合わせに行く見込みです。','周囲の見込みに応えて、すばらしい仕事を成し遂げた。','田中さんは、来週には退院の見込みです。','見込みもしないところで昔の友人に会った。'],ans:2},
+  {q:'満たない',hl:'満たない',hint:'「満たない」の使い方として正しいものは？',opts:['私が生まれたのは、人口500人に満たない小さな村です。','会議資料が3人分満たないから、コピーしてきて。','どうがんばっても、英語力では田中さんに満たない。','当店のサービスについて何か満たない点があればご記入ください。'],ans:0},
+  {q:'有数',hl:'有数',hint:'「有数」の使い方として正しいものは？',opts:['この商品は有数ですので、売り切れの場合もございます。','この国は世界でも有数の小麦生産国だ。','会議で反対意見を述べた人は有数だった。','彼の趣味は有数で、いつも友人を驚かせる。'],ans:1},
+];
+const N1_VOCAB_AI=[
+  {q:'彼の発言は会議の流れを大きく変えた。',hl:'発言',hint:'＿＿＿の読み方は？',opts:['はつげん','はっげん','はつごん','はっごん'],ans:0},
+  {q:'この問題は慎重に検討する必要がある。',hl:'慎重',hint:'＿＿＿の読み方は？',opts:['しんちょう','しんじゅう','じんちょう','じんじゅう'],ans:0},
+  {q:'政府は経済政策を刷新した。',hl:'刷新',hint:'＿＿＿の読み方は？',opts:['さっしん','こうしん','かいしん','しんしん'],ans:0},
+  {q:'彼女は優雅な物腰で挨拶をした。',hl:'優雅',hint:'＿＿＿の読み方は？',opts:['ゆうが','ゆうげ','ゆうか','ゆうけ'],ans:0},
+  {q:'この件は機密事項として扱う。',hl:'機密',hint:'＿＿＿の読み方は？',opts:['きみつ','ぎみつ','きまつ','ぎまつ'],ans:0},
+  {q:'彼は組織の中核を担っている。',hl:'中核',hint:'＿＿＿の読み方は？',opts:['ちゅうかく','ちゅうがく','じゅうかく','じゅうがく'],ans:0},
+  {q:'長年の研究の成果がようやく（　）を結んだ。',hl:'',hint:'（　）に入る言葉は？',opts:['実','花','根','葉'],ans:0},
+  {q:'彼の発言には全く（　）がなく、信頼できる。',hl:'',hint:'（　）に入る言葉は？',opts:['矛盾','疑問','問題','誤解'],ans:0},
+  {q:'この計画を実行するには、まず予算を（　）する必要がある。',hl:'',hint:'（　）に入る言葉は？',opts:['確保','確認','確立','確定'],ans:0},
+  {q:'彼女は仕事と家庭を見事に（　）している。',hl:'',hint:'（　）に入る言葉は？',opts:['両立','並行','同時','合体'],ans:0},
+  {q:'新しい技術が次々と（　）されている。',hl:'',hint:'（　）に入る言葉は？',opts:['開発','発明','発見','発達'],ans:0},
+  {q:'彼の意見は多くの人に（　）を与えた。',hl:'',hint:'（　）に入る言葉は？',opts:['影響','効果','刺激','感動'],ans:0},
+  {q:'この問題には（　）的な解決策が必要だ。',hl:'',hint:'（　）に入る言葉は？',opts:['抜本','根本','基本','原本'],ans:0},
+  {q:'彼の提案は実に画期的だ。',hl:'画期的',hint:'＿＿＿の意味に最も近いものは？',opts:['新時代を開く','とても素晴らしい','よく考えられた','現実的な'],ans:0},
+  {q:'この方針は長らく踏襲されてきた。',hl:'踏襲',hint:'＿＿＿の意味に最も近いものは？',opts:['そのまま受け継ぐ','少し変更する','完全に変える','検討し直す'],ans:0},
+  {q:'彼女の話は冗長で要点がつかめなかった。',hl:'冗長',hint:'＿＿＿の意味に最も近いものは？',opts:['長すぎて無駄が多い','早口で分かりにくい','声が小さい','内容が複雑'],ans:0},
+  {q:'証拠を隠滅した罪で逮捕された。',hl:'隠滅',hint:'＿＿＿の意味に最も近いものは？',opts:['完全に消し去る','一時的に隠す','偽造する','改ざんする'],ans:0},
+  {q:'彼の態度は傲慢だ。',hl:'傲慢',hint:'＿＿＿の意味に最も近いものは？',opts:['思い上がっている','控えめだ','親切だ','慎重だ'],ans:0},
+  {q:'計画は綿密に練られている。',hl:'綿密',hint:'＿＿＿の意味に最も近いものは？',opts:['細かく丁寧に','大まかに','急いで','適当に'],ans:0},
+  {q:'慎重',hl:'慎重',hint:'「慎重」の使い方として正しいものは？',opts:['この案件は慎重に検討する必要がある','慎重に走ってバスに間に合った','慎重な料理を作った','慎重に大声で話した'],ans:0},
+  {q:'公表',hl:'公表',hint:'「公表」の使い方として正しいものは？',opts:['調査結果を公表する','友達に秘密を公表した','歌を公表で歌った','本を公表する'],ans:0},
+  {q:'矛盾',hl:'矛盾',hint:'「矛盾」の使い方として正しいものは？',opts:['彼の発言には矛盾がある','矛盾な料理を食べた','その服は彼に矛盾している','矛盾に行きました'],ans:0},
+  {q:'促進',hl:'促進',hint:'「促進」の使い方として正しいものは？',opts:['経済の発展を促進する','時計を促進する','彼を促進する','本を促進した'],ans:0},
+  {q:'順応',hl:'順応',hint:'「順応」の使い方として正しいものは？',opts:['新しい環境に順応する','本を順応した','友達と順応した','駅で順応する'],ans:0},
+  {q:'不可欠',hl:'不可欠',hint:'「不可欠」の使い方として正しいものは？',opts:['水は生活に不可欠だ','不可欠に走った','彼は不可欠を食べた','不可欠な天気だ'],ans:0},
+  {q:'彼女は感情を抑制するのが上手だ。',hl:'抑制',hint:'＿＿＿の読み方は？',opts:['よくせい','よくしょう','よくじょう','よくしせい'],ans:0},
+  {q:'この問題は早急に対処すべきだ。',hl:'早急',hint:'＿＿＿の読み方は？',opts:['さっきゅう','そうきゅう','さっこう','そうこう'],ans:0},
+  {q:'会議で重要な議題が提起された。',hl:'提起',hint:'＿＿＿の読み方は？',opts:['ていき','ていけ','ていご','ていぎ'],ans:0},
+  {q:'彼は誠実な人柄で皆に愛されている。',hl:'誠実',hint:'＿＿＿の読み方は？',opts:['せいじつ','せいしつ','じょうじつ','じょうしつ'],ans:0},
+  {q:'国際情勢は刻々と変化している。',hl:'刻々',hint:'＿＿＿の読み方は？',opts:['こくこく','ときどき','じこく','じじ'],ans:0},
+  {q:'この問題には抜本的な改革が必要だ。',hl:'',hint:'（　）に入る言葉は？',opts:['抜本','基本','根本','原本'],ans:0},
+  {q:'彼女は研究に没頭している。',hl:'',hint:'（　）に入る言葉は？',opts:['没頭','専念','集中','熱中'],ans:0},
+  {q:'長年の経験を活かして問題を解決した。',hl:'',hint:'（　）に入る言葉は？',opts:['活かして','生きて','働いて','動いて'],ans:0},
+  {q:'政府は新しい政策を打ち出した。',hl:'打ち出した',hint:'＿＿＿の意味に最も近いものは？',opts:['発表した','取り消した','延期した','検討した'],ans:0},
+  {q:'彼の業績は群を抜いている。',hl:'群を抜いて',hint:'＿＿＿の意味に最も近いものは？',opts:['他より優れている','普通の水準だ','劣っている','変わっている'],ans:0},
+  {q:'反映',hl:'反映',hint:'「反映」の使い方として正しいものは？',opts:['意見が結果に反映される','本を反映した','友達を反映する','駅で反映する'],ans:0},
+  {q:'拡大',hl:'拡大',hint:'「拡大」の使い方として正しいものは？',opts:['事業を拡大する','本を拡大した','歌を拡大する','人を拡大した'],ans:0},
+  {q:'傾向',hl:'傾向',hint:'「傾向」の使い方として正しいものは？',opts:['最近、物価が上がる傾向にある','傾向に走った','彼は傾向を食べた','傾向な天気だ'],ans:0},
+  {q:'怠る',hl:'怠る',hint:'「怠る」の使い方として正しいものは？',opts:['注意を怠ると事故になる','彼は怠るを食べた','友達を怠る','駅で怠る'],ans:0},
+  {q:'指示',hl:'指示',hint:'「指示」の使い方として正しいものは？',opts:['上司の指示に従う','指示に走った','彼は指示を食べた','指示な天気だ'],ans:0},
+];
+const N1_GRAMMAR_REAL=[
+  {q:'40代（　）後半となり、わたしもとうとう中高年の仲間入りだ。',hl:'（　）',hint:'（　）に入るものは？',opts:['を','へ','も','まで'],ans:2},
+  {q:'母から「まな板も（　）次第になる」と言われている。',hl:'（　）',hint:'（　）に入るものは？',opts:['使うとなると','使おうものなら','使わんばかりに','使いようによっては'],ans:3},
+  {q:'映画『ブラック』は評判通りの面白さで、特に、主人公が（　）ざる敵におびえる場面は圧巻だった。',hl:'（　）',hint:'（　）に入るものは？',opts:['見て','見え','見る','見える'],ans:1},
+  {q:'甲さんがこの絵をいくらで手に入れたのかはわからないが、有名画家の作品であることから考えても、安くない値段で買ったことは（　）間違いない。',hl:'（　）',hint:'（　）に入るものは？',opts:['まず','よく','かりに','なかなか'],ans:0},
+  {q:'お客様、ご希望のホテルが満室でしたので、他のホテルにご変更（　）のですが…。よろしいでしょうか。',hl:'（　）',hint:'（　）に入るものは？',opts:['ねがいたい','なさりたい','くださりたい','になりたい'],ans:0},
+  {q:'この祭りは長い伝統があるので、皆さんにはぜひこれからも（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['続けていくものです','続けていってほしいものです','続けていくことにしましょう','続けていくことでしょう'],ans:1},
+  {q:'商品ご使用後の返品対応は（　）ので、ご了承ください。',hl:'（　）',hint:'（　）に入るものは？',opts:['いたしかねます','いたしかねません','さしあげかねます','さしあげかねません'],ans:0},
+  {q:'他人の口座から不正に現金を（　）、35歳の男が逮捕された。',hl:'（　）',hint:'（　）に入るものは？',opts:['引き出したとするとして','引き出したとするのに対して','引き出そうとしたとして','引き出そうとしたのに対して'],ans:2},
+  {q:'A「あ、この本、面白いよ。」B「どんな話？」A「主人公と恋人が、親に無理やり（　）話なんだけど、すごくどきどきするんだ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['別れそうになる','別れられそうになる','別れさせそうになる','別れさせられそうになる'],ans:3},
+  {q:'川村「石田さん、ギターがほしいって言っていましたよね。わたしの弟が使っていたギターがあるんですが、よければどうですか。」石田「いいんですか。」川村「はい。弟に聞いたら、弾いてくれる方がいるなら、ぜひと言っていましたので、どうぞ、もらって（　）。」',hl:'（　）',hint:'（　）に入るものは？',opts:['やりませんか','やってください','いただきませんか','いただいてください'],ans:1},
+  {q:'寒さに ＿ ＿ ★ ＿ 大事だ。',hl:'★',hint:'★に入るものは？',opts:['負けない','体を作る','ことが','日々の努力で'],ans:1},
+  {q:'妹は ＿ ＿ ★ ＿ 取り組んでいる。',hl:'★',hint:'★に入るものは？',opts:['長年','一生懸命','研究に','続けてきた'],ans:1},
+  {q:'彼は ＿ ＿ ★ ＿ あった。',hl:'★',hint:'★に入るものは？',opts:['言葉も','感謝の','尽くせないほどの','親切で'],ans:2},
+  {q:'今回の事故は ＿ ＿ ★ ＿ である。',hl:'★',hint:'★に入るものは？',opts:['前代未聞','と','言える','ほどの規模'],ans:2},
+  {q:'この問題を ＿ ＿ ★ ＿ 必要だ。',hl:'★',hint:'★に入るものは？',opts:['解決','するには','一致団結','が'],ans:2},
+];
+const N1_GRAMMAR_AI=[
+  {q:'この問題は専門家（　）解決できないだろう。',hl:'（　）',hint:'（　）に入るものは？',opts:['ならでは','をおいて','にして','でなくて'],ans:1},
+  {q:'彼の話を聞く（　）涙が出てきた。',hl:'（　）',hint:'（　）に入るものは？',opts:['につけ','にして','にも','にとり'],ans:0},
+  {q:'忙しい（　）、少しは休みを取ったほうがいい。',hl:'（　）',hint:'（　）に入るものは？',opts:['にしろ','ものの','ばかりに','ところで'],ans:0},
+  {q:'彼女は会社を辞める（　）、新しい仕事を見つけた。',hl:'（　）',hint:'（　）に入るものは？',opts:['が早いか','と思いきや','かたわら','どころか'],ans:0},
+  {q:'試験の結果を聞く（　）、彼は喜びの声を上げた。',hl:'（　）',hint:'（　）に入るものは？',opts:['や否や','にしては','とともに','ばかりに'],ans:0},
+  {q:'いくら謝った（　）、許してもらえないだろう。',hl:'（　）',hint:'（　）に入るものは？',opts:['ところで','ばかりに','どころか','とともに'],ans:0},
+  {q:'彼は社長である（　）、社員でもある。',hl:'（　）',hint:'（　）に入るものは？',opts:['と同時に','とともに','と一緒に','と並んで'],ans:0},
+  {q:'雨が降ろう（　）、試合は行われる。',hl:'（　）',hint:'（　）に入るものは？',opts:['が','と','で','に'],ans:0},
+  {q:'彼の能力を（　）、リーダーになるのは時間の問題だ。',hl:'（　）',hint:'（　）に入るものは？',opts:['もってすれば','ものとして','ものなら','ものか'],ans:0},
+  {q:'子供（　）あるまいし、もっと自分で考えなさい。',hl:'（　）',hint:'（　）に入るものは？',opts:['では','じゃ','ながら','ばかり'],ans:0},
+  {q:'病気で寝込んでいた（　）、最近やっと回復した。',hl:'（　）',hint:'（　）に入るものは？',opts:['ものの','ばかりに','ところを','ところが'],ans:0},
+  {q:'彼の援助なくして、この事業の成功は（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['ありえなかった','あった','ある','あるべきだ'],ans:0},
+  {q:'この件については、上司に（　）べきだ。',hl:'（　）',hint:'（　）に入るものは？',opts:['相談する','相談される','相談させる','相談された'],ans:0},
+  {q:'彼女は美人である（　）、頭もいい。',hl:'（　）',hint:'（　）に入るものは？',opts:['のみならず','とともに','と同時に','ばかりか'],ans:0},
+  {q:'子供のいたずらだから（　）、許せない。',hl:'（　）',hint:'（　）に入るものは？',opts:['といって','として','とすると','とすれば'],ans:0},
+  {q:'彼は若い ＿ ＿ ★ ＿ 人だ。',hl:'★',hint:'★に入るものは？',opts:['頼りになる','けれども','とても','非常に'],ans:0},
+  {q:'この本は ＿ ＿ ★ ＿ ものだ。',hl:'★',hint:'★に入るものは？',opts:['読む','価値の','十分に','ある'],ans:1},
+  {q:'試験に ＿ ＿ ★ ＿ 努力した。',hl:'★',hint:'★に入るものは？',opts:['一生懸命','合格する','ために','彼は'],ans:1},
+  {q:'雨が ＿ ＿ ★ ＿ 出発する。',hl:'★',hint:'★に入るものは？',opts:['降って','いても','予定通り','私たちは'],ans:1},
+  {q:'この問題は ＿ ＿ ★ ＿ なかった。',hl:'★',hint:'★に入るものは？',opts:['誰にも','解け','難しすぎて','とても'],ans:1},
+  {q:'彼の言うことは信じる（　）ない。',hl:'（　）',hint:'（　）に入るものは？',opts:['に足り','にして','において','ばかり'],ans:0},
+  {q:'忙しさ（　）、食事を取る暇もない。',hl:'（　）',hint:'（　）に入るものは？',opts:['のあまり','のせいで','によって','において'],ans:0},
+  {q:'彼の説明は要領を得ない（　）、私には分かった。',hl:'（　）',hint:'（　）に入るものは？',opts:['ながらも','にしろ','とはいえ','どころか'],ans:0},
+  {q:'彼女は留学先で（　）、現在は外資系企業で働いている。',hl:'（　）',hint:'（　）に入るものは？',opts:['経験を積んで','経験を作って','経験を持って','経験を取って'],ans:0},
+  {q:'失敗を恐れる（　）、何もできない。',hl:'（　）',hint:'（　）に入るものは？',opts:['ばかりでは','ばかりでも','ばかりで','ばかりにも'],ans:0},
+  {q:'医者の指示に従って薬を（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['飲んでこそ','飲むまでだ','飲むものだ','飲んだものだ'],ans:2},
+  {q:'彼は仕事熱心の（　）、家族との時間が少ない。',hl:'（　）',hint:'（　）に入るものは？',opts:['あまり','ばかり','うちに','うえに'],ans:0},
+  {q:'結果は努力（　）報われた。',hl:'（　）',hint:'（　）に入るものは？',opts:['に応じて','によって','につれて','において'],ans:0},
+  {q:'彼の能力を（　）、この仕事は任せられる。',hl:'（　）',hint:'（　）に入るものは？',opts:['考えると','見ると','聞くと','話すと'],ans:0},
+  {q:'子供の成長は親の喜び（　）何ものでもない。',hl:'（　）',hint:'（　）に入るものは？',opts:['以外の','以下の','以上の','以前の'],ans:0},
+  {q:'雨にも（　）、彼は出かけた。',hl:'（　）',hint:'（　）に入るものは？',opts:['かかわらず','よらず','つき','つれ'],ans:0},
+  {q:'今回の事故は人為的なミス（　）起こった。',hl:'（　）',hint:'（　）に入るものは？',opts:['によって','とともに','において','とすると'],ans:0},
+  {q:'彼女の話を聞いて、私は感動を（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['禁じ得なかった','禁じなかった','禁じた','禁じさせた'],ans:0},
+  {q:'長年の研究の結果、彼は世界的に有名な学者と（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['なるに至った','なった','なり始めた','なったままだ'],ans:0},
+  {q:'この件は、君（　）ない判断はできない。',hl:'（　）',hint:'（　）に入るものは？',opts:['なしには','において','によって','について'],ans:0},
+];
+const N1_READING_SHORT=[
+  {passage:'最近、企業の社会的責任という言葉をよく耳にする。これは、企業が利益を追求するだけでなく、社会の一員として様々な責任を果たすべきだという考え方である。具体的には、環境保護への取り組み、従業員の労働環境の改善、地域社会への貢献などが挙げられる。利益のみを追求する時代は終わり、社会と共に発展していく企業こそが、これからの時代に求められているのだ。',qs:[{q:'この文章で筆者が最も言いたいことは何か。',opts:['企業は利益を追求すべきだ','企業は社会的責任も果たすべきだ','企業は環境保護のみすべきだ','企業は地域貢献だけすべきだ'],ans:1}],type:'short',label:'短文'},
+  {passage:'読書は単なる娯楽ではなく、人生を豊かにする重要な活動である。本を読むことで、自分とは違う経験や考え方に触れることができ、視野が広がる。また、登場人物の感情や状況を理解することで、共感力も養われる。インターネットで情報を得ることが多くなった現代だからこそ、じっくりと本に向き合う時間を大切にしたい。',qs:[{q:'筆者が読書について述べていることはどれか。',opts:['娯楽として楽しむもの','視野を広げ共感力を養うもの','情報を得る手段','時間を潰すもの'],ans:1}],type:'short',label:'短文'},
+  {passage:'環境問題への取り組みは、もはや一部の人々だけの問題ではない。地球温暖化、海洋汚染、森林破壊など、私たち一人ひとりの生活に直結する問題ばかりである。日々の生活の中で、できることから始めることが大切だ。例えば、マイバッグを持参する、節電を心がける、ゴミの分別を徹底するなど、小さな行動の積み重ねが、大きな変化を生む。',qs:[{q:'筆者の主張として最も適切なものはどれか。',opts:['環境問題は政府が解決すべきだ','一人ひとりの小さな行動が大切だ','技術革新が最も重要だ','環境問題は解決できない'],ans:1}],type:'short',label:'短文'},
+];
+const N1_READING_MID=[
+  {passage:'AIの発展は目覚ましく、私たちの生活にも大きな影響を与えている。仕事の効率化、医療の進歩、教育の質の向上など、その恩恵は計り知れない。しかし一方で、AIに仕事を奪われる人々の問題、プライバシーの問題、倫理的な問題など、解決すべき課題も多い。\n\n特に懸念されているのは、AIによる判断が人間の判断を超えた時に、誰が責任を取るのかという問題である。\n\n技術の進歩を止めることはできないが、それに伴う社会的な仕組みづくりが急務である。',qs:[
+    {q:'筆者がAIについて述べていることはどれか。',opts:['AIの発展は全て良いことだ','AIの発展は全て悪いことだ','AIには恩恵と課題の両方がある','AIは人間に必要ない'],ans:2},
+    {q:'筆者が特に懸念していることは何か。',opts:['AIの精度が低いこと','AIによる判断の責任の所在','AIの値段が高いこと','AIの普及が遅いこと'],ans:1},
+    {q:'筆者が最も伝えたいことは何か。',opts:['AI技術の進歩を止めるべきだ','AI時代に対応した社会の仕組みづくりが必要だ','AIは医療には使うべきではない','AIは便利な道具にすぎない'],ans:1}
+  ],type:'mid',label:'中文'},
+  {passage:'日本の少子高齢化問題は深刻化している。出生率は1.3前後で推移しており、人口減少は避けられない状況だ。これに伴い、労働力不足、社会保障の負担増、地方の過疎化など、様々な問題が表面化している。\n\n政府は様々な対策を講じているが、効果は限定的だ。\n\n特に重要なのは、若い世代が安心して子供を産み育てられる環境づくりだ。',qs:[
+    {q:'日本の少子高齢化について筆者が述べていることはどれか。',opts:['解決の目処が立っている','深刻化している','心配する必要はない','解決済みである'],ans:1},
+    {q:'政府の対策について筆者はどう考えているか。',opts:['十分に効果的だ','効果は限定的だ','全く意味がない','過剰である'],ans:1},
+    {q:'筆者が最も重要だと考えていることは何か。',opts:['若者が子供を産み育てられる環境づくり','外国人労働者の大量受け入れ','政府による経済的支援のみ','高齢者支援の拡充'],ans:0}
+  ],type:'mid',label:'中文'}
+];
+const N2_VOCAB_REAL=[
+  {q:'田中さんの話は抽象的で分かりにくかった。',hl:'抽象的',hint:'＿＿＿の読み方は？',opts:['ちゅうしょうてき','ちゅうぞうてき','ゆうしょうてき','ゆうぞうてき'],ans:0},
+  {q:'その本は、明日までに必ず返却してください。',hl:'返却',hint:'＿＿＿の読み方は？',opts:['へんきょく','へんきゃ','へんきゃく','へんきょ'],ans:2},
+  {q:'針が見つからなくて困った。',hl:'針',hint:'＿＿＿の読み方は？',opts:['ねじ','はり','くぎ','かぎ'],ans:1},
+  {q:'山田さんはいつもここから夕日を撮影している。',hl:'撮影',hint:'＿＿＿の読み方は？',opts:['さつえい','さいけい','さつけい','さいえい'],ans:0},
+  {q:'ガラスの破片が落ちているから、気をつけてください。',hl:'破片',hint:'＿＿＿の読み方は？',opts:['ひがた','はがた','ひへん','はへん'],ans:3},
+  {q:'夏になると、この島には多くの観光客がおとずれる。',hl:'おとずれる',hint:'＿＿＿を漢字で書くと？',opts:['往れる','伺れる','参れる','訪れる'],ans:3},
+  {q:'今年はたくさんの野菜がしゅうかくできたそうだ。',hl:'しゅうかく',hint:'＿＿＿を漢字で書くと？',opts:['集穫','集得','収穫','収得'],ans:2},
+  {q:'餌をあげたとたん、その犬がすごいいきおいで食べ始めたのでびっくりした。',hl:'いきおい',hint:'＿＿＿を漢字で書くと？',opts:['乱い','勢い','荒い','暴い'],ans:1},
+  {q:'そしきが大きくなると、運営も大変になる。',hl:'そしき',hint:'＿＿＿を漢字で書くと？',opts:['祖識','組識','組織','祖織'],ans:2},
+  {q:'町のいたるところに花が植えられている。',hl:'いたるところ',hint:'＿＿＿を漢字で書くと？',opts:['至るところ','及るところ','満るところ','総るところ'],ans:0},
+  {q:'昨日、（　）夜中に電話で起こされた。',hl:'',hint:'（　）に入る言葉は？',opts:['正','実','本','真'],ans:3},
+  {q:'昨日の選挙の投票（　）は非常に高かった。',hl:'',hint:'（　）に入る言葉は？',opts:['割','率','値','比'],ans:1},
+  {q:'この本棚の本は、作家名のアルファベット（　）に並んでいます。',hl:'',hint:'（　）に入る言葉は？',opts:['順','番','序','位'],ans:0},
+  {q:'外からあまり見えないように、この窓は（　）透明のガラスにしてある。',hl:'',hint:'（　）に入る言葉は？',opts:['弱','中','低','半'],ans:3},
+  {q:'海外のホテルでも日本（　）のサービスを取り入れるところが増えているらしい。',hl:'',hint:'（　）に入る言葉は？',opts:['似','流','類','法'],ans:1},
+  {q:'栄養が（　）ように、いろいろな食品を食べたほうがいい。',hl:'',hint:'（　）に入る言葉は？',opts:['はぶかれない','はずされない','かたよらない','かたむかない'],ans:2},
+  {q:'ダムの建設は、計画通り（　）進んでいる。',hl:'',hint:'（　）に入る言葉は？',opts:['さらさら','すらすら','着々と','続々と'],ans:2},
+  {q:'急いでいるのに、渋滞のせいで車が前に進まなくて（　）した。',hl:'',hint:'（　）に入る言葉は？',opts:['いらいら','わくわく','すっきり','うっかり'],ans:0},
+  {q:'兄は「残業が多い、給料が安い」と会社の（　）ばかり言っている。',hl:'',hint:'（　）に入る言葉は？',opts:['ゆううつ','ぐち','苦情','非難'],ans:1},
+  {q:'あのドラマは、最後に主人公が恋人と再会する（　）が感動的だった。',hl:'',hint:'（　）に入る言葉は？',opts:['要所','名所','場面','画面'],ans:2},
+  {q:'A社はこの10年で、社員一万人の大企業に（　）した。',hl:'',hint:'（　）に入る言葉は？',opts:['発達','展開','上昇','成長'],ans:3},
+  {q:'激しい運動をたまにするより、（　）運動を毎日続ける方が体にはいいらしい。',hl:'',hint:'（　）に入る言葉は？',opts:['適度な','簡略な','好調な','対等な'],ans:0},
+  {q:'ちょっと追加したいデータがあります。',hl:'追加したい',hint:'＿＿＿に意味が最も近いものは？',opts:['たしたい','なおしたい','のせたい','しらべたい'],ans:0},
+  {q:'その国も今の時期はそうとう暑いだろう。',hl:'そうとう',hint:'＿＿＿に意味が最も近いものは？',opts:['たぶん','どうせ','やはり','かなり'],ans:3},
+  {q:'少しの間、じっとしていてください。',hl:'じっとして',hint:'＿＿＿に意味が最も近いものは？',opts:['見ないで','話さないで','使わないで','動かないで'],ans:3},
+  {q:'あやまった情報が流れてしまったようだ。',hl:'あやまった',hint:'＿＿＿に意味が最も近いものは？',opts:['古い','正しくない','秘密の','必要のない'],ans:1},
+  {q:'ちょっと手がかさかさしている。',hl:'かさかさ',hint:'＿＿＿に意味が最も近いものは？',opts:['汚れている','冷えている','しびれている','乾燥している'],ans:3},
+  {q:'廃止',hl:'廃止',hint:'「廃止」の使い方として正しいものは？',opts:['両国が互いに主張を譲らず、会議は予定より早く廃止された。','時間も遅くなったので、区切りのいいところで作業を廃止した。','その制度は現状に合わなくなったので、先月で廃止された。','健康のために、たばこを廃止するよう家族に言われた。'],ans:2},
+  {q:'心強い',hl:'心強い',hint:'「心強い」の使い方として正しいものは？',opts:['姉は心強くて、どんなにつらいことがあっても涙を見せない。','初めてのプレゼンで不安だったが、先輩が一緒だったので心強かった。','アメリカに10年住んでいたので、英語はわりと心強いです。','やると決めたことは最後まであきらめずにやる心強い人間になりたい。'],ans:1},
+  {q:'さっさと',hl:'さっさと',hint:'「さっさと」の使い方として正しいものは？',opts:['いつまでもテレビを見てないで、さっさと宿題をしなさい。','雷が鳴り出したと思ったら、さっさと雨が降り出した。','さっさと着くので、もう少しそこで待っていてください。','買ってまだ一週間なのに、さっさと壊れた。'],ans:0},
+  {q:'ふさぐ',hl:'ふさぐ',hint:'「ふさぐ」の使い方として正しいものは？',opts:['種をまいたら、土でふさいで、水をやってください。','鍋をふたでふさぐと、中の肉に熱が通りやすくなります。','紙袋に穴があいていたので、セロテープでふさいだ。','電子レンジで温めるときは、皿をラップでふさいでください。'],ans:2},
+  {q:'冷静',hl:'冷静',hint:'「冷静」の使い方として正しいものは？',opts:['不安定だったわが国の経済状態が、ようやく冷静になってきた。','トラブルが発生したときでも、森さんは慌てずに冷静に対応していた。','熱が下がるまで、冷静にしていたほうがいい。','台風で波が高かった海も、今日はすっかり冷静になった。'],ans:1},
+];
+const N2_VOCAB_AI=[
+  {q:'彼の主張は理にかなっている。',hl:'主張',hint:'＿＿＿の読み方は？',opts:['しゅちょう','しゅじょう','しゅっちょう','しゅちょ'],ans:0},
+  {q:'この建物は耐震構造になっている。',hl:'耐震',hint:'＿＿＿の読み方は？',opts:['たいしん','だいしん','たいじん','だいじん'],ans:0},
+  {q:'試験の合格基準は厳しい。',hl:'基準',hint:'＿＿＿の読み方は？',opts:['きじゅん','きそん','きしゅん','きぞん'],ans:0},
+  {q:'彼の発言は論理的だった。',hl:'論理',hint:'＿＿＿の読み方は？',opts:['ろんり','りんり','りり','ろり'],ans:0},
+  {q:'この問題には対処が必要だ。',hl:'対処',hint:'＿＿＿の読み方は？',opts:['たいしょ','たいじょ','たいしょう','たいじょう'],ans:0},
+  {q:'けいざいが回復してきた。',hl:'けいざい',hint:'＿＿＿を漢字で書くと？',opts:['経済','経剤','径済','径剤'],ans:0},
+  {q:'新製品のせんでんが始まった。',hl:'せんでん',hint:'＿＿＿を漢字で書くと？',opts:['宣伝','専伝','宣電','専電'],ans:0},
+  {q:'問題のかいけつに時間がかかった。',hl:'かいけつ',hint:'＿＿＿を漢字で書くと？',opts:['解決','解結','改決','改結'],ans:0},
+  {q:'彼はせきにん感が強い。',hl:'せきにん',hint:'＿＿＿を漢字で書くと？',opts:['責任','責人','積任','積人'],ans:0},
+  {q:'けんこうのために運動を始めた。',hl:'けんこう',hint:'＿＿＿を漢字で書くと？',opts:['健康','検康','健庫','検庫'],ans:0},
+  {q:'時間が（　）ので、急いで出かけた。',hl:'',hint:'（　）に入る言葉は？',opts:['迫っていた','押していた','遅れていた','早かった'],ans:0},
+  {q:'彼の話は（　）が合わない。',hl:'',hint:'（　）に入る言葉は？',opts:['つじつま','理屈','道理','筋道'],ans:0},
+  {q:'問題は徐々に（　）してきた。',hl:'',hint:'（　）に入る言葉は？',opts:['解決','改善','改革','解放'],ans:0},
+  {q:'この製品は品質が（　）。',hl:'',hint:'（　）に入る言葉は？',opts:['優れている','立派だ','すばらしい','よろしい'],ans:0},
+  {q:'彼女は（　）な性格だ。',hl:'',hint:'（　）に入る言葉は？',opts:['明朗','明白','明確','明瞭'],ans:0},
+  {q:'計画を（　）通り進めよう。',hl:'',hint:'（　）に入る言葉は？',opts:['予定','約束','決定','確定'],ans:0},
+  {q:'環境問題に（　）取り組む必要がある。',hl:'',hint:'（　）に入る言葉は？',opts:['真剣に','本気に','まじめに','一生懸命'],ans:0},
+  {q:'彼の意見はもっともだ。',hl:'もっとも',hint:'＿＿＿の意味に最も近いものは？',opts:['当然だ','大切だ','重要だ','必要だ'],ans:0},
+  {q:'仕事に追われている。',hl:'追われて',hint:'＿＿＿の意味に最も近いものは？',opts:['忙しい','疲れている','嫌になる','楽しんでいる'],ans:0},
+  {q:'彼の態度はそっけない。',hl:'そっけない',hint:'＿＿＿の意味に最も近いものは？',opts:['冷たい','親切だ','優しい','丁寧だ'],ans:0},
+  {q:'問題を見過ごすわけにはいかない。',hl:'見過ごす',hint:'＿＿＿の意味に最も近いものは？',opts:['気づかないふりをする','じっと見る','早く見る','見直す'],ans:0},
+  {q:'雨が降りそうな空模様だ。',hl:'空模様',hint:'＿＿＿の意味に最も近いものは？',opts:['天気の様子','空の色','雲の形','空の広さ'],ans:0},
+  {q:'検討',hl:'検討',hint:'「検討」の使い方として正しいものは？',opts:['この案を検討する','本を検討した','友達と検討した','駅で検討する'],ans:0},
+  {q:'積極的',hl:'積極的',hint:'「積極的」の使い方として正しいものは？',opts:['積極的に参加する','積極的な料理を食べた','積極的に走った','積極的な天気だ'],ans:0},
+  {q:'相談',hl:'相談',hint:'「相談」の使い方として正しいものは？',opts:['先生に相談する','本を相談した','時計を相談する','駅で相談する'],ans:0},
+  {q:'回復',hl:'回復',hint:'「回復」の使い方として正しいものは？',opts:['体調が回復した','友達と回復した','本を回復した','時計が回復した'],ans:0},
+  {q:'豊富',hl:'豊富',hint:'「豊富」の使い方として正しいものは？',opts:['経験が豊富だ','豊富に走った','豊富な天気だ','豊富に歌う'],ans:0},
+  {q:'公園で人々が憩いの時を過ごしている。',hl:'憩い',hint:'＿＿＿の読み方は？',opts:['いこい','やすみ','くつろぎ','のんびり'],ans:0},
+  {q:'彼の発言は重要な意味を含んでいる。',hl:'含んで',hint:'＿＿＿の読み方は？',opts:['ふくんで','つくんで','こもって','つつんで'],ans:0},
+  {q:'彼女は柔軟な思考の持ち主だ。',hl:'柔軟',hint:'＿＿＿の読み方は？',opts:['じゅうなん','じゅうじゃく','にゅうなん','にゅうじゃく'],ans:0},
+  {q:'国際的な協力が不可欠だ。',hl:'不可欠',hint:'＿＿＿の読み方は？',opts:['ふかけつ','ふけけつ','ふかかつ','ふけかつ'],ans:0},
+  {q:'彼の意見にせいさんを示した。',hl:'せいさん',hint:'＿＿＿を漢字で書くと？',opts:['賛成','成算','清算','精算'],ans:0},
+  {q:'問題のかいせきが必要だ。',hl:'かいせき',hint:'＿＿＿を漢字で書くと？',opts:['解析','解説','回析','回設'],ans:0},
+  {q:'新しい方針をはっぴょうした。',hl:'はっぴょう',hint:'＿＿＿を漢字で書くと？',opts:['発表','発票','八表','八票'],ans:0},
+  {q:'彼の意見にきょうかんした。',hl:'きょうかん',hint:'＿＿＿を漢字で書くと？',opts:['共感','強感','胸感','響感'],ans:0},
+  {q:'この問題は（　）的に解決する必要がある。',hl:'',hint:'（　）に入る言葉は？',opts:['根本','基本','基準','標準'],ans:0},
+  {q:'計画の（　）を確認しよう。',hl:'',hint:'（　）に入る言葉は？',opts:['詳細','詳しさ','細部','細かさ'],ans:0},
+  {q:'彼の話は要点を押さえている。',hl:'要点を',hint:'＿＿＿の意味に最も近いものは？',opts:['押さえている','逃している','離している','放している'],ans:0},
+  {q:'問題の核心に迫る。',hl:'核心',hint:'＿＿＿の意味に最も近いものは？',opts:['最も重要な部分','問題の表面','問題の周辺','問題の解決'],ans:0},
+  {q:'観察',hl:'観察',hint:'「観察」の使い方として正しいものは？',opts:['動物の行動を観察する','本を観察した','友達と観察した','駅で観察する'],ans:0},
+  {q:'対応',hl:'対応',hint:'「対応」の使い方として正しいものは？',opts:['お客様に対応する','本を対応した','時計を対応する','駅で対応する'],ans:0},
+  {q:'分析',hl:'分析',hint:'「分析」の使い方として正しいものは？',opts:['データを分析する','料理を分析した','歌を分析する','駅で分析する'],ans:0},
+  {q:'改善',hl:'改善',hint:'「改善」の使い方として正しいものは？',opts:['品質を改善する','本を改善した','時計を改善する','駅で改善する'],ans:0},
+  {q:'貢献',hl:'貢献',hint:'「貢献」の使い方として正しいものは？',opts:['社会に貢献する','本を貢献した','時計を貢献する','駅で貢献する'],ans:0},
+];
+const N2_GRAMMAR_REAL=[
+  {q:'電子メールが普及している今の時代であるから（　）、手書きの手紙に温かい気持ちを感じる。',hl:'（　）',hint:'（　）に入るものは？',opts:['こそ','さえ','すら','だけ'],ans:0},
+  {q:'母「また寝てるの？せっかくの休みなんだから、寝て（　）いないで、外に出かけたら？」息子「わかったよ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['しか','でも','ぐらい','ばかり'],ans:3},
+  {q:'人は通勤に多くの時間を使っている。（　）通勤に往復2時間かけるとすると、1年間で480時間も通勤に使っている計算になる。',hl:'（　）',hint:'（　）に入るものは？',opts:['たとえ','かりに','ようやく','かえって'],ans:1},
+  {q:'先月電子レンジを買ったが、いくらも（　）壊れてしまった。',hl:'（　）',hint:'（　）に入るものは？',opts:['使っていると','使っているうちに','使わないと','使わないうちに'],ans:3},
+  {q:'彼は小説家になってから、1年に1冊のペースで長編小説を（　）、来月出る小説で10冊目となる。',hl:'（　）',hint:'（　）に入るものは？',opts:['発表しつつ','発表しており','発表するにつれ','発表したところで'],ans:1},
+  {q:'駅前に新しくできたラーメン屋はいつも込んでいる。昨日も大雨（　）行列ができていた。',hl:'（　）',hint:'（　）に入るものは？',opts:['にしても','にしたって','にかぎらず','にもかかわらず'],ans:3},
+  {q:'川村「青木くんは、今日お休み？」山田「うん。アイスの食べ過ぎでおなかが痛くなったって連絡あったよ。」川村「青木くん（　）ね。」',hl:'（　）',hint:'（　）に入るものは？',opts:['らしい','みたいだ','のようだ','のことだ'],ans:0},
+  {q:'最近は夜遅くまで開いているスーパーが多くなってきた。スーパーに（　）、24時間営業のところもある。',hl:'（　）',hint:'（　）に入るものは？',opts:['よっては','とっても','ついても','おいては'],ans:0},
+  {q:'先輩「受験する大学は決まった？」後輩「いえ、僕は海外の大学に行きたいんですけど、両親は僕を自宅から通える大学に（　）」',hl:'（　）',hint:'（　）に入るものは？',opts:['行かせてほしいんです','行こうとしてほしいんです','行かせたがっているんです','行こうとしたがっているんです'],ans:2},
+  {q:'最近は毎月決まった金額でかけ放題の国際電話サービスがある。私が留学していたときにもそんなサービスがあったら（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['どれだけよかった','どれだけよかったか','どうしてもよかった','どうしてもよかったか'],ans:1},
+  {q:'（店で）店員「こちらの車はいかがですか。中古車ですが、（　）新車と変わらないくらいきれいですよ。」客「そうですね。きれいですね。」',hl:'（　）',hint:'（　）に入るものは？',opts:['ご覧のように','ご覧いただくために','拝見したとおり','拝見したきり'],ans:0},
+  {q:'（ホームページで）Q：ゲームをしていたら、急に画面が暗くなってしまいました。A：一度電源を切り、1分くらい経ってからまたつけてみてください。ただし、同じことが何度も（　）故障です。',hl:'（　）',hint:'（　）に入るものは？',opts:['繰り返せるようならば','繰り返せるようになれば','繰り返されるようならば','繰り返させられるようになれば'],ans:2},
+];
+const N2_REORDER_REAL=[
+  {q:'A「あ、飲み物がなくなってしまいましたね。」B「じゃあ、私がちょっとコンビニに ＿ ＿ ★ ＿ いてください。」A「私もいっしょに買いに行きますよ。」\n★に入るものは？',hl:'★',opts:['きますから','行って','待って','買って'],ans:0},
+  {q:'この計画をこのまま ＿ ＿ ★ ＿ だろう。\n★に入るものは？',hl:'★',opts:['必要がある','いずれにしても','早急に結論を出す','進めるかやめるか'],ans:2},
+  {q:'「来週の登山の持ち物について質問があります。配られたプリントに、ビニール袋を持参 ＿ ＿ ★ ＿ 足りるのでしょうか。」\n★に入るものは？',hl:'★',opts:['ありますが','だいたい何枚ぐらい','のことと','用意すれば'],ans:1},
+  {q:'何か目的があって ＿ ＿ ★ ＿ ということがよくある。\n★に入るものは？',hl:'★',opts:['何をしに行ったのか','忘れてしまう','はずなのに','その場所に行った'],ans:0},
+  {q:'日本の食卓に ＿ ＿ ★ ＿ 大豆だが、日本国内で作られているものはわずかで、その多くを海外からの輸入に頼っているという。\n★に入るものは？',hl:'★',opts:['欠かせない','原料となる','調味料の','みそやしょうゆといった'],ans:2},
+];
+const N2_GRAMMAR_AI=[
+  {q:'仕事が忙しい（　）、休日も出勤している。',hl:'（　）',hint:'（　）に入るものは？',opts:['ばかりに','どころか','うえに','ものの'],ans:2},
+  {q:'雨が降った（　）、傘を忘れた。',hl:'（　）',hint:'（　）に入るものは？',opts:['にもかかわらず','とともに','ばかりに','どころか'],ans:0},
+  {q:'彼は来る（　）、すぐに帰った。',hl:'（　）',hint:'（　）に入るものは？',opts:['なり','まま','うちに','ながら'],ans:0},
+  {q:'時間がない（　）、頑張ろう。',hl:'（　）',hint:'（　）に入るものは？',opts:['とはいえ','ばかりに','どころか','ものの'],ans:0},
+  {q:'勉強する（　）、しっかり頑張りたい。',hl:'（　）',hint:'（　）に入るものは？',opts:['からには','ように','ために','うちに'],ans:0},
+  {q:'歳を取る（　）、物忘れが激しくなる。',hl:'（　）',hint:'（　）に入るものは？',opts:['につれて','とともに','につき','について'],ans:0},
+  {q:'忙しい（　）、彼は元気だ。',hl:'（　）',hint:'（　）に入るものは？',opts:['にしろ','にしては','ばかりに','どころか'],ans:1},
+  {q:'試合に勝った（　）、これからが本番だ。',hl:'（　）',hint:'（　）に入るものは？',opts:['とはいえ','ものの','ばかりに','どころか'],ans:0},
+  {q:'彼の話を聞く（　）、感動した。',hl:'（　）',hint:'（　）に入るものは？',opts:['につけ','について','にしても','にしては'],ans:0},
+  {q:'雨が降っている（　）、出かけよう。',hl:'（　）',hint:'（　）に入るものは？',opts:['にしろ','にせよ','とはいえ','ものの'],ans:2},
+  {q:'仕事を辞める（　）、新しい目標を見つけよう。',hl:'（　）',hint:'（　）に入るものは？',opts:['にあたって','にあたり','にしたがって','において'],ans:0},
+  {q:'子供のために（　）、よく頑張った。',hl:'（　）',hint:'（　）に入るものは？',opts:['とはいえ','ものの','ばかりに','どころか'],ans:0},
+  {q:'彼女は美人（　）、頭もいい。',hl:'（　）',hint:'（　）に入るものは？',opts:['なうえに','うえに','だけに','どころか'],ans:0},
+  {q:'忙しくて、食事をする（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['暇もない','時間がない','余裕がない','よゆうがない'],ans:0},
+  {q:'天気予報（　）、明日は晴れだ。',hl:'（　）',hint:'（　）に入るものは？',opts:['によると','によって','について','において'],ans:0},
+  {q:'彼は ＿ ＿ ★ ＿ 仕事ができる。',hl:'★',hint:'★に入るものは？',opts:['頭が','よく','使って','切れて'],ans:1},
+  {q:'この問題は ＿ ＿ ★ ＿ 解けない。',hl:'★',hint:'★に入るものは？',opts:['難しすぎて','とても','私には','一人では'],ans:1},
+  {q:'雨が ＿ ＿ ★ ＿ 出かけた。',hl:'★',hint:'★に入るものは？',opts:['降って','いたが','傘を持って','私は'],ans:1},
+  {q:'彼女は ＿ ＿ ★ ＿ 仕事を続けている。',hl:'★',hint:'★に入るものは？',opts:['結婚','しても','変わらず','以前と'],ans:1},
+  {q:'勉強を ＿ ＿ ★ ＿ 良い成績を取った。',hl:'★',hint:'★に入るものは？',opts:['したので','頑張って','試験で','とても'],ans:1},
+  {q:'彼の意見は ＿ ＿ ★ ＿ 賛成できない。',hl:'★',hint:'★に入るものは？',opts:['理解できる','けれど','どうしても','私には'],ans:1},
+  {q:'時間が ＿ ＿ ★ ＿ 急いだ。',hl:'★',hint:'★に入るものは？',opts:['なかったので','私は','間に合うように','駅まで'],ans:1},
+  {q:'彼は ＿ ＿ ★ ＿ 成功した。',hl:'★',hint:'★に入るものは？',opts:['努力の','末に','ついに','長年の'],ans:1},
+  {q:'この計画は ＿ ＿ ★ ＿ 進めるべきだ。',hl:'★',hint:'★に入るものは？',opts:['慎重に','時間をかけて','少しずつ','一歩一歩'],ans:1},
+  {q:'彼女の歌声は ＿ ＿ ★ ＿ 感動を与える。',hl:'★',hint:'★に入るものは？',opts:['聞く人に','美しく','深い','とても'],ans:1},
+  {q:'試験に ＿ ＿ ★ ＿ 必要がある。',hl:'★',hint:'★に入るものは？',opts:['合格','するためには','努力する','一生懸命'],ans:1},
+  {q:'彼の話は ＿ ＿ ★ ＿ 信じられない。',hl:'★',hint:'★に入るものは？',opts:['あまりに','すぎて','突拍子も','ない'],ans:1},
+];
+const N2_READING_SHORT=[
+  {passage:'論理的に書かれている文章を読んでいくときには、書かれた文章を自分が理解できたかどうかということにとどまらず、書かれている主張や根拠が本当に妥当だろうか、論理的に筋が通っているだろうか、別の考え方はないだろうかと考えて読むことが、とても大切です。こうして読むことによって、書かれている内容についての理解を深め、見方を広げることができます。これは批判的読みとよばれるものです。',qs:[{q:'こうして読むとは、どのように読むことか。',opts:['別の主張や意見が述べられていないか探しながら読むこと','内容の論理性や妥当性などを考えながら読むこと','理解を深めたり、見方を広げるように読むこと','理解が妥当かどうか確認しながら読むこと'],ans:1}],type:'short',label:'短文'},
+  {passage:'（市役所のホームページのお知らせ）\n市民水質調査デーのお知らせ\n安井市では、毎年、美安川の水質調査を行っております。今年も、身の回りの環境への理解を深めていただくため、市民の皆様にもご参加頂きたいと考えております。\n日時：2012年7月28日（土）9時集合、11時解散　＊雨天中止\n集合場所：安井市市民センター前\n募集人数：20名\n当日は、市の調査委員とともに美安川の数ヶ所を回り、調査を行います。調査結果は、後日ホームページ上で公開いたします。参加申し込みは、7月1日より電話またはホームページで受け付けます。',qs:[{q:'このお知らせで最も伝えたいことは何か。',opts:['水質調査方法を学び、周辺の川の汚染を調べてほしい','水質調査を見学し、市役所の活動への理解を深めてほしい','水質調査に参加し、身近な環境についてもっと知ってほしい','水質調査結果について、ホームページで公開するので見てほしい'],ans:2}],type:'short',label:'短文'},
+  {passage:'（ある会社の社内文書）\n資料室からのお願い\n　資料室が開設されて半年が経ち、多くの方に利用されるようになりました。しかし、利用者が増えるにつれ、昼食時には本来の目的以外で席を利用している、私語が多く迷惑になっているなどといった、様々な苦情が総務課に寄せられています。\n　社員皆が気持ちよく利用できるようご協力をお願いします。',qs:[{q:'この文書を書いた、一番の目的は何か。',opts:['資料室の適切な利用を求める。','資料室のいっそうの利用を求める。','資料室の利用時間の厳守を求める。','資料室の利用法について意見を求める。'],ans:0}],type:'short',label:'短文'},
+  {passage:'本来、異なる種類の光源（たとえば太陽光と蛍光灯）のもとでは、同じイチゴでも異なる色の見え方をするはずです。ところが、私たちはふだん生活している中で、つまり太陽の光のもとで見たとき、イチゴがどんな色をしているのかを知っています。そのため、光源の色や明るさが太陽の色とは変わっても、その変化した照明のもとで見るイチゴの色を、すでに知っているイチゴの色に近づけて知覚してしまう、といったことが起こります。これを色の恒常性といいますが、意識することなく行われている、視覚のみごとな仕組みのひとつです。',qs:[{q:'すでに知っているイチゴの色とあるが、ここではどのような色か。',opts:['異なる照明のもとで見た色','太陽や蛍光灯のもとで見た色','蛍光灯のもとで見た色','太陽のもとで見た色'],ans:3}],type:'short',label:'短文'},
+  {passage:'他人にわかるようにおしえることは、実は大変むずかしい。自分がよくわかっていないと相手にわからせることはできないからだ。「何かを学ぶもっともよい方法は、それをおしえてみることだ」。こういった人がいるが、まさに至言だろう。とすれば、一見理解したようでいて実はまだあいまいさがのこっている――こんなときには、他人におしえようとすることにより、逆に、自分の知識の不完全さに気づかせ、よく自分で考えなおしてみることを動機づけることになるだろう。これは、知識を安定したものにするのに役立つ。',qs:[{q:'この文章で筆者の言いたいことは何か。',opts:['他人におしえてもらうことで、学ぶ動機が高まる。','他人におしえてもらうことは、効果的な学びにつながる。','他人におしえることで、おしえるむずかしさを学ぶ。','他人におしえることは、自分自身の学びにつながる。'],ans:3}],type:'short',label:'短文'},
+  {passage:'最近、地球温暖化の影響で、世界各地で異常気象が発生している。日本でも、夏の猛暑、冬の暖冬、突然の豪雨など、これまでにない気象現象が増えている。私たち一人ひとりが、環境保護のためにできることを考え、実行していく必要がある。',qs:[{q:'筆者が言いたいことは何か。',opts:['地球温暖化は仕方ない','一人ひとりが環境保護を実行すべきだ','気象は予測できない','日本だけの問題だ'],ans:1}],type:'short',label:'短文'},
+  {passage:'スマートフォンの普及により、私たちのコミュニケーションの形は大きく変わった。離れていてもすぐに連絡が取れる便利さがある一方で、対面でのコミュニケーションが減り、人間関係が希薄になっているという問題もある。便利さと人間関係のバランスを考える必要がある。',qs:[{q:'筆者の主張として最も適切なものはどれか。',opts:['スマートフォンは便利だ','対面のコミュニケーションは時代遅れだ','便利さと人間関係のバランスが大切だ','スマートフォンを使うべきではない'],ans:2}],type:'short',label:'短文'},
+];
+const N2_READING_MID=[
+  {passage:'サクラが春に咲く不思議\n\n冬の寒さも緩み、春の陽気が感じられるようになってきました。春は花の季節。サクラをはじめ、ウメやモモなど多くの木々が花を咲かせます。\n　ところで、これらの花は、なぜ春に一斉に咲くのでしょう。花なんて暖かくなれば咲くものだと【50】。確かに、気温の上昇も重要です。ただ、皆さんは、春に花を咲かせる木がいつその準備をしているかご存じですか。【51】、開花する前の年の夏には、すでに花となる芽（花芽）が作られ、花を咲かせる準備ができているのです。\n　サクラやウメなどの木は夏に、成長を抑える休眠物質を葉で作ります。それが花芽にたまると、葉が落ち、花芽は「休眠」という期間に入ります。【52】花芽は成長しません。休眠から目覚めるには、一定の低温期間を経験することが必要です。例えば、サクラのソメイヨシノでは、5度前後の気温が約900時間【53】。そして休眠から目覚めると、成長を抑えていた休眠物質が減り始め、春になって、1日の平均気温が12〜13度になると開花するのです。\n　春に一斉に咲く花の仕組み、【54】。冬の間、私たちは寒さが去るのを待つばかりですが、春に咲く花のためには、その寒さは必要なものなのです。',qs:[
+    {q:'【50】に入るものは？',opts:['思うせいです','思うかもしれません','思うほどです','思うことにしました'],ans:1},
+    {q:'【51】に入るものは？',opts:['また','こうして','実は','一方'],ans:2},
+    {q:'【52】に入るものは？',opts:['この期間は','あの期間では','これくらいの期間では','あれくらいの期間は'],ans:0},
+    {q:'【53】に入るものは？',opts:['必要かどうか調査されます','必要かどうか明らかになります','必要だとされています','必要だと気づかされます'],ans:2},
+    {q:'【54】に入るものは？',opts:['ご存じでしょうか','ご存じだったのですね','おわかりいただけるのですね','おわかりいただけましたか'],ans:3},
+  ],type:'mid',label:'中文'},
+  {passage:'従来の会議では、一番地位の高い人が自動的に司会ないし議長の役もする傾向があった。（中略）\n　「いい会議」をもつためには十分な準備が必要である。トップにそんな時間があるはずはない。したがって、自分で準備をして会議を運営するよりも、他の人に任せる選択をすべきである。トップは、あまりたくさんのことをやりすぎてはいけない。しかし、自分が一番情報をもっている場合が多いので、最初の段階で他の出席者に必要な情報を伝える義務はある。また、決定されたことを受け入れるためには、自分も積極的に参加して言うべきことは言っておく必要がある。トップの姿勢次第で、他の出席者が積極的に参加することもあれば、本音を言えずにただそこに座って居るだけで、不満を心の中にしまい込んでおく参加の仕方になってしまう場合もある。その意味でトップがどのように参加するかは、会議の成否を決める決定的な要因の一つである。\n　あとは、進行役に任せることが大切で、基本的には、トップの存在感が薄いほど他の出席者は積極的に参加する。その方が普段は聞けないたくさんの意見やアイデアを聞くチャンスを得られることにもなるし、会議に参加して本当によかったと誰もが思えるようになるのである。',qs:[
+    {q:'一番地位の高い人が会議で議長役をすることについて、筆者はどのように考えているか。',opts:['他の出席者にも議長役を経験させるために、自分ではしない方がよい。','会議の出席者に必要な情報を伝えるためには、自分でした方がよい。','出席者の中で一番情報をもっているため、自分でした方がよい。','会議のスムーズな運営のためには、自分ではしない方がよい。'],ans:3},
+    {q:'会議中にトップがしなければならないことは何か。',opts:['必要な情報を先に伝えて、自分の考えを述べること','参加者が不満をもたないよう、十分情報を伝えること','多くのアイデアを提案して、参加者の意見を求めること','他の出席者が積極的に参加できるよう、発言を避けること'],ans:0},
+    {q:'トップ以外の会議の出席者が本当によかったと思えるのは、どのようなときか。',opts:['進行役の運営が上手で発言しやすかったとき','発言の機会が多く、各自の意見が認められたとき','発言する人が増え、さまざまな意見が聞けたとき','トップが黙って出席者の意見を受け入れてくれたとき'],ans:2},
+  ],type:'mid',label:'中文'},
+  {passage:'1959年は板ガラス製造において記念すべき年である。この年、ある画期的な板ガラス製造法の実用化に成功した。この製造法の発明から実用化までは、苦難の道であり7年の年月がかかったが、この方法によって、表面に輝きがあり、平らでゆがみのない板ガラスを連続的に低コストで作ることができるようになったのである。\n　ガラスが窓に使われ始めたのは今から2,000年以上前のことで、初期の板ガラスは、分厚く、泡を多く含み、表面に傷がたくさんある粗末な品質のものだった。4世紀ごろになると、表面に輝きがある薄い板ガラスの製造法が発明されたが、作れる板ガラスの大きさには限りがあった。その後、より大きな板ガラスの製造法も発明されたが、この製造法においてもゆがみをなくすことはできなかった。それだけでなく①後戻りをしてしまった点もある。溶かしたガラスを手作業で平らにしたため、表面に輝きがなかったのである。\n　このように、板ガラスの歴史を通じて多くの製造法が発明されたが、いずれもどこかに問題点を抱えていた。それらが一気に解決され、高品質の板ガラスを大量生産することが可能になったのが1959年なのである。1960年代の日本は自動車の普及が進み、同時に安全性の向上が求められていた時期である。②この成功があって初めて、これらの需要にこたえることが可能だったと言えるだろう。',qs:[
+    {q:'①後戻りをしてしまった点とあるが、それはどんな点か。',opts:['板ガラスの大きさが限られるようになった点','板ガラスの表面の輝きがなくなった点','薄い板ガラスが作れなくなった点','割れやすい板ガラスになった点'],ans:1},
+    {q:'②この成功は何を指すか。',opts:['質の良い板ガラスの大量生産が可能になったこと','板ガラスの質が高まり利用法が多様になったこと','板ガラスの大量生産が可能になって普及が進んだこと','安全性の高い板ガラスを製造する方法が発明されたこと'],ans:0},
+    {q:'1959年を記念すべき年と、筆者が述べているのはなぜか。',opts:['窓に使用できる板ガラスの製造法が初めて実用化されたから','板ガラスの表面を磨いて輝きを出す技術の開発に成功したから','それまでの問題を解決し、板ガラスの製造に初めて成功したから','それまでの問題をすべて解決する板ガラスの製造法が実用化されたから'],ans:3},
+  ],type:'mid',label:'中文'},
+  {passage:'数年前、家を引っ越した。50年住み慣れた小さな家だったが、いざ引っ越しとなると、使っていない道具がごろごろ出てきて、あらためてものの多さにびっくりした。道具にしろ、本にしろずいぶん多量に所有していて、これを使いこなし、読みつくすには多量の時間がかかる。あと何年生きられるだろうと人生を逆算してみて、①この物量はムダだなあと引っ越しのトラックの助手席で考えた。\n　私は世間の人よりものの所有欲が強いとは思っていない。むしろものをもたないほうと思っているが、それでもものが多過ぎるのである。\n　昔、「預かりものの思想」と言った人がいる。人はぽつんと生まれて、ぷつんと消えていく。家や土地、道具にしても、いくら自分の所有だと力んでみても、死んでしまえばもっていけない。いずれは世の中に返していかなければならない。このわずかな人生の時間の中で、②それを楽しむしかないのだ。空気や水と同じように、土地も家も道具も、あらゆる諸物は世の中から預かって、生きている間だけ借りているのだ、という考えだった。',qs:[
+    {q:'①この物量はムダだなあとあるが、筆者はなぜそう考えたのか。',opts:['残された時間ですべてを利用することができないから','使っていない道具も一緒に運ばなければならないから','整理のために人生の貴重な時間が奪われるから','使わなくなったものがたくさんあるから'],ans:0},
+    {q:'②それとは何を指すか。',opts:['世の中','ものの貸し借り','所有しているもの','わずかな人生の時間'],ans:2},
+    {q:'「預かりものの思想」では、ものをどのように考えているか。',opts:['生きている間にすべて返さなければならない。','生きている間だけ世の中から借りている。','所有していてもいつかは消えてしまう。','所有するより借りたほうがいい。'],ans:1},
+  ],type:'mid',label:'中文'},
+  {passage:'【A】\n旅は非日常の世界へ入っていくことであり、目的地をどこにするかが重視されることが多い。しかし、わたしはむしろ目的地に着くまでの過程を大切にしたいと思っている。その過程には思わぬ発見や驚きがあるだろうし、計画していなかった出来事に出会えるかもしれない。少し予定を変えて寄り道をすることによって、自分が想像していた以上の素晴らしい旅になる可能性が出てくる。たとえ目的地での滞在時間が削られても、そこに行くまでに出会う偶然を大切にすることが、旅全体を楽しくすることになると思う。\n\n【B】\n交通機関が発達することで、人々の移動できる範囲は確実に広がっている。移動にかかる時間も、一昔前とは比較できないほど短縮されている。移動にかかる時間が短くなった分、目的地にゆっくり滞在できるようになったのは幸いである。旅の楽しみは、ふだんとは違う何かを見つけることであるから、目的地に少しでも長くいることができるようにしたいものだ。そうすることで、日々のあわただしい生活を忘れて、再び日常に戻る時のためのエネルギーを充電することができる。',qs:[
+    {q:'AとBのどちらの文章にも触れられている内容はどれか。',opts:['旅の移動手段の発達','旅における新しい発見','旅の日常に与える影響','旅における目的地の選択'],ans:1},
+    {q:'AとBがそれぞれ旅をするときに最も重視していることは何か。',opts:['Aは目的地までの過程を重視し、Bは目的地に長くいられることを重視している。','Aは目的地をどこにするかを重視し、Bは移動時間を短くすることを重視している。','Aは滞在中の発見を重視し、Bは日常から離れられる場所を選ぶことを重視している。','Aは計画を立てることを重視し、Bは移動する範囲を広げることを重視している。'],ans:0},
+  ],type:'mid',label:'中文'},
+  {passage:'食生活の変化は、私たちの健康に大きな影響を与えている。近年、ファストフードやコンビニ食を利用する人が増え、栄養バランスの取れた食事を心がける人が減っている。\n\n若い世代を中心に、朝食を取らない人も増えており、生活リズムの乱れが懸念されている。\n\nしかし、食事は単に栄養を取るためだけのものではない。家族や友人と食卓を囲み、コミュニケーションを取る大切な時間でもある。健康な体と心を保つために、食生活を見直す必要がある。',qs:[
+    {q:'筆者が懸念していることは何か。',opts:['ファストフードの値段','栄養バランスの悪い食生活','食事の時間','料理の難しさ'],ans:1},
+    {q:'食事について筆者が述べていることはどれか。',opts:['栄養を取るだけのもの','コミュニケーションの時間でもある','時間がかかるもの','面倒なもの'],ans:1},
+    {q:'筆者の主張は何か。',opts:['食生活を見直すべきだ','料理を簡単にすべきだ','外食を増やすべきだ','朝食は取らなくていい'],ans:0}
+  ],type:'mid',label:'中文'}
+];
+const N2_READING_LONG=[
+  {passage:'自分の能力や適性と、実際に就いている職業や希望する職業、あるいは生き方が必要とする能力や適性との間のギャップに悩むというのは、①よくあることです。むしろピッタリ一致しているとか、能力・適性が十分あるとかいうケースのほうが稀でしょう。\n　もともと能力とか適性というのは、とてもつかみどころのないものであり、また経験によりたえず引き出されたり磨かれたりしていくものです。運動面の能力や適性は比較的はっきり表面にあらわれますが、知的側面や社会的側面の能力や適性は自分自身でもなかなかわからないし、また経験によって伸びていく可能性も十分あります。\n　実は、能力や適性がないという自分観も、努力する一歩を踏み出すことのできない②自分に対する言い訳として用いられている面があります。仕事がうまくいかない人が自分にはどうもこの仕事の適性がないと嘆いたり、今の仕事が向いてないと言いつつ転職への覚悟ができない人が、自分には能力がないからどんな仕事に替わってもどうせダメなんだと自嘲気味に言ったりするのをよく耳にします。このような言い方も、今ひとつ頑張りきれない自分や、思いきって仕事を替えてみる勇気のない自分に対する弁解だったりするのです。\n　自分は能力がない、適性がない、自分には無理だなどと萎縮している人は、それは勝手な思い込みにすぎないのではないか、と自らに問いかけてみるべきでしょう。能力や適性というのは、気持ちを入れ替えたからといって突然高まるなどということは考えにくいものです。しかし、意欲や行動力なら、気持ちを入れ替えることで突然高まるということは十分ありえることです。\n　ゆえに、自分自身の不遇な職場生活や充実感の乏しい仕事内容の原因が、能力や適性の不足でなく意欲や行動力の不足であることが明らかになれば、「どうせ自分には無理だ」といった後ろ向きの姿勢から、「やるだけやってみるか」といった前向きの姿勢に転じることもできるはずです。',qs:[
+    {q:'①よくあることとあるが、どういうことがあるのか。',opts:['自分の仕事や生き方に必要な能力や適性は何かと悩むこと','自分の仕事や生き方と自分の能力や適性が合っていないと思うこと','自分の持っている能力や適性が何かわからないと悩むこと','自分の持っている能力や適性を伸ばしていくのが難しいと思うこと'],ans:1},
+    {q:'②自分に対する言い訳の例として、最も近いものはどれか。',opts:['人前で話すのが苦手なのは、自分はもともとおとなしいからだ。','人前で話すのが苦手なのは、学校で話し方を習わなかったからだ。','人前で話すのが苦手なのは、そういう機会があまりなかったからだ。','人前で話すのが苦手なのは、しゃべりすぎはよくないと言われたからだ。'],ans:0},
+    {q:'筆者がこの文章で言いたいことは何か。',opts:['変わらないと思われがちな能力や適性も考え方によって変わるものだ。','考え方を変えるよりも自分の能力や適性を理解することが重要だ。','能力や適性よりも意欲や行動力に目を向けるという姿勢が大切だ。','能力や適性がなくても意欲や行動力があれば何でもうまくいくものだ。'],ans:2},
+  ],type:'long',label:'長文'},
+  {passage:'【冷蔵庫の取扱説明書】故障かな？　こんなときは、まず次の点をお確かめください。\n\n■よく冷えない\n・大量の食品をいれていませんか？→食品はすき間をあけて収納してください。\n・温度設定が「弱」になっていませんか？→温度設定を「中」か「強」にしてください。\n・冷蔵庫の周囲に熱を逃すスペースがありますか？→据え付けの位置をチェックしてください。\n\n■冷えすぎる、凍ってしまう\n・温度設定が「強」になっていませんか？→温度設定を「中」にしてください。\n・冷蔵庫のある場所の気温が5℃以下になっていませんか？→温度設定を「弱」にしてください。\n\n■冷蔵庫の側面が熱くなることがある\n・冷蔵庫は内部の熱を外側に出すことで内部を冷やしています。それで側面が熱くなることがあります。→異常に熱くならないか注意してください。そうでなければ心配ありません。\n\n■揺れることがある\n・冷蔵庫が水平に設置されていますか？→水平になっていなかったら、左右の高さを調節してください。\n\n■においが気になる\n・においの強い食品をそのまま収納していませんか？→ラップをかけるなどして収納してください。\n\n■音が気になる\n・庫内の温度が高くなって、再び冷やし始めたときに音が出ることがあります。→冷えるまでお待ちください。\n\n●つぎのような場合はすぐに使用を中止し、点検をご依頼ください。\n・電源コードが異常に熱くなる。\n・電源コードに深いきずや変形がある。\n・何かが焦げるようなにおいがしたり、運転中に急に激しい振動がある。',qs:[
+    {q:'この冷蔵庫を使っているが、最近、中の食品があまり冷えない。確認する必要がないことはどれか。',opts:['冷蔵庫の温度設定','冷蔵庫の中の食品の量','冷蔵庫の周囲のスペース','冷蔵庫がある場所の気温'],ans:3},
+    {q:'この冷蔵庫の使用中にすぐに使うのをやめて販売店などに故障かどうか調べてもらったほうがいいのは、次のうちのどれか。',opts:['冷蔵庫から食品のにおいがもれてくる。','冷蔵庫の側面を触ると熱く感じる。','冷蔵庫が激しく振動することがある。','冷蔵庫から大きい音がすることがある。'],ans:2},
+  ],type:'long',label:'長文'},
+];
+const N5_VOCAB_REAL=[
+  {q:'すみません、水をください。',hl:'水',hint:'＿＿＿の読み方は？',opts:['すい','ずい','みず','みす'],ans:2},
+  {q:'まいあさ8じに学校にいきます。',hl:'学校',hint:'＿＿＿の読み方は？',opts:['かぐを','がぐを','かっこう','がっこう'],ans:3},
+  {q:'このコートは安いですね。',hl:'安い',hint:'＿＿＿の読み方は？',opts:['やすい','かるい','ふるい','うすい'],ans:0},
+  {q:'きょうはしゅくだいが少ないです。',hl:'少ない',hint:'＿＿＿の読み方は？',opts:['すこない','すくない','すずない','すぐない'],ans:1},
+  {q:'このふくは六万円です。',hl:'六万円',hint:'＿＿＿の読み方は？',opts:['よんせんえん','ろくせんえん','ろくまんえん','よんまんえん'],ans:2},
+  {q:'そのかどを左にまがってください。',hl:'左',hint:'＿＿＿の読み方は？',opts:['ひだり','みき','みぎ','ひたり'],ans:0},
+  {q:'えんぴつを三本かしてください。',hl:'三本',hint:'＿＿＿の読み方は？',opts:['さんぼん','さんぽん','さんべん','さんぺん'],ans:0},
+  {q:'さとうさんは先月けっこんしました。',hl:'先月',hint:'＿＿＿の読み方は？',opts:['せんげつ','せんしゅう','こんげつ','こんしゅう'],ans:0},
+  {q:'あの山のなまえはなんですか。',hl:'山',hint:'＿＿＿の読み方は？',opts:['やま','はな','とり','かわ'],ans:0},
+  {q:'かんじを九つおぼえました。',hl:'九つ',hint:'＿＿＿の読み方は？',opts:['ななつ','いつつ','やっつ','ここのつ'],ans:3},
+  {q:'これはどこのくにのお金ですか。',hl:'お金',hint:'＿＿＿の読み方は？',opts:['おがし','おがね','おかし','おかね'],ans:3},
+  {q:'どうぞ飲んでください。',hl:'飲んで',hint:'＿＿＿の読み方は？',opts:['あそんで','はらんで','よんで','のんで'],ans:3},
+  {q:'あれがこのまちでいちばんたかいビルです。',hl:'たかい',hint:'＿＿＿を漢字で書くと？',opts:['高い','高かい','新しい','新かい'],ans:0},
+  {q:'すずきさんはえいごができますか。',hl:'えいご',hint:'＿＿＿を漢字で書くと？',opts:['英話','英説','英語','英訳'],ans:2},
+  {q:'たなかさんはきのうやすみでした。',hl:'やすみ',hint:'＿＿＿を漢字で書くと？',opts:['体み','休み','仕み','任み'],ans:1},
+  {q:'わたしはきょうとでうまれました。',hl:'うまれました',hint:'＿＿＿を漢字で書くと？',opts:['主まれました','生まれました','情まれました','住まれました'],ans:1},
+  {q:'あさからあめが降っています。',hl:'あめ',hint:'＿＿＿を漢字で書くと？',opts:['雪','風','雨','男'],ans:2},
+  {q:'さとうさんとはやしさんのあいだにたってください。',hl:'あいだ',hint:'＿＿＿を漢字で書くと？',opts:['閾','間','開','問'],ans:1},
+  {q:'こうえんのきたがわにとしょかんがあります。',hl:'きた',hint:'＿＿＿を漢字で書くと？',opts:['東がわ','南がわ','西がわ','北がわ'],ans:3},
+  {q:'このわいしゃつをください。',hl:'わいしゃつ',hint:'＿＿＿をカタカナで書くと？',opts:['ウイシャン','ウイシャツ','ワイシャン','ワイシャツ'],ans:3},
+  {q:'ともだちからざっしを3（　）もらいました。',hl:'',hint:'（　）に入る言葉は？',opts:['さつ','まい','ほん','びき'],ans:0},
+  {q:'でんきをつけましたから、へやが（　）です。',hl:'',hint:'（　）に入る言葉は？',opts:['さむい','つめたい','あかるい','せまい'],ans:2},
+  {q:'びょういんはえきから（　）ですから、バスでいきましょう。',hl:'',hint:'（　）に入る言葉は？',opts:['ながい','ふとい','とおい','ひろい'],ans:2},
+  {q:'（　）がありませんから、じかんがわかりません。',hl:'',hint:'（　）に入る言葉は？',opts:['かぎ','さいふ','とけい','つくえ'],ans:2},
+  {q:'かばんはいすのうえに（　）ください。',hl:'',hint:'（　）に入る言葉は？',opts:['のって','おいて','すわって','たって'],ans:1},
+  {q:'あそこのしんごうで（　）をわたりましょう。',hl:'',hint:'（　）に入る言葉は？',opts:['ちかてつ','ちず','でぐち','みち'],ans:3},
+  {q:'このでんしゃはとうきょうえきを9じに（　）。',hl:'',hint:'（　）に入る言葉は？',opts:['おります','でます','かえります','はじまります'],ans:1},
+  {q:'ことしのなつはあついですから、（　）がほしいです。',hl:'',hint:'（　）に入る言葉は？',opts:['ラジオ','ストーブ','エアコン','テレビ'],ans:2},
+  {q:'わたしの（　）は、ちちとははとわたしの3にんです。',hl:'',hint:'（　）に入る言葉は？',opts:['きょうだい','こども','りょうしん','かぞく'],ans:3},
+  {q:'あそこのドアからなかに（　）ください。',hl:'',hint:'（　）に入る言葉は？',opts:['はいって','のぼって','つかって','とまって'],ans:0},
+  {q:'いまごはんをつくっています。',hl:'つくって',hint:'＿＿＿に意味が最も近いものは？',opts:['べんきょうして','せんたくして','りょうりして','れんしゅうして'],ans:2},
+  {q:'わたしはまいあささんぽしています。',hl:'さんぽ',hint:'＿＿＿に意味が最も近いものは？',opts:['あるいて','およいで','はしって','はたらいて'],ans:0},
+  {q:'わたしはどうぶつがすきです。',hl:'どうぶつ',hint:'＿＿＿に意味が最も近いものは？',opts:['くるまやひこうき','いぬやねこ','こうちゃやコーヒー','ケーキやチョコレート'],ans:1},
+  {q:'もりさん、「そぼはいま、いえにいません」といいました。',hl:'そぼ',hint:'＿＿＿に意味が最も近いものは？',opts:['おかあさん','おとうさん','おばあさん','おじいさん'],ans:2},
+  {q:'このジュースはまずいです。',hl:'まずい',hint:'＿＿＿に意味が最も近いものは？',opts:['つめたくない','おいしくない','からくない','すっぱくない'],ans:1},
+];
+const N5_GRAMMAR_REAL=[
+  {q:'西川「はじめまして、私はA銀行（　）西川です。」',hl:'（　）',hint:'（　）に入るものは？',opts:['は','が','を','の'],ans:3},
+  {q:'きのう、大山さんが私（　）花をくれました。',hl:'（　）',hint:'（　）に入るものは？',opts:['に','は','が','を'],ans:0},
+  {q:'このスカートは（　）先週デパートで買いました。',hl:'（　）',hint:'（　）に入るものは？',opts:['の','に','で','は'],ans:3},
+  {q:'今日は風（　）強いです。',hl:'（　）',hint:'（　）に入るものは？',opts:['を','の','が','へ'],ans:2},
+  {q:'毎日私は1時間（　）さんぽします。',hl:'（　）',hint:'（　）に入るものは？',opts:['が','に','は','ぐらい'],ans:3},
+  {q:'きょうしつ（　）、ぼうしをぬいでください。',hl:'（　）',hint:'（　）に入るものは？',opts:['では','には','へは','とは'],ans:0},
+  {q:'A「えいがのチケットが5枚あります。だれ（　）いきませんか。」B「あ、いきたいです。」',hl:'（　）',hint:'（　）に入るものは？',opts:['と','か','の','に'],ans:0},
+  {q:'あしたはしごとの後、（　）びょういんへ行きます。',hl:'（　）',hint:'（　）に入るものは？',opts:['すぐに','もう','よく','だんだん'],ans:0},
+  {q:'A「急いでください。出かけますよ。」B「あ、（　）待ってください。」',hl:'（　）',hint:'（　）に入るものは？',opts:['とても','あまり','ぜんぜん','ちょっと'],ans:3},
+  {q:'A「りょうりをしますか。」B「はい、します。でも、じょうず（　）ですよ。」',hl:'（　）',hint:'（　）に入るものは？',opts:['ない','がない','しない','じゃない'],ans:3},
+  {q:'私は小さい（　）、外国に住んでいました。',hl:'（　）',hint:'（　）に入るものは？',opts:['まで','から','とき','のとき'],ans:3},
+  {q:'日本の食べ物はおいしいです。いちばん（　）のはすしです。',hl:'（　）',hint:'（　）に入るものは？',opts:['好き','好きな','好きだ','好きで'],ans:1},
+  {q:'山下「もしもし、西川さんですか。」西川「はい、そうですが、（　）ですか。」',hl:'（　）',hint:'（　）に入るものは？',opts:['どなた','どの人','だれが','なにか'],ans:0},
+  {q:'A「来月の旅行は電車で行きません。バスで行きます。」B「（　）。」A「バスのほうが安いからです。」',hl:'（　）',hint:'（　）に入るものは？',opts:['どちらですか','どうしてですか','どうしますか','どこへ行きますか'],ans:1},
+  {q:'山下「南さん、いっしょにしゅくだいをやりませんか。」南「すみません、私は家に帰ってから（　）。」',hl:'（　）',hint:'（　）に入るものは？',opts:['います','あります','します','終わります'],ans:2},
+  {q:'西川「ラーメンはありませんか。」食堂の人「ええ、ありますよ。しょうゆラーメンとしおラーメンがあります。」西川「じゃあ、しおラーメン（　）。」',hl:'（　）',hint:'（　）に入るものは？',opts:['にください','にしてください','がおねがいです','がおねがいします'],ans:3},
+  {q:'毎日私は ＿ ＿ ★ ＿ はをみがきます。',hl:'★',hint:'★に入るものは？',opts:['前','の','に','朝ごはん'],ans:1},
+  {q:'A「今日はいい天気ですね。」B「きのうは ＿ ＿ ★ ＿ ましたね。」',hl:'★',hint:'★に入るものは？',opts:['晴れ','雨','今日は','でしたが'],ans:0},
+  {q:'海に ＿ ＿ ★ ＿ です。',hl:'★',hint:'★に入るものは？',opts:['近くて','家に','大きい','住みたい'],ans:1},
+  {q:'きのう私が ＿ ＿ ★ です。',hl:'★',hint:'★に入るものは？',opts:['は','本','読んだ','おもしろかった'],ans:1},
+  {q:'南「中山さん、ダンスを教えてください。」中山「いいですよ。毎週水曜日と土曜日はここで ＿ ＿ ★ ＿ ください。」',hl:'★',hint:'★に入るものは？',opts:['来て','います','れんしゅうして','から'],ans:3},
+];
+const N5_READING_SHORT=[
+  {passage:'今日、安木駅からバスに乗って京山大学へ行きました。大学の中には大きなとしょかんや食堂がありました。大学のとなりには広いこうえんもありました。とてもいいところでした。',qs:[{q:'大学のそばに何がありますか。',opts:['安木駅','としょかん','食堂','こうえん'],ans:3}],type:'short',label:'短文'},
+  {passage:'これは、山田先生が日本語Aクラスの学生に書いたメールです。\n\n日本語Aクラスのみなさん\n来週水曜日の午前のじゅぎょうでDVDを見ます。\nいつもの103きょうしつではなくて、105きょうしつに来てください。\n午後のじゅぎょうはいつもと同じ103きょうしつです。\n山田',qs:[{q:'日本語Aクラスの学生は、来週の水曜日にどのきょうしつへ行きますか。',opts:['午前は103きょうしつ、午後も103きょうしつ','午前は105きょうしつ、午後も105きょうしつ','午前は103きょうしつ、午後は105きょうしつ','午前は105きょうしつ、午後は103きょうしつ'],ans:3}],type:'short',label:'短文'},
+  {passage:'（会社で）エミさんの机の上に、このメモと電車のきっぷがあります。\n\nエミさんへ\n電車のきっぷを買ってきました。\n1枚はエミさんのです。もう1枚は、高木さんにわたしてください。アリさんには、わたしがわたします。\nよろしくおねがいします。\n大西',qs:[{q:'エミさんの机の上にだれのきっぷがありますか。',opts:['エミさんと高木さんとアリさんと大西さん','エミさんと高木さんとアリさん','エミさんと高木さん','エミさんとアリさん'],ans:2}],type:'short',label:'短文'},
+];
+const N5_READING_MID=[
+  {passage:'ラジャさんは山中さんのかぞくに手紙を書きました。\n\nみなさんお元気ですか。\n先週はいろいろありがとうございました。みなさんといっしょの夏休みはとても楽しかったです。一週間日本語でたくさん話ができました。京子さんとプールで泳いだり、お母さんと日本のりょうりを作ったりしました。\nわたしははじめておすしとおにぎりを作りました。おすしはむずかしかったです。でも、おにぎりはかんたんでしたから、また自分で作りたいです。お母さんが作ったみそしるはおいしかったです。わたしが作ったカレーもみなさんが「おいしいですね。」と言いましたから、うれしかったです。\nみなさんととったしゃしんを見ながら、この手紙を書いています。来週の月曜日からまた学校が始まります。',qs:[
+    {q:'ラジャさんは先週何をしましたか。',opts:['しゃしんをとったり、学校で日本語を習ったりしました','プールに行ったり、りょうりを作って食べたりしました','国のことばでたくさん話したり、手紙を書いたりしました','おにぎりの作り方を教えたり、みそしるを作ったりしました'],ans:1},
+    {q:'この手紙でラジャさんは何がいちばん言いたいですか。',opts:['おすしの作り方を習いたいです。おねがいします','カレーがおいしかったです。また作ってください','先週は楽しかったです。ありがとうございました','月曜日から学校が始まります。うれしいです'],ans:2}
+  ],type:'mid',label:'中文'}
+];
+const N5_READING_LONG=[
+  {passage:'「はじめましてパーティー」\n来週「はじめましてパーティー」をします。\nみなさん、来てください！\n\n日時：4月20日（土）午後5時〜7時\n場所：水口日本語学校 302きょうしつ\n※3階のいちばん大きいへやです。\n\n持ち物：\n・Aクラスの人：300円ぐらいの食べ物\n・Bクラスの人：くだもの\n・Cクラスの人：おかし\n※飲み物は学校が買います。\n\nみんなでじこしょうかいをしてから、話したり歌ったりしましょう。\n水口日本語学校 山田',qs:[
+    {q:'アンさんは、「はじめましてパーティー」に行きます。アンさんはCクラスです。何を持っていきますか。',opts:['300円','おかし','くだもの','飲み物'],ans:1}
+  ],type:'long',label:'長文'}
+];
+const N5_VOCAB_AI=[
+  {q:'すみません、水をください。',hl:'水',hint:'＿＿＿の読み方は？',opts:['すい','ずい','みず','みす'],ans:2},
+  {q:'まいあさ8じに学校にいきます。',hl:'学校',hint:'＿＿＿の読み方は？',opts:['かくこう','かっこう','がくこう','がっこう'],ans:3},
+  {q:'このコートは安いですね。',hl:'安い',hint:'＿＿＿の読み方は？',opts:['やすい','かるい','ふるい','うすい'],ans:0},
+  {q:'きょうはしゅくだいが少ないです。',hl:'少ない',hint:'＿＿＿の読み方は？',opts:['すこない','すくない','ろくない','すぐない'],ans:1},
+  {q:'このふくは六千円です。',hl:'六千円',hint:'＿＿＿の読み方は？',opts:['よんせんえん','ろくせんえん','ろくまんえん','よんまんえん'],ans:1},
+  {q:'そのかどを左にまがってください。',hl:'左',hint:'＿＿＿の読み方は？',opts:['ひだり','みぎ','みき','ひたり'],ans:0},
+  {q:'えんぴつを三本かしてください。',hl:'三本',hint:'＿＿＿の読み方は？',opts:['さんぼん','さんぽん','さんべん','さんぺん'],ans:0},
+  {q:'さとうさんは先月けっこんしました。',hl:'先月',hint:'＿＿＿の読み方は？',opts:['せんげつ','せんしゅう','こんげつ','こんしゅう'],ans:0},
+  {q:'あの山のなまえはなんですか。',hl:'山',hint:'＿＿＿の読み方は？',opts:['やま','はな','とり','かわ'],ans:0},
+  {q:'かんじを九つおぼえました。',hl:'九つ',hint:'＿＿＿の読み方は？',opts:['ななつ','いつつ','むっつ','ここのつ'],ans:3},
+  {q:'これはどこのくにのお金ですか。',hl:'金',hint:'＿＿＿の読み方は？',opts:['おかし','おかね','おもの','おかみ'],ans:1},
+  {q:'どうぞ飲んでください。',hl:'飲んで',hint:'＿＿＿の読み方は？',opts:['あそんで','ならんで','よんで','のんで'],ans:3},
+  {q:'あれがこのまちでいちばんたかいビルです。',hl:'たかい',hint:'＿＿＿を漢字で書くと？',opts:['高い','高かい','新しい','新かい'],ans:0},
+  {q:'すずきさんはえいごができますか。',hl:'えいご',hint:'＿＿＿を漢字で書くと？',opts:['英語','英誉','英説','英訳'],ans:0},
+  {q:'たなかさんはきのうやすみでした。',hl:'やすみ',hint:'＿＿＿を漢字で書くと？',opts:['休み','体み','仕み','任み'],ans:0},
+  {q:'わたしはきょうとでうまれました。',hl:'うまれました',hint:'＿＿＿を漢字で書くと？',opts:['生まれました','主まれました','佐まれました','住まれました'],ans:0},
+  {q:'あさからあめがふっています。',hl:'あめ',hint:'＿＿＿を漢字で書くと？',opts:['雨','風','雪','雷'],ans:0},
+  {q:'さとうさんとはやしさんのあいだにたってください。',hl:'あいだ',hint:'＿＿＿を漢字で書くと？',opts:['間','開','閉','閾'],ans:0},
+  {q:'こうえんのきたがわにとしょかんがあります。',hl:'きた',hint:'＿＿＿を漢字で書くと？',opts:['北','東','南','西'],ans:0},
+  {q:'このわいしゃつをください。',hl:'わいしゃつ',hint:'＿＿＿をカタカナで書くと？',opts:['ワイシャツ','ウイシャツ','ワイシャン','ウイシャン'],ans:0},
+  {q:'おなかが（　）。なにかたべましょう。',hl:'',hint:'（　）に入る言葉は？',opts:['すきました','つきました','たりました','とりました'],ans:0},
+  {q:'まいばん（　）をあびます。',hl:'',hint:'（　）に入る言葉は？',opts:['シャワー','プール','ペン','ボタン'],ans:0},
+  {q:'にちようびはいつも（　）ねます。',hl:'',hint:'（　）に入る言葉は？',opts:['おそく','ゆっくり','たくさん','すこし'],ans:0},
+  {q:'いえから（　）であるいて10ぷんです。',hl:'',hint:'（　）に入る言葉は？',opts:['えき','うち','がっこう','こうばん'],ans:0},
+  {q:'てがみに（　）をはります。',hl:'',hint:'（　）に入る言葉は？',opts:['きって','じしょ','つくえ','とけい'],ans:0},
+  {q:'すずしいですね。まどを（　）ください。',hl:'',hint:'（　）に入る言葉は？',opts:['しめて','あけて','つけて','けして'],ans:1},
+  {q:'こうえんで（　）あそびました。',hl:'',hint:'（　）に入る言葉は？',opts:['たのしく','うつくしく','すずしく','つめたく'],ans:0},
+  {q:'きょうは（　）でぱーてぃーがあります。',hl:'',hint:'（　）に入る言葉は？',opts:['レストラン','カメラ','ノート','ベッド'],ans:0},
+  {q:'にもつが（　）です。もてません。',hl:'',hint:'（　）に入る言葉は？',opts:['おもい','かるい','ながい','ひくい'],ans:0},
+  {q:'みちが（　）ですから、きをつけてください。',hl:'',hint:'（　）に入る言葉は？',opts:['ひろい','せまい','たかい','ひくい'],ans:1},
+  {q:'このしごとはやさしいです。',hl:'やさしい',hint:'＿＿＿の意味に最も近いものは？',opts:['かんたん','むずかしい','たのしい','つまらない'],ans:0},
+  {q:'がっこうのちかくにすんでいます。',hl:'ちかく',hint:'＿＿＿の意味に最も近いものは？',opts:['そば','まえ','うえ','した'],ans:0},
+  {q:'このえいががはじまります。',hl:'はじまります',hint:'＿＿＿の意味に最も近いものは？',opts:['スタートします','エンドします','ストップします','ジョインします'],ans:0},
+  {q:'やまださんはじてんしゃでがっこうへきます。',hl:'じてんしゃ',hint:'＿＿＿の意味に最も近いものは？',opts:['バイク','バス','タクシー','でんしゃ'],ans:0},
+  {q:'たなかさんはきょうしです。',hl:'きょうし',hint:'＿＿＿の意味に最も近いものは？',opts:['せんせい','がくせい','いしゃ','けいさつ'],ans:0},
+];
+const N5_GRAMMAR_AI=[
+  {q:'わたしは（　）日本語をべんきょうしました。',hl:'（　）',hint:'（　）に入るものは？',opts:['きのう','きょう','あした','あさって'],ans:0},
+  {q:'これは（　）ですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['なん','なに','どれ','どこ'],ans:0},
+  {q:'えきまで（　）バスで5ふんです。',hl:'（　）',hint:'（　）に入るものは？',opts:['は','が','を','に'],ans:0},
+  {q:'たなかさんはくるま（　）かいしゃへいきます。',hl:'（　）',hint:'（　）に入るものは？',opts:['で','に','へ','と'],ans:0},
+  {q:'やまださん（　）たんじょうびはいつですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['の','を','が','に'],ans:0},
+  {q:'すずきさん（　）えいごをおしえます。',hl:'（　）',hint:'（　）に入るものは？',opts:['に','を','で','と'],ans:0},
+  {q:'まいあさパン（　）たべます。',hl:'（　）',hint:'（　）に入るものは？',opts:['を','に','で','と'],ans:0},
+  {q:'がっこうにくるまで（　）きます。',hl:'（　）',hint:'（　）に入るものは？',opts:['でんしゃ','でんしゃに','でんしゃへ','でんしゃで'],ans:3},
+  {q:'すみません、これ（　）いくらですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['は','が','を','に'],ans:0},
+  {q:'にほんごのほんを2さつ（　）。',hl:'（　）',hint:'（　）に入るものは？',opts:['かいました','かきました','たべました','よみました'],ans:0},
+  {q:'いま、なんじ（　）ですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['ごろ','ぐらい','ほど','ばかり'],ans:0},
+  {q:'たなかさんは（　）にほんごじょうずですね。',hl:'（　）',hint:'（　）に入るものは？',opts:['とても','たくさん','よく','たいへん'],ans:0},
+  {q:'おちゃ（　）コーヒーをのみますか。',hl:'（　）',hint:'（　）に入るものは？',opts:['と','や','か','も'],ans:2},
+  {q:'がっこうへ（　）ですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['いきましたか','いきますか','いきません','いって'],ans:1},
+  {q:'きょうは（　）あついですね。',hl:'（　）',hint:'（　）に入るものは？',opts:['とても','とくに','ぜんぜん','すこし'],ans:0},
+  {q:'すみません、（　）はだれですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['あの','あれ','あちら','あそこ'],ans:2},
+  {q:'たなかさんはいつ（　）か。',hl:'（　）',hint:'（　）に入るものは？',opts:['きました','います','いきます','たべます'],ans:0},
+  {q:'これは（　）のほんですか。',hl:'（　）',hint:'（　）に入るものは？',opts:['だれ','どこ','いつ','なに'],ans:0},
+  {q:'ここ（　）にほんごをべんきょうしています。',hl:'（　）',hint:'（　）に入るものは？',opts:['で','に','へ','を'],ans:0},
+  {q:'えきまでどのくらい（　）ますか。',hl:'（　）',hint:'（　）に入るものは？',opts:['かかり','かかる','かかった','かかって'],ans:0},
 ];
 
-// ── STATE ──────────────────────────────────────────────────────
+const DB={
+  N1:{vocab:{real:N1_VOCAB_REAL,ai:N1_VOCAB_AI},grammar:{real:N1_GRAMMAR_REAL,ai:N1_GRAMMAR_AI},reorder:{real:[],ai:N1_GRAMMAR_AI.filter(q=>q.hl==='★')},reading:{short:N1_READING_SHORT,mid:N1_READING_MID,long:[]}},
+  N2:{vocab:{real:N2_VOCAB_REAL,ai:N2_VOCAB_AI},grammar:{real:N2_GRAMMAR_REAL,ai:N2_GRAMMAR_AI},reorder:{real:N2_REORDER_REAL,ai:N2_GRAMMAR_AI.filter(q=>q.hl==='★')},reading:{short:N2_READING_SHORT,mid:N2_READING_MID,long:N2_READING_LONG}},
+  N3:{vocab:{real:N3_VOCAB_REAL,ai:N3_VOCAB_AI},grammar:{real:N3_GRAMMAR_REAL,ai:N3_GRAMMAR_AI},reorder:{real:N3_REORDER_REAL,ai:[]},reading:{short:N3_READING_SHORT,mid:N3_READING_MID,long:N3_READING_LONG}},
+  N4:{vocab:{real:N4_VOCAB_REAL,ai:N4_VOCAB_AI},grammar:{real:N4_GRAMMAR_REAL,ai:N4_GRAMMAR_AI},reorder:{real:N4_GRAMMAR_REAL.filter(q=>q.hl==='★'),ai:[]},reading:{short:N4_READING_SHORT,mid:N4_READING_MID,long:N4_READING_LONG}},
+  N5:{vocab:{real:N5_VOCAB_REAL,ai:N5_VOCAB_AI},grammar:{real:N5_GRAMMAR_REAL,ai:N5_GRAMMAR_AI},reorder:{real:N5_GRAMMAR_REAL.filter(q=>q.hl==='★'),ai:[]},reading:{short:N5_READING_SHORT,mid:N5_READING_MID,long:N5_READING_LONG}},
+};
 const S={cat:'vocab',src:'real',mode:'instant',count:10,level:'N3',readSet:'A'};
 let QS=[],qi=0,correct=0,userAnswers=[];
 let wrongBank=JSON.parse(localStorage.getItem('jlpt_wrong')||'[]');
 let histBank=JSON.parse(localStorage.getItem('jlpt_hist')||'[]');
-
-function save(){
-  try{localStorage.setItem('jlpt_wrong',JSON.stringify(wrongBank));localStorage.setItem('jlpt_hist',JSON.stringify(histBank));}catch(e){}
+function save(){try{localStorage.setItem('jlpt_wrong',JSON.stringify(wrongBank));localStorage.setItem('jlpt_hist',JSON.stringify(histBank));}catch(e){}}
+function renderCatList(){
+  const lvDB=DB[S.level];
+  const counts={vocab:(lvDB.vocab.real.length+(lvDB.vocab.ai||[]).length),grammar:(lvDB.grammar.real.length+(lvDB.grammar.ai||[]).length),reorder:lvDB.reorder.real.length,reading:(lvDB.reading.short.length+lvDB.reading.mid.length+lvDB.reading.long.length)+'篇'};
+  const names={vocab:['文字・語彙','單字・語彙'],grammar:['文法','文法・句型'],reorder:['文の組み立て','重組句子'],reading:['読解','閱讀理解']};
+  document.getElementById('cat-list').innerHTML=Object.keys(names).map(k=>`<div class="cat-card" onclick="goCat('${k}')"><div><div class="cat-jp">${names[k][0]}</div><div class="cat-zh">${names[k][1]}</div><div class="cat-count">${counts[k]} 題</div></div><span class="cat-arr">›</span></div>`).join('');
 }
-
-// ── SELECTORS ──────────────────────────────────────────────────
-function selLv(el,v){document.querySelectorAll('.level-row .pill').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');S.level=v;}
+function selLv(el,v){document.querySelectorAll('.level-row .pill:not(.disabled)').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');S.level=v;renderCatList();}
 function selSrc(el,v){document.querySelectorAll('.src-tab').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');S.src=v;}
 function selMode(el,v){el.closest('.mode-grid').querySelectorAll('.mode-card').forEach(m=>m.classList.remove('sel'));el.classList.add('sel');S.mode=v;}
 function selCount(el,v){document.querySelectorAll('#setup-vgr .count-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');S.count=v;}
 function selReadSet(el,v){document.querySelectorAll('#setup-reading .count-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');S.readSet=v;}
-
-// ── NAVIGATION ─────────────────────────────────────────────────
 function goScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function openStats(){renderStats();goScreen('stats');}
 function openWrong(){renderWrong();goScreen('wrong');}
@@ -451,212 +1040,51 @@ function goCat(c){
   if(c==='reading'){goScreen('setup-reading');return;}
   const names={vocab:'文字・語彙 / 單字',grammar:'文法 / 句型',reorder:'文の組み立て / 重組'};
   document.getElementById('setup-title').textContent=names[c];
+  const hasAI=(DB[S.level][c].ai||[]).length>0;
   document.getElementById('src-wrap').style.display=(c==='vocab'||c==='grammar')?'block':'none';
+  const aiTab=document.getElementById('ai-tab');
+  aiTab.style.opacity=hasAI?'1':'.35';aiTab.style.pointerEvents=hasAI?'auto':'none';
+  if(!hasAI){S.src='real';document.querySelectorAll('.src-tab').forEach(t=>t.classList.remove('sel'));document.querySelector('.src-tab').classList.add('sel');}
   goScreen('setup-vgr');
 }
-
-// ── QUIZ ───────────────────────────────────────────────────────
-function getPool(){
-  if(S.cat==='vocab') return S.src==='ai'?[...VOCAB_AI]:[...VOCAB_REAL];
-  if(S.cat==='grammar') return S.src==='ai'?[...GRAMMAR_AI]:[...GRAMMAR_REAL];
-  if(S.cat==='reorder') return [...REORDER_REAL];
-  return [];
-}
-function startQuiz(){
-  let pool=getPool();
-  const n=S.count===0?pool.length:Math.min(S.count,pool.length);
-  QS=shuffle(pool).slice(0,n).map(q=>({...q,catKey:S.cat}));
-  qi=0;correct=0;userAnswers=[];
-  goScreen('quiz');renderQ();
-}
-function startReading(){
-  const sets={
-    A:[...shuffle([...READING_SHORT]).slice(0,1),...shuffle([...READING_MID]).slice(0,1)],
-    B:[...shuffle([...READING_SHORT]).slice(0,2),...shuffle([...READING_LONG]).slice(0,1)],
-    C:[...shuffle([...READING_SHORT]).slice(0,3),...shuffle([...READING_MID]).slice(0,1),...shuffle([...READING_LONG]).slice(0,1)],
-  };
-  QS=[];
-  sets[S.readSet].forEach(p=>p.qs.forEach(q=>QS.push({passage:p.passage,passageLabel:p.label,...q,catKey:'reading'})));
-  qi=0;correct=0;userAnswers=[];
-  goScreen('quiz');renderQ();
-}
-function practiceWrong(){
-  if(!wrongBank.length){alert('錯題本是空的！ / 間違いノートは空です');return;}
-  QS=shuffle([...wrongBank]).map(w=>({...w.q,catKey:w.cat}));
-  S.mode='instant';
-  qi=0;correct=0;userAnswers=[];
-  goScreen('quiz');renderQ();
-}
+function getPool(){const lvDB=DB[S.level];if(S.cat==='vocab')return S.src==='ai'?[...(lvDB.vocab.ai||[])]:([...lvDB.vocab.real]);if(S.cat==='grammar')return S.src==='ai'?[...(lvDB.grammar.ai||[])]:([...lvDB.grammar.real]);if(S.cat==='reorder')return[...lvDB.reorder.real];return[];}
+function startQuiz(){let pool=getPool();const n=S.count===0?pool.length:Math.min(S.count,pool.length);QS=shuffle(pool).slice(0,n).map(q=>({...q,catKey:S.cat}));qi=0;correct=0;userAnswers=[];goScreen('quiz');renderQ();}
+function startReading(){const lvDB=DB[S.level];const sets={A:[...shuffle([...lvDB.reading.short]).slice(0,1),...shuffle([...lvDB.reading.mid]).slice(0,1)],B:[...shuffle([...lvDB.reading.short]).slice(0,2),...shuffle([...lvDB.reading.long]).slice(0,1)],C:[...shuffle([...lvDB.reading.short]).slice(0,3),...shuffle([...lvDB.reading.mid]).slice(0,1),...shuffle([...lvDB.reading.long]).slice(0,1)]};QS=[];sets[S.readSet].forEach(p=>p.qs.forEach(q=>QS.push({passage:p.passage,passageLabel:p.label,...q,catKey:'reading'})));qi=0;correct=0;userAnswers=[];goScreen('quiz');renderQ();}
+function practiceWrong(){if(!wrongBank.length){alert('錯題本是空的！');return;}QS=shuffle([...wrongBank]).map(w=>({...w.q,catKey:w.cat}));S.mode='instant';qi=0;correct=0;userAnswers=[];goScreen('quiz');renderQ();}
 function renderQ(){
   const q=QS[qi],total=QS.length;
   document.getElementById('prog').style.width=((qi/total)*100)+'%';
   document.getElementById('q-num').textContent=(qi+1)+' / '+total;
   const bl={vocab:'語彙',grammar:'文法',reorder:'組立',reading:'読解'};
   document.getElementById('q-badge').textContent=bl[q.catKey]||'読解';
-  // passage
   const pw=document.getElementById('passage-wrap');
-  if(q.passage){
-    pw.style.display='block';
-    document.getElementById('passage-label').textContent=(q.passageLabel||'')+'  文章を読んでください';
-    document.getElementById('passage-text').textContent=q.passage;
-  } else pw.style.display='none';
-  // question
-  const qt=document.getElementById('q-text');
-  qt.innerHTML='';
-  if(q.hl&&q.hl.length>0&&q.hl!=='（　）'&&q.hl!=='★'){
-    const re=new RegExp(q.hl.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g');
-    qt.innerHTML=q.q.replace(re,'<span class="q-hl">'+q.hl+'</span>');
-  } else qt.textContent=q.q;
-  // hint
-  const he=document.getElementById('q-hint-el');
-  if(q.hint){he.style.display='block';he.textContent=q.hint;}
-  else he.style.display='none';
-  // options
+  if(q.passage){pw.style.display='block';document.getElementById('passage-label').textContent=(q.passageLabel||'')+'  文章を読んでください';document.getElementById('passage-text').textContent=q.passage;}else pw.style.display='none';
+  const qt=document.getElementById('q-text');qt.innerHTML='';
+  if(q.hl&&q.hl.length>0&&q.hl!=='（　）'&&q.hl!=='★'){const re=new RegExp(q.hl.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g');qt.innerHTML=q.q.replace(re,'<span class="q-hl">'+q.hl+'</span>');}else qt.textContent=q.q;
+  const he=document.getElementById('q-hint-el');if(q.hint){he.style.display='block';he.textContent=q.hint;}else he.style.display='none';
   const od=document.getElementById('options');od.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const d=document.createElement('div');d.className='opt';
-    d.innerHTML=`<span class="opt-n">${i+1}</span><span>${o}</span>`;
-    if(S.mode==='instant') d.onclick=()=>answerInstant(i);
-    else d.onclick=()=>markOpt(d,i);
-    od.appendChild(d);
-  });
-  // btn
-  const ab=document.getElementById('act-btn');
-  ab.className='act-btn hidden';
-  if(S.mode==='review'){
-    ab.className='act-btn';
-    ab.textContent=(qi+1<QS.length)?'次の問題 / 下一題 →':'完了 / 完成';
-    ab.onclick=handleReviewNext;
-  }
+  q.opts.forEach((o,i)=>{const d=document.createElement('div');d.className='opt';d.innerHTML=`<span class="opt-n">${i+1}</span><span>${o}</span>`;if(S.mode==='instant')d.onclick=()=>answerInstant(i);else d.onclick=()=>markOpt(d,i);od.appendChild(d);});
+  const ab=document.getElementById('act-btn');ab.className='act-btn hidden';
+  if(S.mode==='review'){ab.className='act-btn';ab.textContent=(qi+1<QS.length)?'次の問題 / 下一題 →':'完了 / 完成';ab.onclick=handleReviewNext;}
 }
 function answerInstant(i){
-  const q=QS[qi];
-  if(document.querySelector('.opt.disabled')) return;
-  document.querySelectorAll('.opt').forEach((o,idx)=>{
-    o.classList.add('disabled');
-    if(idx===q.ans) o.classList.add('correct');
-    else if(idx===i) o.classList.add('wrong');
-  });
-  userAnswers.push(i);
-  if(i===q.ans) correct++;
-  else addWrong(q,i,q.catKey);
-  const ab=document.getElementById('act-btn');
-  ab.className='act-btn';
-  if(qi+1<QS.length){ab.textContent='次の問題 / 下一題 →';ab.onclick=()=>{qi++;renderQ();};}
-  else{ab.textContent='結果を見る / 查看結果';ab.className='act-btn primary';ab.onclick=showResult;}
+  const q=QS[qi];if(document.querySelector('.opt.disabled'))return;
+  document.querySelectorAll('.opt').forEach((o,idx)=>{o.classList.add('disabled');if(idx===q.ans)o.classList.add('correct');else if(idx===i)o.classList.add('wrong');});
+  userAnswers.push(i);if(i===q.ans)correct++;else addWrong(q,i,q.catKey);
+  const ab=document.getElementById('act-btn');ab.className='act-btn';
+  if(qi+1<QS.length){ab.textContent='次の問題 / 下一題 →';ab.onclick=()=>{qi++;renderQ();};}else{ab.textContent='結果を見る / 查看結果';ab.className='act-btn primary';ab.onclick=showResult;}
 }
-function markOpt(el,i){
-  document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('marked');delete o._c;});
-  el.classList.add('marked');el._c=i;
-}
-function handleReviewNext(){
-  let chosen=-1;
-  document.querySelectorAll('.opt').forEach(o=>{if(o.classList.contains('marked')&&o._c!==undefined) chosen=o._c;});
-  userAnswers.push(chosen);
-  const q=QS[qi];
-  if(chosen===q.ans) correct++;
-  else addWrong(q,chosen,q.catKey);
-  qi++;
-  if(qi<QS.length) renderQ(); else buildReview();
-}
-function addWrong(q,chosen,cat){
-  const key=q.q+'|'+q.ans;
-  const idx=wrongBank.findIndex(w=>w.key===key);
-  const entry={key,q:{...q},chosen,cat,time:Date.now()};
-  if(idx>=0) wrongBank[idx]=entry; else wrongBank.push(entry);
-  save();
-}
-function buildReview(){
-  const list=document.getElementById('rev-list');list.innerHTML='';
-  QS.forEach((q,i)=>{
-    const ua=userAnswers[i],ok=(ua===q.ans);
-    const d=document.createElement('div');d.className='rev-item '+(ok?'ok':'ng');
-    const qShort=q.q.length>55?q.q.slice(0,55)+'…':q.q;
-    d.innerHTML=`<div class="rev-q">${qShort}</div>`
-      +(ok?`<div class="rev-ok">✓ 正解：${q.opts[q.ans]}</div>`
-          :`<div class="rev-ng">✗ あなた：${ua>=0?q.opts[ua]:'未回答'}</div><div class="rev-ok" style="margin-top:4px;">正解：${q.opts[q.ans]}</div>`);
-    list.appendChild(d);
-  });
-  goScreen('review');
-}
-function showResult(){
-  const total=QS.length,pct=Math.round((correct/total)*100);
-  document.getElementById('res-emoji').textContent=pct>=80?'🎉':pct>=60?'📚':'💪';
-  document.getElementById('res-pct').textContent=pct+'%';
-  document.getElementById('res-msg').textContent=pct>=80?'すばらしい！素晴らしい成績！':pct>=60?'よくできました！もう少し！':'頑張れ！練習を続けよう！';
-  document.getElementById('sv-ok').textContent=correct;
-  document.getElementById('sv-ng').textContent=total-correct;
-  document.getElementById('sv-tot').textContent=total;
-  histBank.push({cat:S.cat,correct,total,pct,time:Date.now()});
-  save();
-  goScreen('result');
-}
-function renderStats(){
-  const catKeys=['vocab','grammar','reorder','reading'];
-  const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};
-  const bars=document.getElementById('cat-bars');bars.innerHTML='';
-  let hasData=false;
-  catKeys.forEach(k=>{
-    const h=histBank.filter(x=>x.cat===k);
-    if(!h.length) return;
-    hasData=true;
-    const avg=Math.round(h.reduce((s,x)=>s+x.pct,0)/h.length);
-    const cnt=h.reduce((s,x)=>s+x.total,0);
-    bars.innerHTML+=`<div class="bar-row"><span class="bar-label">${catZh[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${avg}%"></div></div><span class="bar-pct">${avg}%</span></div><div class="bar-sub">累計 ${cnt} 題 · ${h.length} 回練習</div>`;
-  });
-  if(!hasData) bars.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">まだデータがありません<br>尚無資料，先去練習看看！</div>';
-  const hist=document.getElementById('hist-list');hist.innerHTML='';
-  const catJp={vocab:'語彙',grammar:'文法',reorder:'組立',reading:'読解'};
-  if(!histBank.length){hist.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">まだ履歴がありません / 尚無記錄</div>';return;}
-  [...histBank].reverse().slice(0,20).forEach(h=>{
-    const d=new Date(h.time);
-    const ds=`${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
-    hist.innerHTML+=`<div class="hist-item"><div class="hist-l"><div class="hj">${catJp[h.cat]||h.cat} · ${ds}</div><div class="hz">${h.correct}／${h.total} 正解</div></div><div class="hist-pct" style="color:${h.pct>=70?'#3B6D11':'#A32D2D'}">${h.pct}%</div></div>`;
-  });
-}
-function renderWrong(){
-  const list=document.getElementById('wrong-list');list.innerHTML='';
-  if(!wrongBank.length){list.innerHTML='<div class="empty">間違いはありません！<br>錯題本是空的 🎉<br><br>繼續練習，錯題會自動加入這裡。</div>';return;}
-  const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};
-  [...wrongBank].reverse().forEach(w=>{
-    const d=document.createElement('div');d.className='wrong-item';
-    const qShort=w.q.q.length>80?w.q.q.slice(0,80)+'…':w.q.q;
-    d.innerHTML=`<div class="wrong-meta">${catZh[w.cat]||w.cat}</div><div class="wrong-q">${qShort}</div><div class="wrong-ok">正解：${w.q.opts[w.q.ans]}</div>${w.chosen>=0?`<div class="wrong-ng">あなたの答え：${w.q.opts[w.chosen]}</div>`:''}`;
-    list.appendChild(d);
-  });
-}
-function doImport(){
-  const raw=document.getElementById('import-ta').value.trim();
-  const msg=document.getElementById('import-msg');
-  if(!raw){msg.style.color='#A32D2D';msg.textContent='資料為空 / データが空です';return;}
-  try{
-    const blocks=raw.split('---').map(b=>b.trim()).filter(Boolean);
-    let added=0;
-    blocks.forEach(b=>{
-      const lines=b.split('\n');
-      const get=k=>{const l=lines.find(x=>x.startsWith(k+':'));return l?l.slice(k.length+1).trim():'';};
-      const catRaw=get('題型')||get('type')||'vocab';
-      const qText=get('問題');
-      const optsRaw=get('選択肢')||get('opts');
-      const ans=parseInt(get('正解')||get('ans'))||0;
-      if(!qText||!optsRaw) return;
-      const entry={q:qText,hl:get('hl')||'',hint:get('hint')||'',opts:optsRaw.split('|'),ans};
-      const pool=catRaw==='grammar'?GRAMMAR_REAL:catRaw==='reorder'?REORDER_REAL:VOCAB_REAL;
-      if(!pool.find(x=>x.q===qText)){pool.push(entry);added++;}
-    });
-    msg.style.color='#3B6D11';
-    msg.textContent=`成功匯入 ${added} 題！ / ${added}問追加しました！`;
-    document.getElementById('import-ta').value='';
-  }catch(e){msg.style.color='#A32D2D';msg.textContent='格式錯誤 / フォーマットエラー';}
-}
+function markOpt(el,i){document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('marked');delete o._c;});el.classList.add('marked');el._c=i;}
+function handleReviewNext(){let chosen=-1;document.querySelectorAll('.opt').forEach(o=>{if(o.classList.contains('marked')&&o._c!==undefined)chosen=o._c;});userAnswers.push(chosen);const q=QS[qi];if(chosen===q.ans)correct++;else addWrong(q,chosen,q.catKey);qi++;if(qi<QS.length)renderQ();else buildReview();}
+function addWrong(q,chosen,cat){const key=q.q+'|'+q.ans;const idx=wrongBank.findIndex(w=>w.key===key);const entry={key,q:{...q},chosen,cat,level:S.level,time:Date.now()};if(idx>=0)wrongBank[idx]=entry;else wrongBank.push(entry);save();}
+function buildReview(){const list=document.getElementById('rev-list');list.innerHTML='';QS.forEach((q,i)=>{const ua=userAnswers[i],ok=(ua===q.ans);const d=document.createElement('div');d.className='rev-item '+(ok?'ok':'ng');const qShort=q.q.length>55?q.q.slice(0,55)+'…':q.q;d.innerHTML=`<div class="rev-q">${qShort}</div>`+(ok?`<div class="rev-ok">✓ 正解：${q.opts[q.ans]}</div>`:`<div class="rev-ng">✗ あなた：${ua>=0?q.opts[ua]:'未回答'}</div><div class="rev-ok" style="margin-top:4px;">正解：${q.opts[q.ans]}</div>`);list.appendChild(d);});goScreen('review');}
+function showResult(){const total=QS.length,pct=Math.round((correct/total)*100);document.getElementById('res-emoji').textContent=pct>=80?'🎉':pct>=60?'📚':'💪';document.getElementById('res-pct').textContent=pct+'%';document.getElementById('res-msg').textContent=pct>=80?'すばらしい！素晴らしい成績！':pct>=60?'よくできました！もう少し！':'頑張れ！練習を続けよう！';document.getElementById('sv-ok').textContent=correct;document.getElementById('sv-ng').textContent=total-correct;document.getElementById('sv-tot').textContent=total;histBank.push({cat:S.cat,level:S.level,correct,total,pct,time:Date.now()});save();goScreen('result');}
+function renderStats(){const catKeys=['vocab','grammar','reorder','reading'];const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};const bars=document.getElementById('cat-bars');bars.innerHTML='';let hasData=false;catKeys.forEach(k=>{const h=histBank.filter(x=>x.cat===k);if(!h.length)return;hasData=true;const avg=Math.round(h.reduce((s,x)=>s+x.pct,0)/h.length);const cnt=h.reduce((s,x)=>s+x.total,0);bars.innerHTML+=`<div class="bar-row"><span class="bar-label">${catZh[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${avg}%"></div></div><span class="bar-pct">${avg}%</span></div><div class="bar-sub">累計 ${cnt} 題 · ${h.length} 回練習</div>`;});if(!hasData)bars.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">尚無資料，先去練習看看！</div>';const hist=document.getElementById('hist-list');hist.innerHTML='';const catJp={vocab:'語彙',grammar:'文法',reorder:'組立',reading:'読解'};if(!histBank.length){hist.innerHTML='<div style="font-size:14px;color:#999;padding:16px 0;">尚無記錄</div>';return;}[...histBank].reverse().slice(0,20).forEach(h=>{const d=new Date(h.time),ds=`${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;hist.innerHTML+=`<div class="hist-item"><div class="hist-l"><div class="hj"><span class="lv-badge">${h.level||'N3'}</span>${catJp[h.cat]||h.cat} · ${ds}</div><div class="hz">${h.correct}／${h.total} 正解</div></div><div class="hist-pct" style="color:${h.pct>=70?'#3B6D11':'#A32D2D'}">${h.pct}%</div></div>`;});}
+function renderWrong(){const list=document.getElementById('wrong-list');list.innerHTML='';if(!wrongBank.length){list.innerHTML='<div class="empty">間違いはありません！<br>錯題本是空的 🎉</div>';return;}const catZh={vocab:'單字',grammar:'文法',reorder:'重組',reading:'閱讀'};[...wrongBank].reverse().forEach(w=>{const d=document.createElement('div');d.className='wrong-item';const qShort=w.q.q.length>80?w.q.q.slice(0,80)+'…':w.q.q;d.innerHTML=`<div class="wrong-meta"><span class="lv-badge">${w.level||''}</span>${catZh[w.cat]||w.cat}</div><div class="wrong-q">${qShort}</div><div class="wrong-ok">正解：${w.q.opts[w.q.ans]}</div>${w.chosen>=0?`<div class="wrong-ng">あなたの答え：${w.q.opts[w.chosen]}</div>`:''}`;list.appendChild(d);});}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-</script>
+renderCatList();
 
-<script>
-// Service Worker 註冊
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
 </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
 </body>
 </html>
